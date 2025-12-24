@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 interface SEOProps {
   title?: string;
@@ -42,34 +42,65 @@ export default function SEO({
     type: type || defaultSEO.type,
   };
 
-  return (
-    <Helmet>
-      <title>{seo.title}</title>
-      <meta name="description" content={seo.description} />
-      <meta name="keywords" content={seo.keywords} />
-      <link rel="canonical" href={seo.url} />
+  useEffect(() => {
+    // Update document title
+    document.title = seo.title;
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={seo.type} />
-      <meta property="og:url" content={seo.url} />
-      <meta property="og:title" content={seo.title} />
-      <meta property="og:description" content={seo.description} />
-      <meta property="og:image" content={seo.image} />
-      <meta property="og:locale" content="fr_CA" />
-      <meta property="og:site_name" content="Quebec IPTV" />
+    // Helper to update or create meta tags
+    const updateMeta = (selector: string, content: string, attribute = "name") => {
+      let element = document.querySelector(selector) as HTMLMetaElement;
+      if (!element) {
+        element = document.createElement("meta");
+        if (selector.includes("property=")) {
+          const propValue = selector.match(/property="([^"]+)"/)?.[1];
+          if (propValue) element.setAttribute("property", propValue);
+        } else if (selector.includes("name=")) {
+          const nameValue = selector.match(/name="([^"]+)"/)?.[1];
+          if (nameValue) element.setAttribute("name", nameValue);
+        }
+        document.head.appendChild(element);
+      }
+      element.content = content;
+    };
 
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={seo.url} />
-      <meta name="twitter:title" content={seo.title} />
-      <meta name="twitter:description" content={seo.description} />
-      <meta name="twitter:image" content={seo.image} />
+    // Helper to update or create link tags
+    const updateLink = (rel: string, href: string) => {
+      let element = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+      if (!element) {
+        element = document.createElement("link");
+        element.rel = rel;
+        document.head.appendChild(element);
+      }
+      element.href = href;
+    };
 
-      {/* Additional SEO */}
-      <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
-      <meta name="language" content="French" />
-      <meta name="geo.region" content="CA-QC" />
-      <meta name="geo.placename" content="Quebec" />
-    </Helmet>
-  );
+    // Update meta tags
+    updateMeta('meta[name="description"]', seo.description);
+    updateMeta('meta[name="keywords"]', seo.keywords);
+    updateMeta('meta[name="robots"]', noIndex ? "noindex, nofollow" : "index, follow");
+    updateMeta('meta[name="language"]', "French");
+    updateMeta('meta[name="geo.region"]', "CA-QC");
+    updateMeta('meta[name="geo.placename"]', "Quebec");
+
+    // Open Graph
+    updateMeta('meta[property="og:type"]', seo.type);
+    updateMeta('meta[property="og:url"]', seo.url);
+    updateMeta('meta[property="og:title"]', seo.title);
+    updateMeta('meta[property="og:description"]', seo.description);
+    updateMeta('meta[property="og:image"]', seo.image);
+    updateMeta('meta[property="og:locale"]', "fr_CA");
+    updateMeta('meta[property="og:site_name"]', "Quebec IPTV");
+
+    // Twitter
+    updateMeta('meta[name="twitter:card"]', "summary_large_image");
+    updateMeta('meta[name="twitter:url"]', seo.url);
+    updateMeta('meta[name="twitter:title"]', seo.title);
+    updateMeta('meta[name="twitter:description"]', seo.description);
+    updateMeta('meta[name="twitter:image"]', seo.image);
+
+    // Canonical URL
+    updateLink("canonical", seo.url);
+  }, [seo.title, seo.description, seo.keywords, seo.image, seo.url, seo.type, noIndex]);
+
+  return null;
 }

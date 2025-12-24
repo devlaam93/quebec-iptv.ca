@@ -1,0 +1,242 @@
+import { useEffect } from "react";
+
+interface OrganizationData {
+  name: string;
+  url: string;
+  logo: string;
+  description: string;
+  contactEmail?: string;
+  sameAs?: string[];
+}
+
+interface WebSiteData {
+  name: string;
+  url: string;
+  description: string;
+}
+
+interface ProductData {
+  name: string;
+  description: string;
+  price: string;
+  currency: string;
+  availability: "InStock" | "OutOfStock" | "PreOrder";
+  url: string;
+  image?: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface ServiceData {
+  name: string;
+  description: string;
+  provider: string;
+  url: string;
+  areaServed?: string;
+  serviceType?: string;
+}
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface ArticleData {
+  headline: string;
+  description: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+  author: string;
+  url: string;
+}
+
+type StructuredDataProps =
+  | { type: "organization"; data: OrganizationData }
+  | { type: "website"; data: WebSiteData }
+  | { type: "product"; data: ProductData }
+  | { type: "faq"; data: FAQItem[] }
+  | { type: "local-business"; data: OrganizationData & { address?: string; telephone?: string } }
+  | { type: "service"; data: ServiceData }
+  | { type: "breadcrumb"; data: BreadcrumbItem[] }
+  | { type: "article"; data: ArticleData };
+
+const StructuredData = (props: StructuredDataProps) => {
+  useEffect(() => {
+    let jsonLd: object;
+
+    switch (props.type) {
+      case "organization":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: props.data.name,
+          url: props.data.url,
+          logo: props.data.logo,
+          description: props.data.description,
+          contactPoint: props.data.contactEmail
+            ? {
+                "@type": "ContactPoint",
+                email: props.data.contactEmail,
+                contactType: "customer service",
+                availableLanguage: ["French", "English"],
+              }
+            : undefined,
+          sameAs: props.data.sameAs || [],
+        };
+        break;
+
+      case "website":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: props.data.name,
+          url: props.data.url,
+          description: props.data.description,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: `${props.data.url}/blog?search={search_term_string}`,
+            },
+            "query-input": "required name=search_term_string",
+          },
+        };
+        break;
+
+      case "product":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: props.data.name,
+          description: props.data.description,
+          image: props.data.image,
+          offers: {
+            "@type": "Offer",
+            price: props.data.price,
+            priceCurrency: props.data.currency,
+            availability: `https://schema.org/${props.data.availability}`,
+            url: props.data.url,
+          },
+        };
+        break;
+
+      case "faq":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: props.data.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        };
+        break;
+
+      case "local-business":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: props.data.name,
+          url: props.data.url,
+          logo: props.data.logo,
+          description: props.data.description,
+          address: props.data.address,
+          telephone: props.data.telephone,
+          priceRange: "$$",
+        };
+        break;
+
+      case "service":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: props.data.name,
+          description: props.data.description,
+          provider: {
+            "@type": "Organization",
+            name: props.data.provider,
+          },
+          url: props.data.url,
+          areaServed: props.data.areaServed || "CA",
+          serviceType: props.data.serviceType || "IPTV Streaming Service",
+        };
+        break;
+
+      case "breadcrumb":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: props.data.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: item.name,
+            item: item.url,
+          })),
+        };
+        break;
+
+      case "article":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: props.data.headline,
+          description: props.data.description,
+          image: props.data.image,
+          datePublished: props.data.datePublished,
+          dateModified: props.data.dateModified || props.data.datePublished,
+          author: {
+            "@type": "Organization",
+            name: props.data.author,
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Quebec IPTV",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://quebec-iptv.ca/og-image.jpg",
+            },
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": props.data.url,
+          },
+        };
+        break;
+
+      default:
+        return;
+    }
+
+    // Create and inject script tag
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.text = JSON.stringify(jsonLd);
+    script.id = `structured-data-${props.type}`;
+
+    // Remove existing script with same ID if present
+    const existing = document.getElementById(script.id);
+    if (existing) {
+      existing.remove();
+    }
+
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById(script.id);
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+      }
+    };
+  }, [props]);
+
+  return null;
+};
+
+export default StructuredData;

@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Quebec IPTV Design System - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 15%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 220 13% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 15%;
+
+    /* Quebec Orange Brand Colors */
+    --primary: 16 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 220 13% 15%;
+
+    --muted: 220 13% 92%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 16 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 85%;
+    --input: 220 13% 90%;
+    --ring: 16 100% 50%;
+    --focus: 199 89% 48%;
+
+    --radius: 0.75rem;
+
+    /* Quebec IPTV Gradients - Light */
+    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(220, 13%, 97%) 50%, hsl(0, 0%, 100%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 98%) 0%, hsl(220, 13%, 96%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(16, 100%, 50%) 0%, hsl(20, 100%, 45%) 100%);
+    
+    /* Quebec IPTV Shadows - Light */
+    --shadow-glow: 0 0 30px hsl(16, 100%, 50%, 0.2);
+    --shadow-card: 0 8px 32px hsl(220, 13%, 50%, 0.1);
+    --shadow-button: 0 4px 14px hsl(16, 100%, 50%, 0.3);
+
+    /* Trustpilot Green */
+    --trustpilot: 134 61% 41%;
+  }
+
+  .dark {
+    /* Quebec IPTV Design System - Dark Theme */
+    --background: 220 13% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 13% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 13% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Quebec Orange Brand Colors */
+    --primary: 16 100% 60%;
+    --primary-foreground: 220 13% 8%;
+
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 13% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 16 100% 60%;
+    --accent-foreground: 220 13% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 20%;
+    --input: 220 13% 15%;
+    --ring: 16 100% 60%;
+    --focus: 199 89% 48%;
+
+    /* Quebec IPTV Gradients - Dark */
+    --gradient-hero: linear-gradient(135deg, hsl(220, 13%, 8%) 0%, hsl(220, 15%, 12%) 50%, hsl(220, 13%, 8%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220, 13%, 10%) 0%, hsl(220, 13%, 12%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(16, 100%, 60%) 0%, hsl(20, 100%, 55%) 100%);
+    
+    /* Quebec IPTV Shadows - Dark */
+    --shadow-glow: 0 0 30px hsl(16, 100%, 60%, 0.3);
+    --shadow-card: 0 8px 32px hsl(220, 13%, 5%, 0.5);
+    --shadow-button: 0 4px 14px hsl(16, 100%, 60%, 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .hover\\:pause-animation:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Prose styling for blog posts */
+.prose {
+  color: hsl(var(--foreground));
+  max-width: 65ch;
+}
+
+.prose h2 {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+  font-size: 1.875rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.prose h3 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.75;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.625rem;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.prose strong {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+.prose a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  transition: all 0.2s;
+}
+
+.prose a:hover {
+  opacity: 0.8;
+}
+
+.dark .prose {
+  color: hsl(var(--foreground));
+}
+
+/* Particle animation for CTA buttons */
+@keyframes particle-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(cos(var(--angle)) * var(--velocity) * 1px),
+      calc(sin(var(--angle)) * var(--velocity) * 1px)
+    ) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-particle {
+  animation: particle-burst 0.7s ease-out forwards;
+}

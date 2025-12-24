@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#00BCD4"/>
+  <text x="50" y="46" font-family="Arial Black" font-size="10" fill="white" text-anchor="middle">TELE</text>
+  <text x="50" y="62" font-family="Arial Black" font-size="10" fill="white" text-anchor="middle">TOON</text>
+</svg>

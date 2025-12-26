@@ -1,6 +1,102 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const API_BASE = "https://posts.quebec-iptv.ca/wp-json/wp/v2";
+
+// Cache configuration
+const CACHE_PREFIX = "wp_cache_";
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const STALE_TTL = 30 * 60 * 1000; // 30 minutes for stale-while-revalidate
+
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+  headers?: { totalPages: number; totalPosts: number };
+}
+
+// In-memory cache for faster access during session
+const memoryCache = new Map<string, CacheEntry<unknown>>();
+
+function getCacheKey(endpoint: string, params?: Record<string, string>): string {
+  const paramString = params ? JSON.stringify(params) : "";
+  return `${CACHE_PREFIX}${endpoint}_${paramString}`;
+}
+
+function getFromCache<T>(key: string): CacheEntry<T> | null {
+  // Check memory cache first
+  const memEntry = memoryCache.get(key) as CacheEntry<T> | undefined;
+  if (memEntry) {
+    return memEntry;
+  }
+
+  // Fall back to localStorage
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      const entry = JSON.parse(stored) as CacheEntry<T>;
+      // Populate memory cache
+      memoryCache.set(key, entry);
+      return entry;
+    }
+  } catch (e) {
+    console.warn("Cache read error:", e);
+  }
+  return null;
+}
+
+function setCache<T>(key: string, data: T, headers?: { totalPages: number; totalPosts: number }): void {
+  const entry: CacheEntry<T> = {
+    data,
+    timestamp: Date.now(),
+    headers,
+  };
+
+  // Update memory cache
+  memoryCache.set(key, entry);
+
+  // Persist to localStorage
+  try {
+    localStorage.setItem(key, JSON.stringify(entry));
+  } catch (e) {
+    // Handle quota exceeded - clear old cache entries
+    if (e instanceof DOMException && e.name === "QuotaExceededError") {
+      clearOldCache();
+      try {
+        localStorage.setItem(key, JSON.stringify(entry));
+      } catch {
+        console.warn("Cache write failed after cleanup");
+      }
+    }
+  }
+}
+
+function isCacheFresh(timestamp: number): boolean {
+  return Date.now() - timestamp < CACHE_TTL;
+}
+
+function isCacheStale(timestamp: number): boolean {
+  return Date.now() - timestamp > STALE_TTL;
+}
+
+function clearOldCache(): void {
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key?.startsWith(CACHE_PREFIX)) {
+      try {
+        const entry = JSON.parse(localStorage.getItem(key) || "{}");
+        if (isCacheStale(entry.timestamp)) {
+          keysToRemove.push(key);
+        }
+      } catch {
+        keysToRemove.push(key!);
+      }
+    }
+  }
+  keysToRemove.forEach(key => {
+    localStorage.removeItem(key);
+    memoryCache.delete(key);
+  });
+}
 
 export interface WordPressTag {
   id: number;
@@ -130,10 +226,45 @@ export function useWordPressPosts(options?: {
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
+  const isFetchingRef = useRef(false);
 
   useEffect(() => {
+    const cacheParams: Record<string, string> = {
+      per_page: String(options?.perPage || 100),
+      page: String(options?.page || 1),
+    };
+    if (options?.categoryId) {
+      cacheParams.categories = String(options.categoryId);
+    }
+    
+    const cacheKey = getCacheKey("posts", cacheParams);
+    const cached = getFromCache<WordPressPost[]>(cacheKey);
+
+    // Return cached data immediately if fresh
+    if (cached && isCacheFresh(cached.timestamp)) {
+      setPosts(cached.data);
+      setTotalPages(cached.headers?.totalPages || 1);
+      setTotalPosts(cached.headers?.totalPosts || 0);
+      setLoading(false);
+      return;
+    }
+
+    // Use stale data while revalidating
+    if (cached && !isCacheStale(cached.timestamp)) {
+      setPosts(cached.data);
+      setTotalPages(cached.headers?.totalPages || 1);
+      setTotalPosts(cached.headers?.totalPosts || 0);
+      setLoading(false);
+      // Continue to fetch fresh data in background
+    }
+
     async function fetchPosts() {
-      setLoading(true);
+      if (isFetchingRef.current) return;
+      isFetchingRef.current = true;
+      
+      if (!cached) {
+        setLoading(true);
+      }
       setError(null);
       
       try {
@@ -155,19 +286,31 @@ export function useWordPressPosts(options?: {
         
         const totalPagesHeader = response.headers.get("X-WP-TotalPages");
         const totalPostsHeader = response.headers.get("X-WP-Total");
+        const parsedTotalPages = totalPagesHeader ? parseInt(totalPagesHeader, 10) : 1;
+        const parsedTotalPosts = totalPostsHeader ? parseInt(totalPostsHeader, 10) : 0;
         
-        setTotalPages(totalPagesHeader ? parseInt(totalPagesHeader, 10) : 1);
-        setTotalPosts(totalPostsHeader ? parseInt(totalPostsHeader, 10) : 0);
+        setTotalPages(parsedTotalPages);
+        setTotalPosts(parsedTotalPosts);
         
         const rawPosts: WPPostRaw[] = await response.json();
         const transformedPosts = rawPosts.map(transformPost);
         
+        // Cache the results
+        setCache(cacheKey, transformedPosts, {
+          totalPages: parsedTotalPages,
+          totalPosts: parsedTotalPosts,
+        });
+        
         setPosts(transformedPosts);
       } catch (err) {
         console.error("Error fetching WordPress posts:", err);
-        setError(err instanceof Error ? err.message : "Failed to fetch posts");
+        // Only show error if we don't have cached data
+        if (!cached) {
+          setError(err instanceof Error ? err.message : "Failed to fetch posts");
+        }
       } finally {
         setLoading(false);
+        isFetchingRef.current = false;
       }
     }
 
@@ -181,6 +324,7 @@ export function useWordPressPost(slug: string | undefined) {
   const [post, setPost] = useState<WordPressPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isFetchingRef = useRef(false);
 
   useEffect(() => {
     if (!slug) {
@@ -188,8 +332,29 @@ export function useWordPressPost(slug: string | undefined) {
       return;
     }
 
+    const cacheKey = getCacheKey("post", { slug });
+    const cached = getFromCache<WordPressPost>(cacheKey);
+
+    // Return cached data immediately if fresh
+    if (cached && isCacheFresh(cached.timestamp)) {
+      setPost(cached.data);
+      setLoading(false);
+      return;
+    }
+
+    // Use stale data while revalidating
+    if (cached && !isCacheStale(cached.timestamp)) {
+      setPost(cached.data);
+      setLoading(false);
+    }
+
     async function fetchPost() {
-      setLoading(true);
+      if (isFetchingRef.current) return;
+      isFetchingRef.current = true;
+      
+      if (!cached) {
+        setLoading(true);
+      }
       setError(null);
       
       try {
@@ -204,13 +369,18 @@ export function useWordPressPost(slug: string | undefined) {
         if (rawPosts.length === 0) {
           setPost(null);
         } else {
-          setPost(transformPost(rawPosts[0]));
+          const transformedPost = transformPost(rawPosts[0]);
+          setCache(cacheKey, transformedPost);
+          setPost(transformedPost);
         }
       } catch (err) {
         console.error("Error fetching WordPress post:", err);
-        setError(err instanceof Error ? err.message : "Failed to fetch post");
+        if (!cached) {
+          setError(err instanceof Error ? err.message : "Failed to fetch post");
+        }
       } finally {
         setLoading(false);
+        isFetchingRef.current = false;
       }
     }
 
@@ -225,16 +395,32 @@ export function useWordPressCategories() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const cacheKey = getCacheKey("categories", {});
+    const cached = getFromCache<WordPressCategory[]>(cacheKey);
+
+    if (cached && isCacheFresh(cached.timestamp)) {
+      setCategories(cached.data);
+      setLoading(false);
+      return;
+    }
+
+    if (cached && !isCacheStale(cached.timestamp)) {
+      setCategories(cached.data);
+      setLoading(false);
+    }
+
     async function fetchCategories() {
       try {
         const response = await fetch(`${API_BASE}/categories?per_page=100`);
         if (response.ok) {
           const data = await response.json();
-          setCategories(data.map((cat: { id: number; name: string; slug: string }) => ({
+          const transformedCategories = data.map((cat: { id: number; name: string; slug: string }) => ({
             id: cat.id,
             name: cat.name,
             slug: cat.slug,
-          })));
+          }));
+          setCache(cacheKey, transformedCategories);
+          setCategories(transformedCategories);
         }
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -247,4 +433,19 @@ export function useWordPressCategories() {
   }, []);
 
   return { categories, loading };
+}
+
+// Utility to manually clear the WordPress cache
+export function clearWordPressCache(): void {
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key?.startsWith(CACHE_PREFIX)) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(key => {
+    localStorage.removeItem(key);
+    memoryCache.delete(key);
+  });
 }

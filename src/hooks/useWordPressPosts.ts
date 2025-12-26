@@ -220,18 +220,24 @@ export function useWordPressPosts(options?: {
   categoryId?: number; 
   perPage?: number; 
   page?: number;
+  append?: boolean;
 }) {
   const [posts, setPosts] = useState<WordPressPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const isFetchingRef = useRef(false);
+  const currentPageRef = useRef(options?.page || 1);
 
   useEffect(() => {
+    const page = options?.page || 1;
+    const isAppending = options?.append && page > 1;
+    
     const cacheParams: Record<string, string> = {
-      per_page: String(options?.perPage || 100),
-      page: String(options?.page || 1),
+      per_page: String(options?.perPage || 20),
+      page: String(page),
     };
     if (options?.categoryId) {
       cacheParams.categories = String(options.categoryId);
@@ -242,19 +248,37 @@ export function useWordPressPosts(options?: {
 
     // Return cached data immediately if fresh
     if (cached && isCacheFresh(cached.timestamp)) {
-      setPosts(cached.data);
+      if (isAppending) {
+        setPosts(prev => {
+          const existingIds = new Set(prev.map(p => p.id));
+          const newPosts = cached.data.filter(p => !existingIds.has(p.id));
+          return [...prev, ...newPosts];
+        });
+      } else {
+        setPosts(cached.data);
+      }
       setTotalPages(cached.headers?.totalPages || 1);
       setTotalPosts(cached.headers?.totalPosts || 0);
       setLoading(false);
+      setLoadingMore(false);
       return;
     }
 
     // Use stale data while revalidating
     if (cached && !isCacheStale(cached.timestamp)) {
-      setPosts(cached.data);
+      if (isAppending) {
+        setPosts(prev => {
+          const existingIds = new Set(prev.map(p => p.id));
+          const newPosts = cached.data.filter(p => !existingIds.has(p.id));
+          return [...prev, ...newPosts];
+        });
+      } else {
+        setPosts(cached.data);
+      }
       setTotalPages(cached.headers?.totalPages || 1);
       setTotalPosts(cached.headers?.totalPosts || 0);
       setLoading(false);
+      setLoadingMore(false);
       // Continue to fetch fresh data in background
     }
 
@@ -263,15 +287,19 @@ export function useWordPressPosts(options?: {
       isFetchingRef.current = true;
       
       if (!cached) {
-        setLoading(true);
+        if (isAppending) {
+          setLoadingMore(true);
+        } else {
+          setLoading(true);
+        }
       }
       setError(null);
       
       try {
         const params = new URLSearchParams({
           _embed: "true",
-          per_page: String(options?.perPage || 100),
-          page: String(options?.page || 1),
+          per_page: String(options?.perPage || 20),
+          page: String(page),
         });
         
         if (options?.categoryId) {
@@ -301,7 +329,17 @@ export function useWordPressPosts(options?: {
           totalPosts: parsedTotalPosts,
         });
         
-        setPosts(transformedPosts);
+        if (isAppending) {
+          setPosts(prev => {
+            const existingIds = new Set(prev.map(p => p.id));
+            const newPosts = transformedPosts.filter(p => !existingIds.has(p.id));
+            return [...prev, ...newPosts];
+          });
+        } else {
+          setPosts(transformedPosts);
+        }
+        
+        currentPageRef.current = page;
       } catch (err) {
         console.error("Error fetching WordPress posts:", err);
         // Only show error if we don't have cached data
@@ -310,14 +348,15 @@ export function useWordPressPosts(options?: {
         }
       } finally {
         setLoading(false);
+        setLoadingMore(false);
         isFetchingRef.current = false;
       }
     }
 
     fetchPosts();
-  }, [options?.categoryId, options?.perPage, options?.page]);
+  }, [options?.categoryId, options?.perPage, options?.page, options?.append]);
 
-  return { posts, loading, error, totalPages, totalPosts };
+  return { posts, loading, loadingMore, error, totalPages, totalPosts };
 }
 
 export function useWordPressPost(slug: string | undefined) {

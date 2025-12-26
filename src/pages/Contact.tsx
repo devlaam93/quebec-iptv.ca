@@ -10,7 +10,7 @@ const Contact = () => {
     <PageLayout container>
       <SEO
         title="Contact IPTV Québec | Support Client 24/7"
-        description="Contactez notre équipe IPTV Québec. Support disponible 24/7 par WhatsApp, email ou téléphone. Réponse rapide garantie pour toutes vos questions."
+        description="Besoin d'aide? Notre équipe répond en quelques minutes via WhatsApp, email ou chat. Support technique disponible 24h/24, 7j/7. Contactez-nous!"
         path="/contact"
         keywords={["contact IPTV", "support IPTV", "service client IPTV"]}
       />

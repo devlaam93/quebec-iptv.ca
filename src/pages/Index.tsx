@@ -139,6 +139,21 @@ const Index = () => {
           }
         ]}
       />
+      <StructuredData
+        type="service"
+        data={{
+          name: "Abonnement IPTV Québec Premium",
+          description: "Service de streaming IPTV premium offrant plus de 15 000 chaînes TV en direct, 40 000+ films et séries VOD en qualité 4K Ultra HD. Compatible avec tous les appareils: Smart TV, Android, iOS, Fire Stick, ordinateurs. Activation instantanée et support technique 24/7.",
+          provider: "IPTV Québec",
+          url: "https://quebec-iptv.ca/tarifs",
+          areaServed: "Canada, France, Belgique, Suisse",
+          serviceType: "Streaming IPTV",
+          offers: {
+            price: "14.99",
+            priceCurrency: "CAD"
+          }
+        }}
+      />
       <Header />
       <main id="main-content" role="main">
         <HeroSection />

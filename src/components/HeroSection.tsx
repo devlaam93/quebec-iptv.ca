@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef, useLayoutEffect, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import heroBackground from "@/assets/hero-background.jpg";
 
 // Preload hero background image for LCP optimization
@@ -68,8 +68,8 @@ BackgroundElements.displayName = 'BackgroundElements';
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
   
-  // Preload hero image as early as possible
-  useLayoutEffect(() => {
+  // Preload hero image - using useEffect to avoid blocking paint
+  useEffect(() => {
     preloadHeroImage();
   }, []);
 

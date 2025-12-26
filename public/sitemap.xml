@@ -255,6 +255,16 @@
   </url>
 
   <!-- ============================================ -->
+  <!-- LLM/AI INFORMATION PAGE -->
+  <!-- ============================================ -->
+  <url>
+    <loc>https://quebec-iptv.ca/llm.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ============================================ -->
   <!-- ACCESSIBILITY PAGE - Medium Priority (0.5) -->
   <!-- ============================================ -->
   <url>

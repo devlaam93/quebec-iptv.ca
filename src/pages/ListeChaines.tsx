@@ -141,7 +141,8 @@ const ListeChaines = () => {
               </h1>
               
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Le plus grand catalogue IPTV au Québec. Accédez à tout le contenu premium en qualité 4K.
+                Le plus grand catalogue IPTV au Québec. Accédez à tout le contenu premium en qualité 4K. 
+                Consultez <a href="/tutorial" className="text-primary hover:underline font-semibold">notre guide d'installation</a> pour commencer.
               </p>
 
               {/* Important Alert */}
@@ -339,6 +340,15 @@ const ListeChaines = () => {
                 Commencer Maintenant
               </Link>
             </Button>
+
+            {/* Contextual Links */}
+            <div className="mt-10 pt-8 border-t border-border/50">
+              <p className="text-muted-foreground">
+                Des questions? Consultez notre{" "}
+                <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>{" "}
+                ou découvrez <a href="/blog" className="text-primary hover:underline font-medium">nos guides complets sur l'IPTV</a>.
+              </p>
+            </div>
           </div>
         </section>
     </PageLayout>

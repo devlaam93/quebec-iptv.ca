@@ -208,7 +208,9 @@ const Tarifs = () => {
             Nos <span className="text-primary">Tarifs</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Des plans flexibles adaptés à vos besoins avec activation instantanée et support 24/7
+            Des plans flexibles adaptés à vos besoins. Accédez à{" "}
+            <a href="/liste-chaines" className="text-primary hover:underline font-semibold">45 000+ chaînes en direct</a>{" "}
+            avec activation instantanée et support 24/7.
           </p>
         </div>
       </section>
@@ -309,6 +311,16 @@ const Tarifs = () => {
                 <Zap className="w-4 h-4 text-amber-400" />
                 Activation instantanée
               </span>
+            </div>
+
+            {/* Contextual Links */}
+            <div className="mt-8 pt-8 border-t border-border">
+              <p className="text-muted-foreground">
+                Besoin d'aide? Consultez notre{" "}
+                <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>, 
+                lisez <a href="/tutorial" className="text-primary hover:underline font-medium">notre guide d'installation</a>, 
+                ou découvrez <a href="/blog" className="text-primary hover:underline font-medium">nos articles sur l'IPTV</a>.
+              </p>
             </div>
           </div>
         </div>

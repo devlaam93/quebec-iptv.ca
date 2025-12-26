@@ -31,9 +31,21 @@ const Index = () => {
           name: "IPTV Québec",
           url: "https://quebec-iptv.ca",
           logo: "https://quebec-iptv.ca/og-image.jpg",
-          description: "Service IPTV premium au Québec et Canada avec 45 000+ chaînes et 140 000+ films/séries en qualité 4K. Support technique 24/7.",
+          description: "Service IPTV premium au Québec et Canada offrant plus de 15 000 chaînes TV en direct, 40 000+ films et séries VOD en qualité 4K Ultra HD. Activation instantanée, support technique 24/7, compatible avec tous les appareils.",
           contactEmail: "support@quebec-iptv.ca",
-          sameAs: [],
+          sameAs: [
+            "https://www.facebook.com/iptvquebec",
+            "https://twitter.com/iptvquebec",
+            "https://www.instagram.com/iptvquebec",
+            "https://www.youtube.com/@iptvquebec"
+          ],
+          foundingDate: "2020",
+          contactPoint: {
+            telephone: "+1-438-000-0000",
+            contactType: "customer service",
+            availableLanguage: ["French", "English"],
+            areaServed: ["CA", "FR", "BE", "CH"]
+          }
         }}
       />
       <StructuredData
@@ -42,7 +54,7 @@ const Index = () => {
           name: "IPTV Québec",
           url: "https://quebec-iptv.ca",
           logo: "https://quebec-iptv.ca/og-image.jpg",
-          description: "Fournisseur de services IPTV premium au Québec offrant plus de 45 000 chaînes TV en direct, 140 000+ films et séries en 4K. Essai gratuit 24h disponible.",
+          description: "Fournisseur de services IPTV premium au Québec offrant plus de 15 000 chaînes TV en direct, 40 000+ films et séries VOD en qualité 4K Ultra HD. Essai gratuit disponible.",
           telephone: "+1-438-000-0000",
           priceRange: "$$",
           address: {
@@ -58,7 +70,12 @@ const Index = () => {
           paymentAccepted: ["Visa", "MasterCard", "PayPal", "Interac", "Crypto"],
           currenciesAccepted: "CAD, USD",
           areaServed: ["Canada", "France", "Belgique", "Suisse"],
-          sameAs: [],
+          sameAs: [
+            "https://www.facebook.com/iptvquebec",
+            "https://twitter.com/iptvquebec",
+            "https://www.instagram.com/iptvquebec",
+            "https://www.youtube.com/@iptvquebec"
+          ],
         }}
       />
       <StructuredData

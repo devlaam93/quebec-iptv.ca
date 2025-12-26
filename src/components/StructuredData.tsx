@@ -7,6 +7,13 @@ interface OrganizationData {
   description: string;
   contactEmail?: string;
   sameAs?: string[];
+  foundingDate?: string;
+  contactPoint?: {
+    telephone?: string;
+    contactType?: string;
+    availableLanguage?: string[];
+    areaServed?: string[];
+  };
 }
 
 interface WebSiteData {
@@ -208,15 +215,24 @@ const StructuredData = (props: StructuredDataProps) => {
             height: 630,
           },
           description: props.data.description,
-          contactPoint: props.data.contactEmail
+          foundingDate: props.data.foundingDate,
+          contactPoint: props.data.contactPoint
             ? {
                 "@type": "ContactPoint",
-                email: props.data.contactEmail,
-                contactType: "customer service",
-                availableLanguage: ["French", "English"],
-                areaServed: "CA",
+                telephone: props.data.contactPoint.telephone,
+                contactType: props.data.contactPoint.contactType || "customer service",
+                availableLanguage: props.data.contactPoint.availableLanguage || ["French", "English"],
+                areaServed: props.data.contactPoint.areaServed || ["CA"],
               }
-            : undefined,
+            : props.data.contactEmail
+              ? {
+                  "@type": "ContactPoint",
+                  email: props.data.contactEmail,
+                  contactType: "customer service",
+                  availableLanguage: ["French", "English"],
+                  areaServed: "CA",
+                }
+              : undefined,
           sameAs: props.data.sameAs || [],
         };
         break;

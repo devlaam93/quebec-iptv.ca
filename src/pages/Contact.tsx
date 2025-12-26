@@ -1,6 +1,7 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import ContactForm from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock, MessageCircle, HeadphonesIcon, Zap } from "lucide-react";
@@ -204,6 +205,11 @@ const Contact = () => {
           </CardContent>
         </Card>
 
+      </div>
+
+      {/* Contact Form Section */}
+      <div className="max-w-2xl mx-auto mb-16">
+        <ContactForm />
       </div>
 
       {/* Support Categories */}

@@ -158,7 +158,7 @@ const ClientCounter = () => {
 };
 const Tarifs = () => {
   return <PageLayout>
-      <SEO title="Tarifs IPTV Québec - Abonnements à partir de 14,99$/mois" description="Découvrez nos forfaits IPTV au Québec. Abonnements 1, 3, 6 ou 12 mois avec 45 000+ chaînes, VOD 4K et support 24/7. Meilleur rapport qualité-prix garanti." path="/tarifs" keywords={["prix IPTV", "abonnement IPTV", "forfait IPTV Québec", "IPTV pas cher"]} />
+      <SEO title="Tarifs IPTV Québec - Abonnements à partir de 14,99$/mois" description="Découvrez nos forfaits IPTV au Québec. Abonnements 1, 3, 6 ou 12 mois avec 45 000+ chaînes, VOD 4K et support 24/7. Meilleur rapport qualité-prix garanti." path="/tarifs" keywords={["prix IPTV", "abonnement IPTV", "forfait IPTV Québec", "IPTV pas cher"]} image="/og-tarifs.jpg" />
       <StructuredData
         type="service"
         data={{

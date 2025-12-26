@@ -7,6 +7,7 @@ const routeNames: Record<string, string> = {
   "/essai-gratuit": "Essai Gratuit",
   "/faq": "Questions Fréquentes",
   "/contact": "Contact",
+  "/accessibilite": "Déclaration d'Accessibilité",
   "/tarifs": "Tarifs",
   "/liste-chaines": "Liste des Chaînes",
   "/revendeur": "Programme Revendeur",

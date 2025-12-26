@@ -36,7 +36,7 @@ const PaypalIcon = ({
 }: {
   className?: string;
 }) => <div className={className}>
-    <img src={paypalIcon} alt="PayPal" className="h-full w-full object-contain" />
+    <img src={paypalIcon} alt="Paiement par PayPal" className="h-full w-full object-contain" />
   </div>;
 const ApplePayIcon = ({
   className

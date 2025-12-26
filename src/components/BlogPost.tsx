@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -13,11 +14,56 @@ interface BlogPostProps {
   readTime: string;
   image: string;
   content: React.ReactNode;
+  slug?: string;
 }
 
-const BlogPost = ({ title, excerpt, category, date, readTime, image, content }: BlogPostProps) => {
+const BlogPost = ({ title, excerpt, category, date, readTime, image, content, slug }: BlogPostProps) => {
+  // Convert French date format to ISO format for structured data
+  const parseDate = (frenchDate: string): string => {
+    const months: { [key: string]: string } = {
+      'janvier': '01', 'février': '02', 'mars': '03', 'avril': '04',
+      'mai': '05', 'juin': '06', 'juillet': '07', 'août': '08',
+      'septembre': '09', 'octobre': '10', 'novembre': '11', 'décembre': '12'
+    };
+    const parts = frenchDate.toLowerCase().match(/(\d+)\s+(\w+)\s+(\d+)/);
+    if (parts) {
+      const day = parts[1].padStart(2, '0');
+      const month = months[parts[2]] || '01';
+      const year = parts[3];
+      return `${year}-${month}-${day}`;
+    }
+    return new Date().toISOString().split('T')[0];
+  };
+
+  const articleUrl = slug 
+    ? `https://quebec-iptv.ca/blog/${slug}`
+    : typeof window !== 'undefined' ? window.location.href : 'https://quebec-iptv.ca/blog';
+
+  const imageUrl = typeof image === 'string' && image.startsWith('http') 
+    ? image 
+    : `https://quebec-iptv.ca${image}`;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <StructuredData 
+        type="article" 
+        data={{
+          headline: title,
+          description: excerpt,
+          image: imageUrl,
+          datePublished: parseDate(date),
+          author: "Quebec IPTV",
+          url: articleUrl,
+        }} 
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Blog", url: "https://quebec-iptv.ca/blog" },
+          { name: title, url: articleUrl }
+        ]}
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}

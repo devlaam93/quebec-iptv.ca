@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { cn } from "@/lib/utils";
 
 interface PageLayoutProps {
@@ -56,8 +55,6 @@ const PageLayout = ({
       </main>
 
       <Footer />
-      
-      <WhatsAppButton />
     </div>
   );
 };

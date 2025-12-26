@@ -18,9 +18,9 @@ const WhatsAppButton = () => {
       aria-label="Contacter sur WhatsApp"
     >
       <WhatsAppIcon />
-      <span className="absolute -top-1 -right-1 flex h-5 w-5" aria-hidden="true">
+      <span className="absolute -top-1 -right-1 flex h-5 w-5 pointer-events-none" aria-hidden="true">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 text-xs text-white items-center justify-center font-bold">1</span>
+        <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 text-xs text-white items-center justify-center font-bold" aria-hidden="true">1</span>
       </span>
     </a>
   );

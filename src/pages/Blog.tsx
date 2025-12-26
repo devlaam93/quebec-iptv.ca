@@ -139,7 +139,8 @@ const Blog = () => {
             Blog IPTV <span className="text-primary">Québec</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Guides experts, tutoriels détaillés et conseils SEO pour maîtriser l'IPTV au Québec. Découvrez comment choisir, installer et optimiser votre service IPTV en 2025.
+            Guides experts, tutoriels détaillés et conseils pour maîtriser l'IPTV au Québec. 
+            Prêt à essayer? <a href="/essai-gratuit" className="text-primary hover:underline font-semibold">Obtenez votre essai gratuit de 24h</a>.
           </p>
         </div>
       </section>
@@ -258,6 +259,19 @@ const Blog = () => {
               </Button>
             </div>
           )}
+
+          {/* Contextual Links */}
+          <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
+            <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
+            <p className="text-muted-foreground mb-6">
+              Consultez notre <a href="/tutorial" className="text-primary hover:underline font-medium">guide d'installation complet</a>, 
+              explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
+              ou découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
+            </p>
+          </div>
         </div>
       </section>
     </PageLayout>

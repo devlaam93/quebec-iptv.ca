@@ -12,6 +12,7 @@ const AnnulationCommande = () => {
         title="Annulation de Commande - IPTV Québec"
         description="Politique d'annulation de commande IPTV Québec. Découvrez les conditions et démarches pour annuler votre abonnement IPTV."
         path="/annulation-commande"
+        image="/og-annulation.jpg"
         noIndex
       />
       <StructuredData

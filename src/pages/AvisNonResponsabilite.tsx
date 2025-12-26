@@ -11,6 +11,7 @@ const AvisNonResponsabilite = () => {
         title="Avis de Non-Responsabilité - IPTV Québec"
         description="Avis de non-responsabilité et limitations d'utilisation du service IPTV Québec. Informations importantes sur les conditions du service."
         path="/avis-non-responsabilite"
+        image="/og-avis.jpg"
         noIndex
       />
       <StructuredData

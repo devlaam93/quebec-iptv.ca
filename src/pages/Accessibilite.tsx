@@ -93,6 +93,7 @@ const Accessibilite = () => {
         title="Déclaration d'Accessibilité | IPTV Quebec"
         description="Notre engagement pour l'accessibilité numérique. Découvrez les mesures prises pour rendre notre site accessible à tous selon les normes WCAG 2.1 AA."
         path="/accessibilite"
+        image="/og-accessibilite.jpg"
       />
       <StructuredData
         type="article"

@@ -11,6 +11,7 @@ const DmcaPolicy = () => {
         title="Politique DMCA - IPTV Québec"
         description="Politique DMCA d'IPTV Québec. Procédure de notification pour les droits d'auteur et respect de la propriété intellectuelle."
         path="/dmca-policy"
+        image="/og-dmca.jpg"
         noIndex
       />
       <StructuredData

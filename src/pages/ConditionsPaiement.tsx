@@ -11,6 +11,7 @@ const ConditionsPaiement = () => {
         title="Conditions de Paiement - IPTV Québec"
         description="Méthodes de paiement acceptées par IPTV Québec : Visa, Mastercard, PayPal, Interac, crypto. Paiement sécurisé et conditions de facturation."
         path="/conditions-paiement"
+        image="/og-paiement.jpg"
         noIndex
       />
       <StructuredData

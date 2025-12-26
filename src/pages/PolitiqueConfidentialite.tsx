@@ -12,6 +12,7 @@ const PolitiqueConfidentialite = () => {
         description="Découvrez comment IPTV Québec protège vos données personnelles. Notre politique de confidentialité détaille la collecte, l'utilisation et la protection de vos informations."
         path="/politique-confidentialite"
         keywords={["confidentialité", "protection données", "vie privée"]}
+        image="/og-confidentialite.jpg"
       />
       <StructuredData
         type="breadcrumb"

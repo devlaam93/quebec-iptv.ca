@@ -12,6 +12,7 @@ const PolitiqueRemboursement = () => {
         title="Politique de Remboursement - IPTV Québec"
         description="Politique de remboursement IPTV Québec. Conditions, délais et procédure pour demander un remboursement de votre abonnement IPTV."
         path="/politique-remboursement"
+        image="/og-remboursement.jpg"
         noIndex
       />
       <StructuredData

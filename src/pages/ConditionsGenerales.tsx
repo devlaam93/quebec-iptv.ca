@@ -11,6 +11,7 @@ const ConditionsGenerales = () => {
         title="Conditions Générales d'Utilisation - IPTV Québec"
         description="Consultez les conditions générales d'utilisation du service IPTV Québec. Règles d'utilisation, droits et obligations des utilisateurs."
         path="/conditions-generales"
+        image="/og-conditions.jpg"
         noIndex
       />
       <StructuredData

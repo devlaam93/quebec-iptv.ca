@@ -116,12 +116,15 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
           <figure className="relative mb-12 rounded-xl overflow-hidden">
             <img 
               src={image} 
-              alt={title}
+              alt={`Image principale de l'article: ${title} - Guide IPTV Quebec`}
+              width={1200}
+              height={630}
+              loading="eager"
               className="w-full h-auto object-cover"
               itemProp="image"
             />
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">
-              <img src={logo} alt="Logo IPTV Quebec - filigrane" className="h-6" aria-hidden="true" />
+              <img src={logo} alt="" width={60} height={24} className="h-6" aria-hidden="true" />
             </div>
           </figure>
 

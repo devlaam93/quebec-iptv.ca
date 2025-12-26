@@ -9,9 +9,9 @@ import logo from "@/assets/iptv-quebec-premium-logo.png";
 
 const StepImage = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative my-6 rounded-xl overflow-hidden border border-border">
-    <img src={src} alt={alt} className="w-full h-auto object-cover" />
+    <img src={src} alt={alt} width={800} height={450} loading="lazy" className="w-full h-auto object-cover" />
     <div className="absolute bottom-3 right-3 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-lg">
-      <img src={logo} alt="" className="h-5" aria-hidden="true" />
+      <img src={logo} alt="" width={50} height={20} className="h-5" aria-hidden="true" />
     </div>
   </div>
 );

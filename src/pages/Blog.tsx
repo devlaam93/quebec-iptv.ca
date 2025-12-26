@@ -186,7 +186,9 @@ const Blog = () => {
                   {post.image ? (
                     <img 
                       src={post.image} 
-                      alt={post.imageAlt || post.title}
+                      alt={post.imageAlt || `Article: ${post.title} - Guide IPTV Quebec`}
+                      width={400}
+                      height={225}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       loading="lazy"
                     />
@@ -196,7 +198,7 @@ const Blog = () => {
                     </div>
                   )}
                   <div className="absolute top-4 left-4">
-                    <img src={logo} alt="" className="h-8 opacity-90" aria-hidden="true" />
+                    <img src={logo} alt="" width={80} height={32} className="h-8 opacity-90" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="p-6">

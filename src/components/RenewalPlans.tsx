@@ -220,7 +220,7 @@ const RenewalPlans = () => {
               ].map((payment, index) => <div key={index} className={`bg-background border border-border rounded-xl px-4 py-2.5 hover:border-primary/30 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`} style={{
               transitionDelay: `${900 + index * 50}ms`
             }}>
-                  <img src={payment.logo} alt={`Paiement par ${payment.name}`} className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                  <img src={payment.logo} alt={`Mode de paiement ${payment.name} accepté - paiement sécurisé`} width={60} height={24} loading="lazy" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
                 </div>)}
             </div>
 

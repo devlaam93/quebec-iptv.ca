@@ -237,15 +237,15 @@ const EssaiGratuit = () => {
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
                     {[
-                      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-                      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
-                      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
-                      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face'
-                    ].map((src, i) => (
+                      { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face', name: 'Marc' },
+                      { src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face', name: 'Sophie' },
+                      { src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', name: 'Pierre' },
+                      { src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', name: 'Marie' }
+                    ].map((client, i) => (
                       <img 
                         key={i} 
-                        src={src} 
-                        alt={`Client ${i + 1}`} 
+                        src={client.src} 
+                        alt={`Photo de ${client.name}, client satisfait`} 
                         className="w-9 h-9 rounded-full border-2 border-background object-cover" 
                       />
                     ))}

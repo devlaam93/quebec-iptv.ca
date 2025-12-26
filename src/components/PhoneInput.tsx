@@ -191,12 +191,28 @@ const getMaxLength = (countryId: string): number => {
   return (phoneFormats[countryId] || defaultFormat).maxLength;
 };
 
+// Country name lookup for accessible alt text
+const countryNames: Record<string, string> = {
+  CA: "Canada", US: "États-Unis", FR: "France", BE: "Belgique", CH: "Suisse",
+  GB: "Royaume-Uni", DE: "Allemagne", ES: "Espagne", IT: "Italie", PT: "Portugal",
+  NL: "Pays-Bas", LU: "Luxembourg", MA: "Maroc", DZ: "Algérie", TN: "Tunisie",
+  LY: "Libye", EG: "Égypte", SN: "Sénégal", CI: "Côte d'Ivoire", ML: "Mali",
+  BF: "Burkina Faso", NE: "Niger", TG: "Togo", BJ: "Bénin", GN: "Guinée",
+  MR: "Mauritanie", NG: "Nigeria", GH: "Ghana", CM: "Cameroun", GA: "Gabon",
+  CG: "Congo", CD: "RD Congo", TD: "Tchad", CF: "Centrafrique", KE: "Kenya",
+  TZ: "Tanzanie", UG: "Ouganda", RW: "Rwanda", ET: "Éthiopie", DJ: "Djibouti",
+  ZA: "Afrique du Sud", MG: "Madagascar", MU: "Maurice", LB: "Liban", JO: "Jordanie",
+  SY: "Syrie", IQ: "Irak", KW: "Koweït", SA: "Arabie Saoudite", AE: "Émirats Arabes Unis",
+  QA: "Qatar", BH: "Bahreïn", OM: "Oman", YE: "Yémen", PS: "Palestine", IL: "Israël",
+  TR: "Turquie", IR: "Iran"
+};
+
 // Flag component using flagcdn.com
 const CountryFlag = ({ countryId, className }: { countryId: string; className?: string }) => (
   <img
     src={`https://flagcdn.com/w40/${countryId.toLowerCase()}.png`}
     srcSet={`https://flagcdn.com/w80/${countryId.toLowerCase()}.png 2x`}
-    alt={countryId}
+    alt={`Drapeau ${countryNames[countryId] || countryId}`}
     className={cn("w-7 h-5 object-cover shadow-md border-2 border-border", className)}
     loading="lazy"
   />

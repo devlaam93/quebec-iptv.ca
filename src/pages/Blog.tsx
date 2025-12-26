@@ -196,7 +196,7 @@ const Blog = () => {
                     </div>
                   )}
                   <div className="absolute top-4 left-4">
-                    <img src={logo} alt="IPTV Quebec" className="h-8 opacity-90" />
+                    <img src={logo} alt="" className="h-8 opacity-90" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="p-6">

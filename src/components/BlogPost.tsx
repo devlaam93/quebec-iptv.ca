@@ -121,7 +121,7 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
               itemProp="image"
             />
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">
-              <img src={logo} alt="IPTV Quebec" className="h-6" />
+              <img src={logo} alt="Logo IPTV Quebec - filigrane" className="h-6" aria-hidden="true" />
             </div>
           </figure>
 

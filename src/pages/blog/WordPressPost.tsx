@@ -7,6 +7,7 @@ import StructuredData from "@/components/StructuredData";
 import ReadingProgress from "@/components/ReadingProgress";
 import BackToTop from "@/components/BackToTop";
 import SocialShare from "@/components/SocialShare";
+import BookmarkButton from "@/components/BookmarkButton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -14,6 +15,8 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
+import { useReadingList } from "@/hooks/useReadingList";
+import { toast } from "@/hooks/use-toast";
 
 const WordPressPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -21,6 +24,28 @@ const WordPressPost = () => {
   
   const { post, loading, error } = useWordPressPost(slug);
   const { posts: allPosts } = useWordPressPosts({ perPage: 100 });
+  const { addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
+  
+  const isBookmarked = post ? isInReadingList(post.slug) : false;
+
+  const handleBookmarkToggle = useCallback(() => {
+    if (!post) return;
+    if (isBookmarked) {
+      removeFromReadingList(post.slug);
+      toast({ title: "Article retiré", description: "L'article a été retiré de votre liste de lecture." });
+    } else {
+      addToReadingList({
+        slug: post.slug,
+        title: post.title,
+        excerpt: post.excerpt,
+        image: post.image,
+        category: post.category,
+        date: post.date,
+        readTime: post.readTime,
+      });
+      toast({ title: "Article enregistré", description: "L'article a été ajouté à votre liste de lecture." });
+    }
+  }, [post, isBookmarked, addToReadingList, removeFromReadingList]);
   
   // Get related articles from the same category, excluding current post
   const relatedArticles = useMemo(() => {
@@ -196,12 +221,19 @@ const WordPressPost = () => {
               </div>
             </div>
             
-            {/* Social Share Buttons */}
-            <div className="mt-6 pt-6 border-t border-border">
+            {/* Social Share & Bookmark Buttons */}
+            <div className="mt-6 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-4">
               <SocialShare 
                 url={`https://quebec-iptv.ca/blog/${post.slug}`}
                 title={post.title}
                 description={post.excerpt}
+              />
+              <BookmarkButton 
+                isBookmarked={isBookmarked}
+                onToggle={handleBookmarkToggle}
+                size="default"
+                variant="outline"
+                showLabel
               />
             </div>
           </div>

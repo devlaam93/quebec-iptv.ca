@@ -5,19 +5,67 @@ import StructuredData from "@/components/StructuredData";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowRight, Loader2, Globe, Tag } from "lucide-react";
-import { useWordPressPosts, WordPressPost } from "@/hooks/useWordPressPosts";
+import { Calendar, Clock, ArrowRight, Globe, Tag } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
+
+// Static blog posts data - no backend required
+const staticPosts = [
+  {
+    id: 1,
+    title: "Meilleur IPTV Québec 2025 : Guide Complet",
+    excerpt: "Découvrez les meilleurs services IPTV au Québec en 2025. Comparatif complet, prix, qualité et support.",
+    slug: "meilleur-iptv-quebec-2025",
+    date: "2025-01-15",
+    readTime: "8 min",
+    image: "",
+    imageAlt: "Meilleur IPTV Québec 2025",
+    category: "Guides",
+    tags: [{ id: 1, name: "IPTV", slug: "iptv" }, { id: 2, name: "Québec", slug: "quebec" }]
+  },
+  {
+    id: 2,
+    title: "Comment Installer IPTV sur Fire Stick",
+    excerpt: "Guide étape par étape pour installer et configurer IPTV sur votre Amazon Fire Stick.",
+    slug: "installer-iptv-fire-stick",
+    date: "2025-01-10",
+    readTime: "6 min",
+    image: "",
+    imageAlt: "Installer IPTV Fire Stick",
+    category: "Tutoriels",
+    tags: [{ id: 3, name: "Fire Stick", slug: "fire-stick" }, { id: 4, name: "Installation", slug: "installation" }]
+  },
+  {
+    id: 3,
+    title: "IPTV Légal au Québec : Ce Que Vous Devez Savoir",
+    excerpt: "Tout savoir sur la légalité de l'IPTV au Québec et au Canada. Informations importantes pour les utilisateurs.",
+    slug: "iptv-legal-quebec",
+    date: "2025-01-05",
+    readTime: "5 min",
+    image: "",
+    imageAlt: "IPTV Légal Québec",
+    category: "Légal",
+    tags: [{ id: 5, name: "Légal", slug: "legal" }, { id: 6, name: "Canada", slug: "canada" }]
+  }
+];
+
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  slug: string;
+  date: string;
+  readTime: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  tags: { id: number; name: string; slug: string }[];
+}
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tous");
   const [visibleArticles, setVisibleArticles] = useState(6);
   
-  // Fetch WordPress posts
-  const { data: wpData, isLoading: isLoadingWP } = useWordPressPosts(100);
-  
-  const posts = wpData?.posts || [];
-  const wpCategories = wpData?.categories || [];
+  const posts: BlogPost[] = staticPosts;
 
   // Calculate dynamic category counts
   const categories = useMemo(() => {
@@ -56,8 +104,7 @@ const Blog = () => {
     setVisibleArticles(6);
   };
 
-  const handleArticleClick = (post: WordPressPost) => {
-    // Navigate to internal blog post page
+  const handleArticleClick = (post: BlogPost) => {
     window.location.href = `/blog/${post.slug}`;
   };
 
@@ -118,14 +165,7 @@ const Blog = () => {
       {/* Articles Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          {isLoadingWP && (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin mr-3 text-primary" />
-              <span className="text-muted-foreground text-lg">Chargement des articles...</span>
-            </div>
-          )}
-          
-          {!isLoadingWP && posts.length === 0 && (
+          {posts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">Aucun article disponible pour le moment.</p>
             </div>

@@ -74,7 +74,7 @@ const FAQ = () => {
     category: "service"
   }];
   const filteredFaqs = activeCategory === "all" ? faqItems : faqItems.filter(item => item.category === activeCategory);
-  return <section className="py-16 md:py-24 bg-background relative overflow-hidden">
+  return <section id="faq" aria-labelledby="faq-heading" className="py-16 md:py-24 bg-background relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -88,7 +88,7 @@ const FAQ = () => {
             <HelpCircle className="w-4 h-4" />
             Support & Aide
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 id="faq-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Questions Fréquentes
           </h2>
           <p className="text-muted-foreground text-lg">

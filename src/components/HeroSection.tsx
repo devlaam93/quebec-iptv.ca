@@ -20,12 +20,16 @@ const useLiveViewerCount = (min: number, max: number) => {
 };
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
-  return <section className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" style={{
-    backgroundImage: `linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95)), url(${heroBackground})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed'
-  }}>
+  return <section 
+    aria-labelledby="hero-heading"
+    className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" 
+    style={{
+      backgroundImage: `linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95)), url(${heroBackground})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed'
+    }}
+  >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Glowing orbs */}
@@ -84,7 +88,7 @@ const HeroSection = () => {
           </div>
           
           {/* Main heading with gradient text */}
-          <h1 className="opacity-0 animate-fade-in-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-center w-full">
+          <h1 id="hero-heading" className="opacity-0 animate-fade-in-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-center w-full">
             <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">IPTV QUEBEC</span>
           </h1>
           

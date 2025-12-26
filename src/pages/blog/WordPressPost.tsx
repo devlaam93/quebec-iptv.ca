@@ -119,7 +119,7 @@ const WordPressPost = () => {
   }
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ReadingProgress />
+      <ReadingProgress readTime={post.readTime} />
       <SEO
         title={post.metaTitle || post.title}
         description={post.metaDescription || post.excerpt}

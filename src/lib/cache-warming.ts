@@ -206,12 +206,18 @@ export const secondaryImages: string[] = [
 
 /**
  * Route-specific images for prefetching on navigation
+ * Add route-specific images here for prefetching on hover
  */
 export const routeImages = createRouteImageMap({
   "/": criticalImages,
   "/essai-gratuit": criticalImages,
   "/tarifs": criticalImages,
-  // Add more routes as needed
+  "/liste-chaines": criticalImages,
+  "/tutorial": criticalImages,
+  "/revendeur": criticalImages,
+  "/blog": criticalImages,
+  "/contact": criticalImages,
+  "/faq": criticalImages,
 });
 
 /**

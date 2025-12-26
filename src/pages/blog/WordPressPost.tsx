@@ -23,7 +23,7 @@ const WordPressPost = () => {
   const navigate = useNavigate();
   
   const { post, loading, error } = useWordPressPost(slug);
-  const { posts: allPosts } = useWordPressPosts({ perPage: 100 });
+  const { posts: allPosts } = useWordPressPosts({ perPage: 10 });
   const { addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
   
   const isBookmarked = post ? isInReadingList(post.slug) : false;

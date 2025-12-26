@@ -197,7 +197,7 @@ const EssaiGratuit = () => {
             <div className="space-y-10 lg:space-y-8 lg:pt-4 text-center lg:text-left">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Testez notre service IPTV premium sans engagement. Accédez à{" "}
-                <strong className="text-foreground">45 000+ chaînes</strong> et{" "}
+                <a href="/liste-chaines" className="text-primary hover:underline font-semibold">45 000+ chaînes en direct</a> et{" "}
                 <strong className="text-foreground">100 000+ films</strong> en qualité 4K.
               </p>
 
@@ -253,17 +253,22 @@ const EssaiGratuit = () => {
               <div className="space-y-3 pt-4 flex flex-col items-center lg:items-start">
                 <h3 className="font-semibold text-foreground">Inclus dans l'essai:</h3>
                 <ul className="space-y-2">
-                  {[
-                    "Accès complet à toutes les chaînes",
-                    "Films et séries en HD, Full HD et 4K",
-                    "Compatible tous appareils",
-                    "Guide EPG inclus"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
-                      <span className="text-sm">{item}</span>
-                    </li>
-                  ))}
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-sm">Accès complet à toutes les chaînes</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-sm">Films et séries en HD, Full HD et 4K</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-sm">Compatible tous appareils - <a href="/tutorial" className="text-primary hover:underline">voir le guide d'installation</a></span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-sm">Guide EPG inclus</span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -393,7 +398,8 @@ const EssaiGratuit = () => {
                 <div className="mt-5 p-4 rounded-xl bg-muted/50">
                   <p className="text-xs text-muted-foreground text-center">
                     <Sparkles className="w-3.5 h-3.5 inline mr-1 text-primary" />
-                    <strong className="text-foreground">Offre Spéciale:</strong> Achetez pendant votre essai et obtenez{" "}
+                    <strong className="text-foreground">Offre Spéciale:</strong> Achetez pendant votre essai et{" "}
+                    <a href="/tarifs" className="text-primary hover:underline font-semibold">consultez nos forfaits</a> pour obtenir{" "}
                     <span className="text-destructive font-semibold">10% de réduction</span>
                   </p>
                 </div>
@@ -441,6 +447,16 @@ const EssaiGratuit = () => {
                 <p className="text-sm text-muted-foreground">{item.description}</p>
               </div>
             ))}
+          </div>
+
+          {/* Contextual Links */}
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground">
+              Des questions? Consultez notre{" "}
+              <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>{" "}
+              ou découvrez{" "}
+              <a href="/blog" className="text-primary hover:underline font-medium">nos articles sur l'IPTV</a>.
+            </p>
           </div>
         </div>
       </section>

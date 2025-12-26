@@ -59,16 +59,21 @@ const CountdownTimer = ({ variant = "default", className = "" }: CountdownTimerP
 
   if (variant === "compact") {
     return (
-      <div className={`flex items-center gap-1 font-mono text-sm ${className}`}>
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold">
+      <div 
+        className={`flex items-center gap-1 font-mono text-sm ${className}`}
+        role="timer"
+        aria-live="polite"
+        aria-label={`Temps restant: ${formatNumber(timeLeft.hours)} heures, ${formatNumber(timeLeft.minutes)} minutes, ${formatNumber(timeLeft.seconds)} secondes`}
+      >
+        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formatNumber(timeLeft.hours)}
         </span>
-        <span className="text-destructive font-bold">:</span>
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold">
+        <span className="text-destructive font-bold" aria-hidden="true">:</span>
+        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formatNumber(timeLeft.minutes)}
         </span>
-        <span className="text-destructive font-bold">:</span>
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold">
+        <span className="text-destructive font-bold" aria-hidden="true">:</span>
+        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formatNumber(timeLeft.seconds)}
         </span>
       </div>
@@ -76,23 +81,28 @@ const CountdownTimer = ({ variant = "default", className = "" }: CountdownTimerP
   }
 
   return (
-    <div className={`flex items-center justify-center gap-2 md:gap-4 ${className}`}>
+    <div 
+      className={`flex items-center justify-center gap-2 md:gap-4 ${className}`}
+      role="timer"
+      aria-live="polite"
+      aria-label={`Temps restant: ${formatNumber(timeLeft.hours)} heures, ${formatNumber(timeLeft.minutes)} minutes, ${formatNumber(timeLeft.seconds)} secondes`}
+    >
       <div className="flex flex-col items-center">
-        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center">
+        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center" aria-hidden="true">
           {formatNumber(timeLeft.hours)}
         </div>
         <span className="text-xs text-muted-foreground mt-1">Heures</span>
       </div>
-      <span className="text-2xl md:text-3xl font-bold text-destructive">:</span>
+      <span className="text-2xl md:text-3xl font-bold text-destructive" aria-hidden="true">:</span>
       <div className="flex flex-col items-center">
-        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center">
+        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center" aria-hidden="true">
           {formatNumber(timeLeft.minutes)}
         </div>
         <span className="text-xs text-muted-foreground mt-1">Minutes</span>
       </div>
-      <span className="text-2xl md:text-3xl font-bold text-destructive">:</span>
+      <span className="text-2xl md:text-3xl font-bold text-destructive" aria-hidden="true">:</span>
       <div className="flex flex-col items-center">
-        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center">
+        <div className="bg-destructive text-destructive-foreground text-2xl md:text-3xl font-bold px-3 py-2 rounded-lg min-w-[60px] text-center" aria-hidden="true">
           {formatNumber(timeLeft.seconds)}
         </div>
         <span className="text-xs text-muted-foreground mt-1">Secondes</span>

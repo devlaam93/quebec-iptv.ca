@@ -152,7 +152,7 @@ const HeroSection = () => {
                 <Zap className="w-4 h-4" aria-hidden="true" />
                 S'abonner Maintenant
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" aria-hidden="true" />
             </Button>
             <Button variant="outline-hero" size="lg" className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group" asChild>
               <Link to="/essai-gratuit" className="flex items-center gap-2">

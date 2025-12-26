@@ -137,7 +137,7 @@ const EssaiGratuit = () => {
   return (
     <PageLayout heroSection>
       <SEO
-        title="Essai Gratuit IPTV 24h - Testez Sans Engagement"
+        title="Essai Gratuit IPTV 24h | Testez Sans Engagement"
         description="Obtenez votre essai gratuit IPTV de 24 heures. Accès complet à 45 000+ chaînes et 100 000+ films en 4K. Activation instantanée, sans carte bancaire."
         path="/essai-gratuit"
         keywords={["essai gratuit IPTV", "test IPTV", "IPTV gratuit", "démo IPTV"]}

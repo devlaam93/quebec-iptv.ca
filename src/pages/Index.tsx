@@ -19,7 +19,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="IPTV Québec - Meilleur Service IPTV au Canada | 45 000+ Chaînes"
+        title="IPTV Québec | 45 000+ Chaînes TV en 4K - Essai Gratuit"
         description="IPTV Québec offre le meilleur service IPTV au Canada avec 45 000+ chaînes, 140 000+ films et séries en 4K. Essai gratuit 24h. Support 24/7."
         path="/"
         keywords={["IPTV premium", "streaming 4K", "chaînes canadiennes", "VOD", "sports en direct"]}

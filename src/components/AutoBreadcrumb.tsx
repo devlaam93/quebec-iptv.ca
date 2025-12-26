@@ -67,35 +67,11 @@ const AutoBreadcrumb = () => {
     return null;
   }
 
-  // Generate JSON-LD structured data
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-  
-  const jsonLdData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Accueil",
-        "item": baseUrl
-      },
-      ...pathnames.map((segment, index) => ({
-        "@type": "ListItem",
-        "position": index + 2,
-        "name": getLabel(segment),
-        "item": `${baseUrl}/${pathnames.slice(0, index + 1).join("/")}`
-      }))
-    ]
-  };
+  // Note: JSON-LD breadcrumb structured data is handled by StructuredData component on each page
+  // to avoid duplicate schemas
 
   return (
     <>
-      {/* JSON-LD Structured Data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
       
       <Breadcrumb className="mb-6">
         <BreadcrumbList>

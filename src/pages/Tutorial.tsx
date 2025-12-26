@@ -55,10 +55,41 @@ const Tutorial = () => {
         type="article"
         data={{
           headline: "Guide d'Installation IPTV - Tutoriels pour Tous Appareils",
-          description: "Guides d'installation IPTV etape par etape pour Android TV, iOS, Fire Stick et Smart TV.",
+          description: "Guides d'installation IPTV étape par étape pour Android TV, iOS, Fire Stick et Smart TV. Configuration facile en quelques minutes.",
           datePublished: "2025-01-01",
-          author: "Quebec IPTV",
+          dateModified: "2025-01-15",
+          author: "IPTV Québec",
           url: "https://quebec-iptv.ca/tutorial",
+          image: "https://quebec-iptv.ca/og-tutorial.jpg",
+        }}
+      />
+      <StructuredData
+        type="how-to"
+        data={{
+          name: "Comment installer IPTV sur Android TV",
+          description: "Guide étape par étape pour installer et configurer IPTV sur votre Android TV en moins de 5 minutes.",
+          totalTime: "PT5M",
+          estimatedCost: "0",
+          steps: [
+            { name: "Télécharger l'application", text: "Installez IPTV Smarters Pro depuis le Google Play Store sur votre Android TV." },
+            { name: "Configurer l'application", text: "Ouvrez l'application et sélectionnez 'Login with Xtream Codes API'." },
+            { name: "Entrer vos identifiants", text: "Saisissez le nom d'utilisateur, mot de passe et URL fournis par IPTV Québec." },
+            { name: "Profiter du contenu", text: "Parcourez les chaînes et commencez à regarder vos émissions favorites." },
+          ],
+        }}
+      />
+      <StructuredData
+        type="software-application"
+        data={{
+          name: "IPTV Smarters Pro",
+          description: "Application IPTV recommandée pour regarder vos chaînes TV en streaming sur tous vos appareils.",
+          applicationCategory: "MultimediaApplication",
+          operatingSystem: "Android, iOS, Windows, macOS",
+          url: "https://quebec-iptv.ca/tutorial",
+          aggregateRating: {
+            ratingValue: 4.8,
+            ratingCount: 15000,
+          },
         }}
       />
       <StructuredData

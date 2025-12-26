@@ -144,14 +144,30 @@ const EssaiGratuit = () => {
         image="/og-essai-gratuit.jpg"
       />
       <StructuredData
-        type="product"
+        type="offer"
         data={{
-          name: "Essai Gratuit IPTV 24h",
-          description: "Essai gratuit IPTV de 24 heures avec acces complet a 45 000+ chaines.",
+          name: "Essai Gratuit IPTV 24 Heures",
+          description: "Essai gratuit IPTV de 24 heures avec accès complet à 45 000+ chaînes TV en direct, 100 000+ films et séries en qualité 4K. Sans engagement, sans carte bancaire.",
           price: "0",
-          currency: "CAD",
+          priceCurrency: "CAD",
           availability: "InStock",
           url: "https://quebec-iptv.ca/essai-gratuit",
+          seller: "IPTV Québec",
+        }}
+      />
+      <StructuredData
+        type="service"
+        data={{
+          name: "Essai Gratuit IPTV Québec",
+          description: "Service d'essai gratuit IPTV de 24 heures. Accès complet à toutes les chaînes TV, films et séries en streaming 4K.",
+          provider: "IPTV Québec",
+          url: "https://quebec-iptv.ca/essai-gratuit",
+          areaServed: "Canada",
+          serviceType: "IPTV Free Trial",
+          offers: {
+            price: "0",
+            priceCurrency: "CAD",
+          },
         }}
       />
       <StructuredData

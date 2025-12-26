@@ -106,19 +106,34 @@ const ListeChaines = () => {
       <StructuredData
         type="service"
         data={{
-          name: "Catalogue IPTV Quebec",
-          description: "45 000+ chaines en direct, 140 000+ films et series en qualite 4K.",
-          provider: "Quebec IPTV",
+          name: "Catalogue IPTV Québec - 45 000+ Chaînes",
+          description: "Le plus grand catalogue IPTV au Québec avec 45 000+ chaînes en direct, 140 000+ films et séries en qualité 4K. Sports premium, chaînes québécoises et internationales.",
+          provider: "IPTV Québec",
           url: "https://quebec-iptv.ca/liste-chaines",
           areaServed: "Canada",
-          serviceType: "IPTV Streaming Service",
+          serviceType: "IPTV Streaming Catalog",
+        }}
+      />
+      <StructuredData
+        type="item-list"
+        data={{
+          name: "Catégories de Contenu IPTV",
+          description: "Toutes les catégories de contenu disponibles dans notre catalogue IPTV",
+          itemListElement: [
+            { name: "Sports Premium", description: "Hockey, Football, Soccer, Basketball en direct" },
+            { name: "Films & Séries", description: "Dernières sorties cinéma et séries exclusives en 4K" },
+            { name: "Chaînes Québécoises", description: "TVA, Radio-Canada, V, Télé-Québec, Noovo" },
+            { name: "Divertissement", description: "Discovery, History, HGTV, National Geographic" },
+            { name: "Jeunesse", description: "Disney, Nickelodeon, Cartoon Network, Télétoon" },
+            { name: "International", description: "Chaînes d'Europe, Moyen-Orient, Asie" },
+          ],
         }}
       />
       <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },
-          { name: "Liste des Chaines", url: "https://quebec-iptv.ca/liste-chaines" },
+          { name: "Liste des Chaînes", url: "https://quebec-iptv.ca/liste-chaines" },
         ]}
       />
       {/* Hero Section */}

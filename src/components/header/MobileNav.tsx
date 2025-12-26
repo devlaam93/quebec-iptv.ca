@@ -32,7 +32,7 @@ const MobileNav = ({ open, onOpenChange }: MobileNavProps) => {
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="lg:hidden relative min-w-[48px] min-h-[48px]">
           <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle menu</span>
+          <span className="sr-only">Ouvrir le menu de navigation</span>
         </Button>
       </SheetTrigger>
       <SheetContent 
@@ -58,7 +58,7 @@ const MobileNav = ({ open, onOpenChange }: MobileNavProps) => {
                 size="icon"
                 onClick={toggleTheme}
                 className="rounded-full bg-muted/50 hover:bg-muted transition-colors min-w-[48px] min-h-[48px]"
-                aria-label="Toggle theme"
+                aria-label="Basculer le thème clair/sombre"
               >
                 {theme === "dark" ? (
                   <Sun className="h-5 w-5 text-yellow-500" />

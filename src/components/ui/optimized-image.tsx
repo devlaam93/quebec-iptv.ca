@@ -1,4 +1,4 @@
-import { useState, ImgHTMLAttributes, useMemo } from "react";
+import { useState, ImgHTMLAttributes, useMemo, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -40,6 +40,19 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
    * Use with vite-imagetools: import img640 from './img.jpg?w=640&format=webp'
    */
   webpSrcSet?: ResponsiveSrc[];
+  /**
+   * Low-quality placeholder image for blur-up effect
+   * Use with vite-imagetools: import placeholder from './img.jpg?w=20&blur=10'
+   */
+  placeholderSrc?: string;
+  /**
+   * Enable blur-up placeholder effect (auto-generates if placeholderSrc not provided)
+   */
+  blurUp?: boolean;
+  /**
+   * Placeholder blur amount in pixels (default: 20)
+   */
+  blurAmount?: number;
 }
 
 /**
@@ -101,9 +114,28 @@ const generateExternalSrcSet = (
 };
 
 /**
- * OptimizedImage component with WebP support, responsive srcset, and fallbacks
+ * Generate a tiny placeholder URL for external services
+ */
+const generatePlaceholderUrl = (url: string): string | null => {
+  if (url.includes('images.unsplash.com')) {
+    const baseUrl = url.split('?')[0];
+    return `${baseUrl}?w=20&blur=50&q=10`;
+  }
+  if (url.includes('cloudinary.com')) {
+    return url.replace('/upload/', '/upload/w_20,e_blur:1000,q_10/');
+  }
+  if (url.includes('imgix.net')) {
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}w=20&blur=50&q=10`;
+  }
+  return null;
+};
+
+/**
+ * OptimizedImage component with WebP support, blur-up placeholders, and responsive srcset
  * 
  * Features:
+ * - Blur-up placeholder effect for smooth loading
  * - Responsive srcset for different viewport sizes
  * - WebP format with automatic fallback
  * - Lazy loading by default (use priority={true} for above-the-fold)
@@ -112,34 +144,25 @@ const generateExternalSrcSet = (
  * - Auto-generates srcset for Unsplash, Cloudinary, Imgix
  * - Works with vite-imagetools for build-time optimization
  * 
- * @example Basic usage
+ * @example With blur-up placeholder
  * ```tsx
- * <OptimizedImage src={heroImage} alt="Hero" width={1200} height={600} />
- * ```
- * 
- * @example With responsive srcset (vite-imagetools)
- * ```tsx
- * import img640 from '@/assets/hero.jpg?w=640'
- * import img1024 from '@/assets/hero.jpg?w=1024'
- * import img1536 from '@/assets/hero.jpg?w=1536'
- * import img640Webp from '@/assets/hero.jpg?w=640&format=webp'
- * import img1024Webp from '@/assets/hero.jpg?w=1024&format=webp'
- * import img1536Webp from '@/assets/hero.jpg?w=1536&format=webp'
+ * import heroPlaceholder from '@/assets/hero.jpg?w=20&blur=10'
  * 
  * <OptimizedImage 
- *   src={img1536}
- *   srcSet={[
- *     { src: img640, width: 640 },
- *     { src: img1024, width: 1024 },
- *     { src: img1536, width: 1536 },
- *   ]}
- *   webpSrcSet={[
- *     { src: img640Webp, width: 640 },
- *     { src: img1024Webp, width: 1024 },
- *     { src: img1536Webp, width: 1536 },
- *   ]}
- *   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
- *   alt="Hero image"
+ *   src={heroImage} 
+ *   placeholderSrc={heroPlaceholder}
+ *   alt="Hero" 
+ *   width={1200} 
+ *   height={600} 
+ * />
+ * ```
+ * 
+ * @example Auto blur-up for external images
+ * ```tsx
+ * <OptimizedImage 
+ *   src="https://images.unsplash.com/photo-xxx" 
+ *   blurUp
+ *   alt="Hero" 
  * />
  * ```
  */
@@ -155,14 +178,19 @@ const OptimizedImage = ({
   sizes,
   srcSet,
   webpSrcSet,
+  placeholderSrc,
+  blurUp = false,
+  blurAmount = 20,
   className,
   ...props
 }: OptimizedImageProps) => {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  // Generate srcset strings
-  const { srcSetString, webpSrcSetString, webpUrl } = useMemo(() => {
+  // Generate srcset strings and placeholder
+  const { srcSetString, webpSrcSetString, webpUrl, placeholderUrl } = useMemo(() => {
     // If explicit srcSet provided, use it
     const srcSetStr = srcSet ? generateSrcSetString(srcSet) : null;
     const webpSrcSetStr = webpSrcSet ? generateSrcSetString(webpSrcSet) : null;
@@ -185,12 +213,32 @@ const OptimizedImage = ({
       }
     }
 
+    // Generate placeholder URL
+    const placeholder = placeholderSrc || (blurUp ? generatePlaceholderUrl(src) : null);
+
     return {
       srcSetString: srcSetStr || externalSrcSet,
       webpSrcSetString: webpSrcSetStr || externalWebpSrcSet,
       webpUrl: webpUrlResult,
+      placeholderUrl: placeholder,
     };
-  }, [src, srcSet, webpSrcSet, webpSrc]);
+  }, [src, srcSet, webpSrcSet, webpSrc, placeholderSrc, blurUp]);
+
+  // Check if image is already cached/loaded
+  useEffect(() => {
+    if (imgRef.current?.complete && imgRef.current?.naturalHeight > 0) {
+      setIsLoaded(true);
+      setShowPlaceholder(false);
+    }
+  }, []);
+
+  // Hide placeholder after load transition
+  useEffect(() => {
+    if (isLoaded) {
+      const timer = setTimeout(() => setShowPlaceholder(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded]);
 
   const displaySrc = hasError && fallbackSrc ? fallbackSrc : src;
 
@@ -204,14 +252,31 @@ const OptimizedImage = ({
     setIsLoaded(true);
   };
 
+  const containerStyles: React.CSSProperties = {
+    position: 'relative',
+    overflow: 'hidden',
+    ...(aspectRatio ? { aspectRatio } : {}),
+  };
+
+  const placeholderStyles: React.CSSProperties = {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    filter: `blur(${blurAmount}px)`,
+    transform: 'scale(1.1)', // Prevent blur edge artifacts
+    transition: 'opacity 0.3s ease-out',
+    opacity: isLoaded ? 0 : 1,
+    zIndex: 1,
+  };
+
   const imageStyles = cn(
     "transition-opacity duration-300",
-    !isLoaded && "opacity-0",
+    !isLoaded && placeholderUrl && "opacity-0",
     isLoaded && "opacity-100",
     className
   );
-
-  const containerStyles = aspectRatio ? { aspectRatio } : undefined;
 
   // Determine sizes attribute
   const sizesAttr = sizes || "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
@@ -235,48 +300,83 @@ const OptimizedImage = ({
   const hasWebpSupport = webpUrl || webpSrcSetString;
   const hasSrcSet = srcSetString || webpSrcSetString;
 
-  if ((hasWebpSupport || hasSrcSet) && !hasError) {
+  const renderImage = () => {
+    if ((hasWebpSupport || hasSrcSet) && !hasError) {
+      return (
+        <picture>
+          {/* WebP sources (highest priority) */}
+          {webpSrcSetString && (
+            <source 
+              srcSet={webpSrcSetString} 
+              sizes={sizesAttr}
+              type="image/webp" 
+            />
+          )}
+          {webpUrl && !webpSrcSetString && (
+            <source srcSet={webpUrl} type="image/webp" />
+          )}
+          
+          {/* Original format sources */}
+          {srcSetString && (
+            <source 
+              srcSet={srcSetString} 
+              sizes={sizesAttr}
+              type={getImageType(displaySrc)} 
+            />
+          )}
+          
+          {/* Fallback img element */}
+          <img 
+            ref={imgRef}
+            src={displaySrc} 
+            srcSet={srcSetString || undefined}
+            {...imgProps} 
+          />
+        </picture>
+      );
+    }
+
+    // Simple img fallback
     return (
-      <picture style={containerStyles}>
-        {/* WebP sources (highest priority) */}
-        {webpSrcSetString && (
-          <source 
-            srcSet={webpSrcSetString} 
-            sizes={sizesAttr}
-            type="image/webp" 
+      <img
+        ref={imgRef}
+        src={displaySrc}
+        {...imgProps}
+      />
+    );
+  };
+
+  // Render with blur-up placeholder
+  if (placeholderUrl && !hasError) {
+    return (
+      <div style={containerStyles} className={cn("inline-block", className)}>
+        {/* Blurred placeholder */}
+        {showPlaceholder && (
+          <img
+            src={placeholderUrl}
+            alt=""
+            aria-hidden="true"
+            style={placeholderStyles}
           />
         )}
-        {webpUrl && !webpSrcSetString && (
-          <source srcSet={webpUrl} type="image/webp" />
-        )}
-        
-        {/* Original format sources */}
-        {srcSetString && (
-          <source 
-            srcSet={srcSetString} 
-            sizes={sizesAttr}
-            type={getImageType(displaySrc)} 
-          />
-        )}
-        
-        {/* Fallback img element */}
-        <img 
-          src={displaySrc} 
-          srcSet={srcSetString || undefined}
-          {...imgProps} 
-        />
-      </picture>
+        {/* Main image */}
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          {renderImage()}
+        </div>
+      </div>
     );
   }
 
-  // Simple img fallback
-  return (
-    <img
-      src={displaySrc}
-      style={containerStyles}
-      {...imgProps}
-    />
-  );
+  // Render without placeholder
+  if (aspectRatio) {
+    return (
+      <div style={{ aspectRatio }}>
+        {renderImage()}
+      </div>
+    );
+  }
+
+  return renderImage();
 };
 
 // Helper to determine image MIME type
@@ -298,5 +398,5 @@ const getImageType = (src: string): string => {
   }
 };
 
-export { OptimizedImage, generateSrcSetString, DEFAULT_WIDTHS };
+export { OptimizedImage, generateSrcSetString, generatePlaceholderUrl, DEFAULT_WIDTHS };
 export type { OptimizedImageProps, ResponsiveSrc };

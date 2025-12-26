@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowLeft, Share2, Tag } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 
@@ -215,12 +216,12 @@ const WordPressPost = () => {
           {/* Featured Image */}
           {post.image && (
             <div className="relative mb-12 rounded-xl overflow-hidden">
-              <img 
+              <OptimizedImage 
                 src={post.image} 
                 alt={post.imageAlt || `Image de l'article: ${post.title} - Guide complet IPTV Quebec`}
                 width={1200}
                 height={630}
-                loading="eager"
+                priority
                 className="w-full h-auto object-cover"
               />
               <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">

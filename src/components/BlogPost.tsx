@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
@@ -114,14 +115,13 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
 
           {/* Featured Image with Watermark */}
           <figure className="relative mb-12 rounded-xl overflow-hidden">
-            <img 
+            <OptimizedImage 
               src={image} 
               alt={`Image principale de l'article: ${title} - Guide IPTV Quebec`}
               width={1200}
               height={630}
-              loading="eager"
+              priority
               className="w-full h-auto object-cover"
-              itemProp="image"
             />
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">
               <img src={logo} alt="" width={60} height={24} className="h-6" aria-hidden="true" />

@@ -23,6 +23,7 @@ const Index = () => {
         description="Service IPTV premium au Québec : 45 000+ chaînes en direct, 140 000+ films et séries en 4K. Essai gratuit 24h, support 24/7. Commencez maintenant!"
         path="/"
         keywords={["IPTV premium", "streaming 4K", "chaînes canadiennes", "VOD", "sports en direct"]}
+        image="/og-image.jpg"
       />
       <StructuredData
         type="organization"

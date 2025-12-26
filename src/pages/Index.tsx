@@ -10,7 +10,6 @@ import FAQ from "@/components/FAQ";
 import LatestArticles from "@/components/LatestArticles";
 import Footer from "@/components/Footer";
 
-import WhatsAppButton from "@/components/WhatsAppButton";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
@@ -166,8 +165,6 @@ const Index = () => {
         <FAQ />
       </main>
       <Footer />
-      
-      <WhatsAppButton />
     </div>
   );
 };

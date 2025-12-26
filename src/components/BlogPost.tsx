@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
@@ -35,9 +36,9 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
     return new Date().toISOString().split('T')[0];
   };
 
-  const articleUrl = slug 
-    ? `https://quebec-iptv.ca/blog/${slug}`
-    : typeof window !== 'undefined' ? window.location.href : 'https://quebec-iptv.ca/blog';
+  const articleSlug = slug || (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : '');
+  const articleUrl = `https://quebec-iptv.ca/blog/${articleSlug}`;
+  const articlePath = `/blog/${articleSlug}`;
 
   const imageUrl = typeof image === 'string' && image.startsWith('http') 
     ? image 
@@ -45,6 +46,14 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title={`${title} | IPTV Québec`}
+        description={excerpt}
+        path={articlePath}
+        image={imageUrl}
+        type="article"
+        keywords={[category, "IPTV", "Québec", "streaming"]}
+      />
       <StructuredData 
         type="article" 
         data={{

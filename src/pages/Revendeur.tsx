@@ -17,6 +17,29 @@ const Revendeur = () => {
         image="/og-revendeur.jpg"
       />
       <StructuredData
+        type="service"
+        data={{
+          name: "Programme Revendeur IPTV Québec",
+          description: "Programme de revente IPTV avec marges jusqu'à 40%, panel de gestion inclus et support dédié 24/7. Rejoignez notre réseau de revendeurs.",
+          provider: "IPTV Québec",
+          url: "https://quebec-iptv.ca/revendeur",
+          areaServed: "Canada",
+          serviceType: "IPTV Reseller Program",
+        }}
+      />
+      <StructuredData
+        type="item-list"
+        data={{
+          name: "Forfaits Revendeur IPTV",
+          description: "Nos forfaits de crédits pour revendeurs IPTV",
+          itemListElement: [
+            { name: "Starter - 50 Crédits", description: "250$ CAD - Économie de 20%" },
+            { name: "Business - 150 Crédits", description: "675$ CAD - Économie de 30%" },
+            { name: "Enterprise - 500 Crédits", description: "2000$ CAD - Économie de 40%" },
+          ],
+        }}
+      />
+      <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },

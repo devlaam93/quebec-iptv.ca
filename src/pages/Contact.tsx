@@ -18,11 +18,30 @@ const Contact = () => {
       <StructuredData
         type="local-business"
         data={{
-          name: "Quebec IPTV",
+          name: "IPTV Québec - Support Client",
           url: "https://quebec-iptv.ca",
           logo: "https://quebec-iptv.ca/og-image.jpg",
-          description: "Service IPTV premium au Quebec avec support 24/7.",
+          description: "Service client IPTV premium au Québec avec support 24/7. Contactez-nous par WhatsApp, email ou chat en direct.",
           telephone: "+1-514-900-0626",
+          contactEmail: "support@quebeciptv.ca",
+          priceRange: "$$",
+          address: {
+            addressLocality: "Montréal",
+            addressRegion: "QC",
+            addressCountry: "CA",
+          },
+          openingHours: ["Mo-Su 00:00-23:59"],
+          areaServed: ["Canada", "France", "Belgique", "Suisse"],
+        }}
+      />
+      <StructuredData
+        type="organization"
+        data={{
+          name: "IPTV Québec",
+          url: "https://quebec-iptv.ca",
+          logo: "https://quebec-iptv.ca/og-image.jpg",
+          description: "Fournisseur de services IPTV premium au Québec. Support technique disponible 24/7.",
+          contactEmail: "support@quebeciptv.ca",
         }}
       />
       <StructuredData

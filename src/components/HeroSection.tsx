@@ -165,7 +165,7 @@ const HeroSection = () => {
           {/* Trust indicators */}
           <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row items-center gap-4 pt-4">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1" aria-label="Note de 4.9 sur 5 étoiles">
+              <div className="flex items-center gap-1" role="img" aria-label="Note de 4.9 sur 5 étoiles">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-primary text-primary" aria-hidden="true" />
                 ))}

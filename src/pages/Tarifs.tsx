@@ -171,6 +171,30 @@ const Tarifs = () => {
         }}
       />
       <StructuredData
+        type="product"
+        data={{
+          name: "IPTV Legacy - Abonnement 12 Mois",
+          description: "Forfait IPTV avec +15,000 chaînes TV, +50,000 VOD, sports inclus (NBA, NFL, NHL), qualité UHD/FHD/HD, 2 connexions simultanées et support 24/7.",
+          price: "139",
+          currency: "CAD",
+          availability: "InStock",
+          url: "https://quebec-iptv.ca/tarifs",
+          image: "https://quebec-iptv.ca/og-image.jpg",
+        }}
+      />
+      <StructuredData
+        type="product"
+        data={{
+          name: "IPTV Advanced - Abonnement 12 Mois",
+          description: "Forfait IPTV Premium avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium (NBA, NFL, NHL, UFC, F1, PPV), qualité 8K/UHD, 4 connexions simultanées, VPN intégré et support VIP prioritaire.",
+          price: "189",
+          currency: "CAD",
+          availability: "InStock",
+          url: "https://quebec-iptv.ca/tarifs",
+          image: "https://quebec-iptv.ca/og-image.jpg",
+        }}
+      />
+      <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },

@@ -91,12 +91,15 @@ export default function SEO({
     updateMeta('meta[property="og:locale"]', "fr_CA");
     updateMeta('meta[property="og:site_name"]', "Quebec IPTV");
 
-    // Twitter
+    // Twitter Card (Large Image)
     updateMeta('meta[name="twitter:card"]', "summary_large_image");
+    updateMeta('meta[name="twitter:site"]', "@QuebecIPTV");
+    updateMeta('meta[name="twitter:creator"]', "@QuebecIPTV");
     updateMeta('meta[name="twitter:url"]', seo.url);
     updateMeta('meta[name="twitter:title"]', seo.title);
     updateMeta('meta[name="twitter:description"]', seo.description);
     updateMeta('meta[name="twitter:image"]', seo.image);
+    updateMeta('meta[name="twitter:image:alt"]', seo.title);
 
     // Canonical URL
     updateLink("canonical", seo.url);

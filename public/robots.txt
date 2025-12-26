@@ -1,23 +1,72 @@
-# Allow all web crawlers
+# Robots.txt for IPTV Quebec
+# https://quebec-iptv.ca
+
+# Default rules for all crawlers
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*
+Crawl-delay: 1
 
-# Search engine bots
+# Google Search Bot - Priority crawler
 User-agent: Googlebot
 Allow: /
+Disallow: /api/
 
+User-agent: Googlebot-Image
+Allow: /og-*.jpg
+Allow: /assets/
+
+# Bing Search Bot
 User-agent: Bingbot
 Allow: /
+Disallow: /api/
+Crawl-delay: 1
 
-# Social media bots
+# Yahoo Search Bot
+User-agent: Slurp
+Allow: /
+Disallow: /api/
+Crawl-delay: 2
+
+# DuckDuckGo Bot
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+
+# Yandex Bot
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Crawl-delay: 2
+
+# Baidu Bot
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Crawl-delay: 3
+
+# Social Media Bots - Full access for rich previews
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-# AI bots for enhanced visibility
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# AI Bots - Allow for enhanced visibility
 User-agent: GPTBot
 Allow: /
 
@@ -36,5 +85,27 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
+# Block bad bots and scrapers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
 # Sitemap location
 Sitemap: https://quebec-iptv.ca/sitemap.xml
+
+# Host directive
+Host: https://quebec-iptv.ca

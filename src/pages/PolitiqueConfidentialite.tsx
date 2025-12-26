@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Lock, Eye, Database, UserCheck, Mail } from "lucide-react";
 
@@ -11,6 +12,13 @@ const PolitiqueConfidentialite = () => {
         description="Découvrez comment IPTV Québec protège vos données personnelles. Notre politique de confidentialité détaille la collecte, l'utilisation et la protection de vos informations."
         path="/politique-confidentialite"
         keywords={["confidentialité", "protection données", "vie privée"]}
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Politique de Confidentialite", url: "https://quebec-iptv.ca/politique-confidentialite" },
+        ]}
       />
       {/* Hero Section */}
       <div className="text-center mb-12 sm:mb-16">

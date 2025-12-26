@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent } from "@/components/ui/card";
 import { CreditCard, Shield, DollarSign } from "lucide-react";
 
@@ -11,6 +12,13 @@ const ConditionsPaiement = () => {
         description="Méthodes de paiement acceptées par IPTV Québec : Visa, Mastercard, PayPal, Interac, crypto. Paiement sécurisé et conditions de facturation."
         path="/conditions-paiement"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Conditions de Paiement", url: "https://quebec-iptv.ca/conditions-paiement" },
+        ]}
       />
       {/* Hero Section */}
       <section className="bg-gradient-hero border-b border-border/50 pt-36 sm:pt-40 pb-16 sm:pb-20">

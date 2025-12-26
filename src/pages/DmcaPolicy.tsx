@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, FileText, AlertCircle } from "lucide-react";
 
@@ -11,6 +12,13 @@ const DmcaPolicy = () => {
         description="Politique DMCA d'IPTV Québec. Procédure de notification pour les droits d'auteur et respect de la propriété intellectuelle."
         path="/dmca-policy"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Politique DMCA", url: "https://quebec-iptv.ca/dmca-policy" },
+        ]}
       />
       {/* Hero Section */}
       <section className="bg-gradient-hero border-b border-border/50 pt-36 sm:pt-40 pb-16 sm:pb-20">

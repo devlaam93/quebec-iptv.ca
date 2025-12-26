@@ -106,6 +106,24 @@ const FAQPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Contextual Links Section */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-4">
+            <h3 className="text-xl font-bold">Explorez nos ressources</h3>
+            <p className="text-muted-foreground">
+              Découvrez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre liste complète de chaînes</a>, 
+              consultez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits et tarifs</a>, 
+              ou lisez <a href="/blog" className="text-primary hover:underline font-medium">nos articles experts sur l'IPTV</a>.
+            </p>
+            <p className="text-muted-foreground">
+              Prêt à essayer? <a href="/essai-gratuit" className="text-primary hover:underline font-semibold">Demandez votre essai gratuit de 24 heures</a> 
+              {" "}et testez notre service sans engagement.
+            </p>
+          </div>
+        </div>
+      </section>
     </PageLayout>
   );
 };

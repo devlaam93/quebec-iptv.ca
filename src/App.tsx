@@ -23,6 +23,7 @@ import AvisNonResponsabilite from "./pages/AvisNonResponsabilite";
 import ConditionsPaiement from "./pages/ConditionsPaiement";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollToTop from "./components/ScrollToTop";
+import RouteAnnouncer from "./components/RouteAnnouncer";
 import FAQPage from "./pages/FAQPage";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <RouteAnnouncer />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/essai-gratuit" element={<EssaiGratuit />} />

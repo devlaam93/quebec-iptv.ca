@@ -18,7 +18,7 @@ const Blog = () => {
   const [visibleArticles, setVisibleArticles] = useState(6);
   const [showReadingList, setShowReadingList] = useState(false);
   
-  const { posts, loading, error } = useWordPressPosts({ perPage: 100 });
+  const { posts, loading, error } = useWordPressPosts({ perPage: 20 });
   const { readingList, addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
 
   const handleBookmarkToggle = useCallback((post: WordPressPost) => {

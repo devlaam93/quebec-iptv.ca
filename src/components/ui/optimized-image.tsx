@@ -1,4 +1,4 @@
-import { useState, ImgHTMLAttributes, useMemo, useRef, useEffect } from "react";
+import { useState, ImgHTMLAttributes, useMemo, useRef, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -53,12 +53,72 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
    * Placeholder blur amount in pixels (default: 20)
    */
   blurAmount?: number;
+  /**
+   * Root margin for intersection observer (default: "200px")
+   * How far before the image enters viewport to start loading
+   */
+  rootMargin?: string;
+  /**
+   * Threshold for intersection observer (default: 0.01)
+   */
+  threshold?: number;
 }
 
 /**
  * Default breakpoint widths for responsive images
  */
 const DEFAULT_WIDTHS = [640, 768, 1024, 1280, 1536];
+
+/**
+ * Custom hook for intersection observer-based lazy loading
+ */
+const useIntersectionObserver = (
+  enabled: boolean,
+  rootMargin: string = "200px",
+  threshold: number = 0.01
+): [React.RefObject<HTMLDivElement>, boolean] => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isIntersecting, setIsIntersecting] = useState(!enabled);
+
+  useEffect(() => {
+    if (!enabled) {
+      setIsIntersecting(true);
+      return;
+    }
+
+    const element = containerRef.current;
+    if (!element) return;
+
+    // Check if IntersectionObserver is supported
+    if (!('IntersectionObserver' in window)) {
+      setIsIntersecting(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsIntersecting(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin,
+        threshold,
+      }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [enabled, rootMargin, threshold]);
+
+  return [containerRef, isIntersecting];
+};
 
 /**
  * Generate srcset string from responsive source array
@@ -132,37 +192,33 @@ const generatePlaceholderUrl = (url: string): string | null => {
 };
 
 /**
- * OptimizedImage component with WebP support, blur-up placeholders, and responsive srcset
+ * OptimizedImage component with intersection observer, WebP support, blur-up placeholders
  * 
  * Features:
+ * - Intersection observer-based lazy loading (starts loading 200px before viewport)
  * - Blur-up placeholder effect for smooth loading
  * - Responsive srcset for different viewport sizes
  * - WebP format with automatic fallback
- * - Lazy loading by default (use priority={true} for above-the-fold)
  * - Error handling with optional fallback image
  * - Prevents layout shift with width/height or aspectRatio
  * - Auto-generates srcset for Unsplash, Cloudinary, Imgix
  * - Works with vite-imagetools for build-time optimization
  * 
- * @example With blur-up placeholder
+ * @example With intersection observer lazy loading
  * ```tsx
- * import heroPlaceholder from '@/assets/hero.jpg?w=20&blur=10'
- * 
  * <OptimizedImage 
  *   src={heroImage} 
- *   placeholderSrc={heroPlaceholder}
  *   alt="Hero" 
- *   width={1200} 
- *   height={600} 
+ *   rootMargin="300px"  // Start loading 300px before viewport
  * />
  * ```
  * 
- * @example Auto blur-up for external images
+ * @example Priority image (loads immediately, no observer)
  * ```tsx
  * <OptimizedImage 
- *   src="https://images.unsplash.com/photo-xxx" 
- *   blurUp
+ *   src={heroImage} 
  *   alt="Hero" 
+ *   priority  // Skips intersection observer
  * />
  * ```
  */
@@ -181,6 +237,8 @@ const OptimizedImage = ({
   placeholderSrc,
   blurUp = false,
   blurAmount = 20,
+  rootMargin = "200px",
+  threshold = 0.01,
   className,
   ...props
 }: OptimizedImageProps) => {
@@ -188,6 +246,9 @@ const OptimizedImage = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [showPlaceholder, setShowPlaceholder] = useState(true);
   const imgRef = useRef<HTMLImageElement>(null);
+  
+  // Use intersection observer for non-priority images
+  const [containerRef, isInViewport] = useIntersectionObserver(!priority, rootMargin, threshold);
 
   // Generate srcset strings and placeholder
   const { srcSetString, webpSrcSetString, webpUrl, placeholderUrl } = useMemo(() => {
@@ -230,7 +291,7 @@ const OptimizedImage = ({
       setIsLoaded(true);
       setShowPlaceholder(false);
     }
-  }, []);
+  }, [isInViewport]);
 
   // Hide placeholder after load transition
   useEffect(() => {
@@ -242,20 +303,22 @@ const OptimizedImage = ({
 
   const displaySrc = hasError && fallbackSrc ? fallbackSrc : src;
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
     if (!hasError) {
       setHasError(true);
     }
-  };
+  }, [hasError]);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setIsLoaded(true);
-  };
+  }, []);
 
   const containerStyles: React.CSSProperties = {
     position: 'relative',
     overflow: 'hidden',
     ...(aspectRatio ? { aspectRatio } : {}),
+    ...(width ? { width } : {}),
+    ...(height && !aspectRatio ? { height } : {}),
   };
 
   const placeholderStyles: React.CSSProperties = {
@@ -271,9 +334,18 @@ const OptimizedImage = ({
     zIndex: 1,
   };
 
+  const skeletonStyles: React.CSSProperties = {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'hsl(var(--muted))',
+    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+  };
+
   const imageStyles = cn(
     "transition-opacity duration-300",
-    !isLoaded && placeholderUrl && "opacity-0",
+    !isLoaded && (placeholderUrl || !isInViewport) && "opacity-0",
     isLoaded && "opacity-100",
     className
   );
@@ -281,7 +353,7 @@ const OptimizedImage = ({
   // Determine sizes attribute
   const sizesAttr = sizes || "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
 
-  // Common image props
+  // Common image props - only set src when in viewport
   const imgProps = {
     alt,
     width,
@@ -301,6 +373,11 @@ const OptimizedImage = ({
   const hasSrcSet = srcSetString || webpSrcSetString;
 
   const renderImage = () => {
+    // Don't render actual image until in viewport (unless priority)
+    if (!isInViewport && !priority) {
+      return null;
+    }
+
     if ((hasWebpSupport || hasSrcSet) && !hasError) {
       return (
         <picture>
@@ -346,37 +423,34 @@ const OptimizedImage = ({
     );
   };
 
-  // Render with blur-up placeholder
-  if (placeholderUrl && !hasError) {
-    return (
-      <div style={containerStyles} className={cn("inline-block", className)}>
-        {/* Blurred placeholder */}
-        {showPlaceholder && (
-          <img
-            src={placeholderUrl}
-            alt=""
-            aria-hidden="true"
-            style={placeholderStyles}
-          />
-        )}
-        {/* Main image */}
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          {renderImage()}
-        </div>
-      </div>
-    );
-  }
-
-  // Render without placeholder
-  if (aspectRatio) {
-    return (
-      <div style={{ aspectRatio }}>
+  // Render with container for intersection observer
+  return (
+    <div 
+      ref={containerRef} 
+      style={containerStyles} 
+      className={cn("inline-block", !isInViewport && !priority && "min-h-[100px]")}
+    >
+      {/* Skeleton placeholder when not yet in viewport */}
+      {!isInViewport && !priority && (
+        <div style={skeletonStyles} aria-hidden="true" />
+      )}
+      
+      {/* Blurred placeholder */}
+      {placeholderUrl && showPlaceholder && isInViewport && !hasError && (
+        <img
+          src={placeholderUrl}
+          alt=""
+          aria-hidden="true"
+          style={placeholderStyles}
+        />
+      )}
+      
+      {/* Main image */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
         {renderImage()}
       </div>
-    );
-  }
-
-  return renderImage();
+    </div>
+  );
 };
 
 // Helper to determine image MIME type
@@ -398,5 +472,5 @@ const getImageType = (src: string): string => {
   }
 };
 
-export { OptimizedImage, generateSrcSetString, generatePlaceholderUrl, DEFAULT_WIDTHS };
+export { OptimizedImage, generateSrcSetString, generatePlaceholderUrl, useIntersectionObserver, DEFAULT_WIDTHS };
 export type { OptimizedImageProps, ResponsiveSrc };

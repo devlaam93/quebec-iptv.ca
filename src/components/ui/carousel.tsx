@@ -49,6 +49,8 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [totalSlides, setTotalSlides] = React.useState(0);
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -57,6 +59,8 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
       setCanScrollPrev(api.canScrollPrev());
       setCanScrollNext(api.canScrollNext());
+      setCurrentIndex(api.selectedScrollSnap());
+      setTotalSlides(api.scrollSnapList().length);
     }, []);
 
     const scrollPrev = React.useCallback(() => {
@@ -69,15 +73,25 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "ArrowLeft") {
+        const isHorizontal = orientation === "horizontal";
+        const prevKeys = isHorizontal ? ["ArrowLeft"] : ["ArrowUp"];
+        const nextKeys = isHorizontal ? ["ArrowRight"] : ["ArrowDown"];
+
+        if (prevKeys.includes(event.key)) {
           event.preventDefault();
           scrollPrev();
-        } else if (event.key === "ArrowRight") {
+        } else if (nextKeys.includes(event.key)) {
           event.preventDefault();
           scrollNext();
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          api?.scrollTo(0);
+        } else if (event.key === "End") {
+          event.preventDefault();
+          api?.scrollTo(api.scrollSnapList().length - 1);
         }
       },
-      [scrollPrev, scrollNext],
+      [scrollPrev, scrollNext, orientation, api],
     );
 
     React.useEffect(() => {
@@ -120,9 +134,14 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
           role="region"
-          aria-roledescription="carousel"
+          aria-roledescription="carrousel"
+          aria-label={`Carrousel avec ${totalSlides} diapositives`}
+          tabIndex={0}
           {...props}
         >
+          <div aria-live="polite" aria-atomic="true" className="sr-only">
+            Diapositive {currentIndex + 1} sur {totalSlides}
+          </div>
           {children}
         </div>
       </CarouselContext.Provider>
@@ -183,10 +202,10 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
+        aria-label="Diapositive précédente"
         {...props}
       >
-        <ArrowLeft className="h-4 w-4" />
-        <span className="sr-only">Previous slide</span>
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
       </Button>
     );
   },
@@ -211,10 +230,10 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
+        aria-label="Diapositive suivante"
         {...props}
       >
-        <ArrowRight className="h-4 w-4" />
-        <span className="sr-only">Next slide</span>
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Button>
     );
   },

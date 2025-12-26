@@ -91,51 +91,51 @@ const Index = () => {
         data={[
           {
             question: "Quels Critères Dois-Je Considérer Pour Choisir Un Service IPTV Au Québec ?",
-            answer: "Pour choisir le meilleur service IPTV au Québec, considérez la qualité vidéo (HD/4K), la stabilité du signal, la variété des chaînes, le support client, les prix compétitifs, et la compatibilité avec vos appareils."
+            answer: "Vérifiez la qualité vidéo (HD/4K), la stabilité du signal, le nombre de chaînes, le support client 24/7, et la compatibilité avec vos appareils (Smart TV, Fire Stick, Android, iOS)."
           },
           {
             question: "Comment Éviter Les Arnaques Et Choisir Un Fournisseur IPTV Légitime ?",
-            answer: "Recherchez des fournisseurs établis avec de bonnes critiques, évitez les prix anormalement bas, vérifiez les garanties de remboursement, et assurez-vous qu'ils offrent un support client réactif."
+            answer: "Choisissez un fournisseur avec garantie de remboursement 7 jours, support client joignable, et avis vérifiables. Évitez les offres à vie ou les prix inférieurs à 5$/mois."
           },
           {
             question: "Puis-Je Souscrire À L'IPTV Quebec Sans Service Satellite ?",
-            answer: "Oui, l'IPTV fonctionne uniquement avec une connexion Internet haut débit. Aucun équipement satellite n'est nécessaire, juste une connexion Internet stable."
+            answer: "Oui. L'IPTV nécessite uniquement une connexion Internet. Aucune antenne satellite ni câble coaxial requis."
           },
           {
             question: "Puis-Je Utiliser Mon Abonnement IPTV Quebec Sur Plusieurs Appareils ?",
-            answer: "Oui, selon votre abonnement, vous pouvez généralement utiliser votre service IPTV sur plusieurs appareils simultanément (TV, smartphone, tablette, ordinateur)."
+            answer: "Oui, jusqu'à 2 appareils simultanés selon l'abonnement. Compatible Smart TV, smartphone, tablette, ordinateur et Fire Stick."
           },
           {
             question: "Offrez-Vous Un Remboursement ?",
-            answer: "Oui, nous offrons une garantie de remboursement de 7 jours. Si vous n'êtes pas satisfait de notre service, nous vous remboursons intégralement."
+            answer: "Oui, remboursement complet sous 7 jours sans condition. Contactez le support par WhatsApp ou email pour initier la demande."
           },
           {
             question: "Mon Abonnement Est-Il Actif Dès Que J'effectue Un Paiement ?",
-            answer: "Oui, votre abonnement est activé immédiatement après confirmation du paiement. Vous recevrez vos identifiants de connexion par email dans les minutes qui suivent."
+            answer: "Oui, activation immédiate. Les identifiants sont envoyés par email dans les 5 minutes suivant le paiement."
           },
           {
             question: "Disposez-Vous D'un Guide TV Epg (Electronic Program Guide) ?",
-            answer: "Oui, nous fournissons un guide TV électronique complet avec les programmes de toutes les chaînes, vous permettant de voir ce qui passe maintenant et plus tard."
+            answer: "Oui, guide EPG inclus avec programmation sur 7 jours pour toutes les chaînes. Disponible sur toutes les applications compatibles."
           },
           {
             question: "Comment Vérifier La Vitesse Et La Qualité De Mon Internet ?",
-            answer: "Nous recommandons au minimum 10 Mbps pour une qualité HD et 25 Mbps pour la 4K. Vous pouvez tester votre connexion avec des outils comme Speedtest.net."
+            answer: "Minimum requis: 10 Mbps pour HD, 25 Mbps pour 4K. Testez sur speedtest.net. Connexion filaire recommandée pour la 4K."
           },
           {
             question: "Combien De Bande Passante Le Flux IPTV Quebec Utilise-T-Il ?",
-            answer: "Le flux IPTV utilise environ 5-8 Mbps pour du contenu HD et 15-25 Mbps pour du contenu 4K. La consommation varie selon la qualité choisie."
+            answer: "Consommation: 3-5 Mbps en SD, 5-8 Mbps en HD, 15-25 Mbps en 4K. Environ 2-4 Go par heure en HD."
           },
           {
             question: "Quels Sont Les Modes De Paiement Disponibles ?",
-            answer: "Nous acceptons les cartes de crédit (Visa, MasterCard), PayPal, Interac, et les virements bancaires pour votre commodité et sécurité."
+            answer: "Visa, MasterCard, PayPal, Interac e-Transfer, et crypto-monnaies (Bitcoin, Ethereum). Paiements sécurisés par Stripe."
           },
           {
             question: "Comment Puis-Je Stabiliser Mon Canal Lorsqu'il Connaît Des Interruptions ?",
-            answer: "Vérifiez votre connexion Internet, redémarrez votre appareil, changez de serveur si l'option est disponible, ou contactez notre support technique."
+            answer: "1) Redémarrez l'application. 2) Vérifiez votre connexion Internet. 3) Changez de serveur dans les paramètres. 4) Contactez le support si le problème persiste."
           },
           {
             question: "Comment Puis-Je Réactiver Mon Compte Lorsqu'il Ne Fonctionne Pas ?",
-            answer: "Contactez notre service client avec vos identifiants. Nous vérifierons votre compte et vous aiderons à le réactiver rapidement."
+            answer: "Contactez le support via WhatsApp avec votre email d'inscription. Réactivation sous 10 minutes en heures ouvrables."
           }
         ]}
       />

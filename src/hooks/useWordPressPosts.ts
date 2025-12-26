@@ -449,3 +449,57 @@ export function clearWordPressCache(): void {
     memoryCache.delete(key);
   });
 }
+
+// Track ongoing prefetch requests to avoid duplicates
+const prefetchingPosts = new Set<string>();
+
+// Prefetch a single post by slug to warm the cache
+export async function prefetchPost(slug: string): Promise<void> {
+  if (!slug || prefetchingPosts.has(slug)) return;
+  
+  const cacheKey = getCacheKey("post", { slug });
+  const cached = getFromCache<WordPressPost>(cacheKey);
+  
+  // Skip if already cached and fresh
+  if (cached && isCacheFresh(cached.timestamp)) {
+    return;
+  }
+  
+  prefetchingPosts.add(slug);
+  
+  try {
+    const response = await fetch(`${API_BASE}/posts?slug=${slug}&_embed`);
+    
+    if (response.ok) {
+      const rawPosts: WPPostRaw[] = await response.json();
+      if (rawPosts.length > 0) {
+        const transformedPost = transformPost(rawPosts[0]);
+        setCache(cacheKey, transformedPost);
+      }
+    }
+  } catch (err) {
+    console.warn("Prefetch failed for:", slug, err);
+  } finally {
+    prefetchingPosts.delete(slug);
+  }
+}
+
+// Prefetch with delay (useful for hover - only prefetch if user hovers for a moment)
+let prefetchTimeout: ReturnType<typeof setTimeout> | null = null;
+
+export function prefetchPostOnHover(slug: string, delay = 150): void {
+  if (prefetchTimeout) {
+    clearTimeout(prefetchTimeout);
+  }
+  
+  prefetchTimeout = setTimeout(() => {
+    prefetchPost(slug);
+  }, delay);
+}
+
+export function cancelPrefetch(): void {
+  if (prefetchTimeout) {
+    clearTimeout(prefetchTimeout);
+    prefetchTimeout = null;
+  }
+}

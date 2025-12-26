@@ -1,20 +1,35 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowLeft, Share2, Tag, Loader2 } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Tag, Loader2, Globe } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
-import { useWordPressPost } from "@/hooks/useWordPressPosts";
+import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType } from "@/hooks/useWordPressPosts";
 
 const WordPressPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
   const { post, loading, error } = useWordPressPost(slug);
+  const { posts: allPosts } = useWordPressPosts({ perPage: 100 });
+  
+  // Get related articles from the same category, excluding current post
+  const relatedArticles = useMemo(() => {
+    if (!post || !allPosts.length) return [];
+    return allPosts
+      .filter(p => p.category === post.category && p.slug !== post.slug)
+      .slice(0, 3);
+  }, [post, allPosts]);
+
+  const handleArticleClick = (article: WordPressPostType) => {
+    window.location.href = `/blog/${article.slug}`;
+  };
 
   // Loading state
   if (loading) {
@@ -236,13 +251,63 @@ const WordPressPost = () => {
 
           {/* Related Articles Section */}
           <div className="mt-12 pt-8 border-t border-border">
-            <h3 className="text-xl font-bold mb-4">Explorer plus d&apos;articles</h3>
-            <Button variant="outline" asChild>
-              <Link to="/blog">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Voir tous les articles
-              </Link>
-            </Button>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold">Articles similaires</h3>
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/blog">
+                  Voir tous les articles
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+            
+            {relatedArticles.length > 0 ? (
+              <div className="grid md:grid-cols-3 gap-6">
+                {relatedArticles.map((article) => (
+                  <Card 
+                    key={article.id}
+                    className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border group cursor-pointer"
+                    onClick={() => handleArticleClick(article)}
+                  >
+                    <div className="relative h-36 overflow-hidden">
+                      {article.image ? (
+                        <OptimizedImage 
+                          src={article.image} 
+                          alt={article.imageAlt || article.title}
+                          width={300}
+                          height={170}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <Globe className="w-8 h-8 text-primary/50" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <Badge variant="secondary" className="mb-2 text-xs">{article.category}</Badge>
+                      <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
+                        {article.title}
+                      </h4>
+                      <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                        <Clock className="w-3 h-3" />
+                        {article.readTime}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground mb-4">Explorez d'autres articles sur notre blog.</p>
+                <Button variant="outline" asChild>
+                  <Link to="/blog">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Retour au blog
+                  </Link>
+                </Button>
+              </div>
+            )}
           </div>
         </article>
       </main>

@@ -63,7 +63,7 @@ const FAQPage = () => {
     <PageLayout heroSection>
       <SEO
         title="FAQ IPTV Québec | Questions Fréquentes et Aide"
-        description="Trouvez les réponses à toutes vos questions sur IPTV Québec. Guide complet sur l'installation, le paiement, la qualité et le support technique."
+        description="Réponses à vos questions sur l'IPTV : installation, paiement, compatibilité, qualité. Trouvez rapidement l'aide dont vous avez besoin. Support 24/7."
         path="/faq"
         keywords={["FAQ IPTV", "questions IPTV", "aide IPTV", "support IPTV Québec"]}
       />

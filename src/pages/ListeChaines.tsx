@@ -98,7 +98,7 @@ const ListeChaines = () => {
     <PageLayout heroSection>
       <SEO
         title="Liste Chaînes IPTV | 45 000+ Chaînes TV et 140 000+ VOD"
-        description="Explorez notre catalogue IPTV : 45 000+ chaînes en direct, 140 000+ films et séries. Sports, divertissement, chaînes québécoises et internationales en 4K."
+        description="Catalogue IPTV complet : sports, films, séries, chaînes québécoises et internationales en 4K. Découvrez notre sélection et testez gratuitement!"
         path="/liste-chaines"
         keywords={["chaînes IPTV", "liste chaînes", "catalogue IPTV", "chaînes TV"]}
         image="/og-liste-chaines.jpg"

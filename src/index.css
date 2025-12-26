@@ -109,11 +109,46 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Reduced motion preferences - WCAG 2.1 AAA */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Preserve essential UI feedback with subtle transitions */
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      transition-duration: 0.1s !important;
+    }
+  }
 }
 
 @layer utilities {
   .hover\\:pause-animation:hover {
     animation-play-state: paused;
+  }
+
+  /* Motion-safe utility - only animate when user hasn't requested reduced motion */
+  .motion-safe-animate {
+    @apply motion-safe:animate-fade-in-up;
+  }
+
+  .motion-safe-transition {
+    @apply motion-safe:transition-all motion-safe:duration-300;
+  }
+
+  /* Explicit reduced-motion alternative */
+  .motion-reduce-opacity {
+    @apply motion-reduce:opacity-100;
   }
 }
 

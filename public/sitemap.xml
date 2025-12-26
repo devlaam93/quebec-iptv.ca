@@ -1,162 +1,316 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- ============================================ -->
+  <!-- HOMEPAGE - Highest Priority -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quebec-iptv.ca"/>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-image.jpg</image:loc>
+      <image:title>IPTV Québec - Service IPTV Premium au Canada</image:title>
+      <image:caption>Meilleur service IPTV au Québec avec 45 000+ chaînes TV et 140 000+ films en 4K</image:caption>
+    </image:image>
   </url>
-  
-  <!-- Main Pages (priority 0.9) -->
+
+  <!-- ============================================ -->
+  <!-- CONVERSION PAGES - High Priority (0.9) -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca/tarifs</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/tarifs"/>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-tarifs.jpg</image:loc>
+      <image:title>Tarifs Abonnement IPTV Québec</image:title>
+      <image:caption>Forfaits IPTV à partir de 8,99$/mois - Plans Legacy et Advanced</image:caption>
+    </image:image>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/essai-gratuit</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/essai-gratuit"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/essai-gratuit"/>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-essai-gratuit.jpg</image:loc>
+      <image:title>Essai Gratuit IPTV 24 Heures</image:title>
+      <image:caption>Testez notre service IPTV gratuitement pendant 24h sans engagement</image:caption>
+    </image:image>
   </url>
+
+  <!-- ============================================ -->
+  <!-- CONTENT PAGES - High Priority (0.8) -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca/liste-chaines</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/liste-chaines"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/liste-chaines"/>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-liste-chaines.jpg</image:loc>
+      <image:title>Liste des Chaînes IPTV</image:title>
+      <image:caption>Catalogue complet de 45 000+ chaînes TV et 140 000+ VOD en 4K</image:caption>
+    </image:image>
   </url>
   
-  <!-- Content Pages (priority 0.8) -->
   <url>
     <loc>https://quebec-iptv.ca/blog</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/blog"/>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-blog.jpg</image:loc>
+      <image:title>Blog IPTV Québec</image:title>
+      <image:caption>Guides, tutoriels et actualités sur l'IPTV au Québec</image:caption>
+    </image:image>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/tutorial</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/tutorial"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/tutorial"/>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-tutorial.jpg</image:loc>
+      <image:title>Tutoriels Installation IPTV</image:title>
+      <image:caption>Guides d'installation IPTV pour tous appareils - Android TV, Fire Stick, iOS</image:caption>
+    </image:image>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/faq</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/faq"/>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-faq.jpg</image:loc>
+      <image:title>FAQ IPTV Québec</image:title>
+      <image:caption>Questions fréquentes sur notre service IPTV</image:caption>
+    </image:image>
   </url>
+
+  <!-- ============================================ -->
+  <!-- SECONDARY PAGES - Medium Priority (0.7) -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca/contact</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/contact"/>
+    <lastmod>2025-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-contact.jpg</image:loc>
+      <image:title>Contact IPTV Québec</image:title>
+      <image:caption>Support client 24/7 - WhatsApp, Email, Chat</image:caption>
+    </image:image>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/revendeur</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/revendeur"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/revendeur"/>
+    <lastmod>2025-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/og-revendeur.jpg</image:loc>
+      <image:title>Programme Revendeur IPTV</image:title>
+      <image:caption>Devenez revendeur IPTV avec des marges jusqu'à 40%</image:caption>
+    </image:image>
   </url>
-  
-  <!-- Blog Posts (priority 0.6) -->
+
+  <!-- ============================================ -->
+  <!-- BLOG ARTICLES - Medium Priority (0.6) -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca/blog/meilleur-service-iptv-quebec</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/meilleur-service-iptv-quebec"/>
+    <lastmod>2025-01-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/comment-fonctionne-iptv</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/iptv-legal-quebec</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/meilleure-application-iptv</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/installer-iptv-montreal</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/fire-stick-iptv</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/apps-gratuites-firestick</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/acheter-code-iptv</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://quebec-iptv.ca/blog/ibo-player-guide</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/meilleur-service-iptv.jpg</image:loc>
+      <image:title>Meilleur Service IPTV au Québec 2025</image:title>
+    </image:image>
   </url>
   
-  <!-- Legal/Policy Pages (priority 0.3) -->
+  <url>
+    <loc>https://quebec-iptv.ca/blog/comment-iptv-fonctionne</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/comment-iptv-fonctionne"/>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/iptv-fonctionnement.jpg</image:loc>
+      <image:title>Comment Fonctionne l'IPTV</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/iptv-legal-quebec</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/iptv-legal-quebec"/>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/iptv-legal-quebec.jpg</image:loc>
+      <image:title>IPTV Légal au Québec</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/meilleure-application-iptv</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/meilleure-application-iptv"/>
+    <lastmod>2025-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/meilleures-apps-iptv.jpg</image:loc>
+      <image:title>Meilleures Applications IPTV 2025</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/installer-iptv-montreal-quebec</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/installer-iptv-montreal-quebec"/>
+    <lastmod>2025-01-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/installation-montreal.jpg</image:loc>
+      <image:title>Installation IPTV à Montréal</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/fire-stick-iptv-fonctionnement</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/fire-stick-iptv-fonctionnement"/>
+    <lastmod>2025-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/fire-stick-guide.jpg</image:loc>
+      <image:title>Guide Fire Stick IPTV</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/applications-gratuites-fire-tv-stick</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/applications-gratuites-fire-tv-stick"/>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/apps-gratuites-firestick.jpg</image:loc>
+      <image:title>Applications Gratuites Fire TV Stick</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/acheter-code-iptv</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/acheter-code-iptv"/>
+    <lastmod>2025-01-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/acheter-code-iptv.jpg</image:loc>
+      <image:title>Acheter Code IPTV</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://quebec-iptv.ca/blog/ibo-player-guide</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/blog/ibo-player-guide"/>
+    <lastmod>2025-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://quebec-iptv.ca/assets/blog/ibo-player-guide.jpg</image:loc>
+      <image:title>Guide Complet IBO Player</image:title>
+    </image:image>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- LEGAL PAGES - Low Priority (0.3-0.4) -->
+  <!-- ============================================ -->
   <url>
     <loc>https://quebec-iptv.ca/politique-remboursement</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/politique-remboursement"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/politique-confidentialite</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/politique-confidentialite"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/conditions-generales</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/conditions-generales"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/conditions-paiement</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/conditions-paiement"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/annulation-commande</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/annulation-commande"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/dmca-policy</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/dmca-policy"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
+  
   <url>
     <loc>https://quebec-iptv.ca/avis-non-responsabilite</loc>
-    <lastmod>2025-06-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/avis-non-responsabilite"/>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
+
 </urlset>

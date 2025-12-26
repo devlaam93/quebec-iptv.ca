@@ -10,6 +10,7 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
   priority?: boolean;
   fallbackSrc?: string;
   aspectRatio?: string;
+  sizes?: string;
 }
 
 /**
@@ -21,6 +22,15 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
  * - Error handling with optional fallback image
  * - Prevents layout shift with width/height or aspectRatio
  * - Supports external image services with WebP (Unsplash, etc.)
+ * - Works with vite-imagetools for build-time optimization
+ * 
+ * Usage with vite-imagetools:
+ * ```tsx
+ * import heroJpg from '@/assets/hero.jpg'
+ * import heroWebp from '@/assets/hero.jpg?webp'
+ * 
+ * <OptimizedImage src={heroJpg} webpSrc={heroWebp} alt="Hero" />
+ * ```
  */
 const OptimizedImage = ({
   src,
@@ -31,6 +41,7 @@ const OptimizedImage = ({
   priority = false,
   fallbackSrc,
   aspectRatio,
+  sizes,
   className,
   ...props
 }: OptimizedImageProps) => {
@@ -39,23 +50,26 @@ const OptimizedImage = ({
 
   // Generate WebP URL for supported external services
   const getWebPUrl = (url: string): string | null => {
+    // If explicit webpSrc provided, use it
+    if (webpSrc) {
+      return webpSrc;
+    }
+
     // Unsplash supports fm=webp parameter
     if (url.includes('images.unsplash.com')) {
       const separator = url.includes('?') ? '&' : '?';
       return `${url}${separator}fm=webp`;
     }
     
-    // For local images, check if webpSrc was provided
-    if (webpSrc) {
-      return webpSrc;
+    // Cloudinary supports f_webp
+    if (url.includes('cloudinary.com')) {
+      return url.replace('/upload/', '/upload/f_webp/');
     }
 
-    // Try to create WebP path for local assets
-    if (url.startsWith('/') || url.includes('/assets/')) {
-      const webpPath = url.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-      if (webpPath !== url) {
-        return webpPath;
-      }
+    // Imgix supports fm=webp
+    if (url.includes('imgix.net')) {
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}fm=webp`;
     }
 
     return null;
@@ -83,24 +97,28 @@ const OptimizedImage = ({
 
   const containerStyles = aspectRatio ? { aspectRatio } : undefined;
 
-  // If we have a WebP source, use picture element
+  // Common image props
+  const imgProps = {
+    alt,
+    width,
+    height,
+    loading: priority ? "eager" as const : "lazy" as const,
+    decoding: priority ? "sync" as const : "async" as const,
+    fetchPriority: priority ? "high" as const : "auto" as const,
+    onError: handleError,
+    onLoad: handleLoad,
+    className: imageStyles,
+    sizes: sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+    ...props,
+  };
+
+  // If we have a WebP source, use picture element for format switching
   if (webpUrl && !hasError) {
     return (
       <picture style={containerStyles}>
         <source srcSet={webpUrl} type="image/webp" />
         <source srcSet={displaySrc} type={getImageType(displaySrc)} />
-        <img
-          src={displaySrc}
-          alt={alt}
-          width={width}
-          height={height}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          onError={handleError}
-          onLoad={handleLoad}
-          className={imageStyles}
-          {...props}
-        />
+        <img src={displaySrc} {...imgProps} />
       </picture>
     );
   }
@@ -109,23 +127,15 @@ const OptimizedImage = ({
   return (
     <img
       src={displaySrc}
-      alt={alt}
-      width={width}
-      height={height}
-      loading={priority ? "eager" : "lazy"}
-      decoding={priority ? "sync" : "async"}
-      onError={handleError}
-      onLoad={handleLoad}
-      className={imageStyles}
       style={containerStyles}
-      {...props}
+      {...imgProps}
     />
   );
 };
 
 // Helper to determine image MIME type
 const getImageType = (src: string): string => {
-  const extension = src.split('.').pop()?.toLowerCase();
+  const extension = src.split('.').pop()?.toLowerCase().split('?')[0];
   switch (extension) {
     case 'png':
       return 'image/png';

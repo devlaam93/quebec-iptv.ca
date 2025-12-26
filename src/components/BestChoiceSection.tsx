@@ -3,6 +3,8 @@ import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
+// WebP version generated at build time by vite-imagetools
+import showcaseTvWebp from "@/assets/iptv-showcase-tv.jpg?format=webp";
 
 const BestChoiceSection = () => {
   return (
@@ -17,6 +19,7 @@ const BestChoiceSection = () => {
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
               <OptimizedImage 
                 src={showcaseTv} 
+                webpSrc={showcaseTvWebp}
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
                 width={600}
                 height={400}

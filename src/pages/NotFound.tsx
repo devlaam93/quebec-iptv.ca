@@ -1,6 +1,7 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,13 @@ const NotFound = () => {
         description="La page que vous recherchez n'existe pas ou a été déplacée. Retournez à l'accueil pour continuer votre navigation."
         path={location.pathname}
         noIndex={true}
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Page Non Trouvée", url: `https://quebec-iptv.ca${location.pathname}` },
+        ]}
       />
       <Header />
       <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-16">

@@ -164,7 +164,7 @@ const Footer = () => {
             <div className="lg:col-span-8">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-6">
                 {/* Règlements */}
-                <div>
+                <nav aria-label="Liens légaux">
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Règlements
                   </h3>
@@ -190,10 +190,10 @@ const Footer = () => {
                       </a>
                     </li>
                   </ul>
-                </div>
+                </nav>
 
                 {/* Service Client */}
-                <div>
+                <nav aria-label="Service client">
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Service Client
                   </h3>
@@ -224,10 +224,10 @@ const Footer = () => {
                       </a>
                     </li>
                   </ul>
-                </div>
+                </nav>
 
                 {/* Contact - Full width on mobile */}
-                <div className="col-span-2 sm:col-span-1">
+                <address className="col-span-2 sm:col-span-1 not-italic">
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Contact
                   </h3>
@@ -240,12 +240,12 @@ const Footer = () => {
                       <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                       <span>+1 (514) 123-4567</span>
                     </a>
-                    <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                    <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
                       <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
                       <span>Montreal, QC, Canada</span>
-                    </div>
+                    </p>
                   </div>
-                </div>
+                </address>
               </div>
             </div>
           </div>
@@ -270,7 +270,7 @@ const Footer = () => {
               <p className="text-xs text-muted-foreground">
                 © 2026 Quebec IPTV. Tous droits réservés.
               </p>
-              <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <nav aria-label="Liens rapides" className="flex flex-wrap justify-center gap-x-6 gap-y-2">
                 <a href="/" className="text-xs text-muted-foreground hover:text-primary transition-colors">Accueil</a>
                 <a href="/tarifs" className="text-xs text-muted-foreground hover:text-primary transition-colors">Tarifs</a>
                 <a href="/essai-gratuit" className="text-xs text-muted-foreground hover:text-primary transition-colors">Essai Gratuit</a>

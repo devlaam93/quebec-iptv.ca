@@ -30,7 +30,10 @@ export default function SEO({
   noIndex = false,
 }: SEOProps) {
   const keywordsString = Array.isArray(keywords) ? keywords.join(", ") : (keywords || defaultSEO.keywords);
-  const fullUrl = `${BASE_URL}${path}`;
+  
+  // Normalize path to prevent duplicate content (remove trailing slashes except for root)
+  const normalizedPath = path === "/" ? "/" : path.replace(/\/+$/, "");
+  const fullUrl = `${BASE_URL}${normalizedPath}`;
   const fullImage = image?.startsWith("http") ? image : `${BASE_URL}${image || defaultSEO.image}`;
 
   const seo = {
@@ -64,11 +67,15 @@ export default function SEO({
     };
 
     // Helper to update or create link tags
-    const updateLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+    const updateLink = (rel: string, href: string, hreflang?: string) => {
+      const selector = hreflang 
+        ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+        : `link[rel="${rel}"]:not([hreflang])`;
+      let element = document.querySelector(selector) as HTMLLinkElement;
       if (!element) {
         element = document.createElement("link");
         element.rel = rel;
+        if (hreflang) element.setAttribute("hreflang", hreflang);
         document.head.appendChild(element);
       }
       element.href = href;
@@ -77,10 +84,12 @@ export default function SEO({
     // Update meta tags
     updateMeta('meta[name="description"]', seo.description);
     updateMeta('meta[name="keywords"]', seo.keywords);
-    updateMeta('meta[name="robots"]', noIndex ? "noindex, nofollow" : "index, follow");
+    updateMeta('meta[name="robots"]', noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
     updateMeta('meta[name="language"]', "French");
     updateMeta('meta[name="geo.region"]', "CA-QC");
     updateMeta('meta[name="geo.placename"]', "Quebec");
+    updateMeta('meta[name="author"]', "IPTV Québec");
+    updateMeta('meta[name="publisher"]', "IPTV Québec");
 
     // Open Graph
     updateMeta('meta[property="og:type"]', seo.type);
@@ -88,8 +97,11 @@ export default function SEO({
     updateMeta('meta[property="og:title"]', seo.title);
     updateMeta('meta[property="og:description"]', seo.description);
     updateMeta('meta[property="og:image"]', seo.image);
+    updateMeta('meta[property="og:image:width"]', "1200");
+    updateMeta('meta[property="og:image:height"]', "630");
+    updateMeta('meta[property="og:image:alt"]', seo.title);
     updateMeta('meta[property="og:locale"]', "fr_CA");
-    updateMeta('meta[property="og:site_name"]', "Quebec IPTV");
+    updateMeta('meta[property="og:site_name"]', "IPTV Québec");
 
     // Twitter Card (Large Image)
     updateMeta('meta[name="twitter:card"]', "summary_large_image");
@@ -101,8 +113,14 @@ export default function SEO({
     updateMeta('meta[name="twitter:image"]', seo.image);
     updateMeta('meta[name="twitter:image:alt"]', seo.title);
 
-    // Canonical URL
+    // Canonical URL - Critical for preventing duplicate content
     updateLink("canonical", seo.url);
+    
+    // Hreflang tags for international SEO
+    updateLink("alternate", seo.url, "fr-CA");
+    updateLink("alternate", seo.url, "fr");
+    updateLink("alternate", seo.url, "x-default");
+
   }, [seo.title, seo.description, seo.keywords, seo.image, seo.url, seo.type, noIndex]);
 
   return null;

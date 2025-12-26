@@ -23,6 +23,16 @@ const SITE_PAGES = [
   { path: "/politique-remboursement", title: "Politique de Remboursement", description: "Conditions de remboursement" },
 ];
 
+// Popular pages to show by default
+const POPULAR_PAGES = [
+  { path: "/", title: "Accueil", icon: "🏠" },
+  { path: "/tarifs", title: "Tarifs", icon: "💰" },
+  { path: "/essai-gratuit", title: "Essai Gratuit", icon: "🎁" },
+  { path: "/liste-chaines", title: "Liste des Chaînes", icon: "📺" },
+  { path: "/tutorial", title: "Tutoriel", icon: "📖" },
+  { path: "/faq", title: "FAQ", icon: "❓" },
+];
+
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -110,6 +120,25 @@ const NotFound = () => {
                 </li>
               ))}
             </ul>
+          )}
+
+          {/* Popular pages - show when not searching */}
+          {!searchQuery.trim() && (
+            <div className="mb-8">
+              <h3 className="text-sm font-medium text-muted-foreground mb-4">Pages populaires</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {POPULAR_PAGES.map((page) => (
+                  <Link
+                    key={page.path}
+                    to={page.path}
+                    className="flex items-center gap-2 px-4 py-3 bg-card border border-border rounded-lg hover:bg-accent hover:border-primary/50 transition-colors text-left"
+                  >
+                    <span className="text-lg" aria-hidden="true">{page.icon}</span>
+                    <span className="text-sm font-medium text-foreground">{page.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           )}
 
           {searchQuery.trim() && filteredPages.length === 0 && (

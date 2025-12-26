@@ -278,7 +278,7 @@ const PhoneInput = ({
     <div className="relative" ref={dropdownRef}>
       <div
         className={cn(
-          "flex items-center h-11 rounded-md border-2 bg-background transition-all duration-200 ease-out",
+          "flex items-center h-12 rounded-md border-2 bg-background transition-all duration-200 ease-out",
           error ? "border-destructive" : "border-input",
           "focus-within:border-focus focus-within:ring-0"
         )}
@@ -287,14 +287,14 @@ const PhoneInput = ({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1.5 px-3 h-full border-r border-input hover:bg-muted/50 transition-colors rounded-l-md"
+          className="flex items-center gap-2 px-3 h-full min-w-[80px] border-r border-input hover:bg-muted/50 transition-colors rounded-l-md touch-manipulation"
         >
           <CountryFlag countryId={selectedCountry.id} />
-          <ChevronDown className={cn("w-3.5 h-3.5 text-muted-foreground transition-transform", isOpen && "rotate-180")} />
+          <ChevronDown className={cn("w-4 h-4 text-muted-foreground transition-transform", isOpen && "rotate-180")} />
         </button>
 
         {/* Country Code Display */}
-        <span className="pl-3 pr-1 text-sm text-muted-foreground font-medium">
+        <span className="pl-3 pr-1 text-base text-muted-foreground font-medium">
           {selectedCountry.code}
         </span>
 
@@ -306,7 +306,7 @@ const PhoneInput = ({
           onChange={handleInputChange}
           placeholder={currentPlaceholder}
           maxLength={currentMaxLength}
-          className="flex-1 h-full px-2 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          className="flex-1 h-full px-2 bg-transparent text-base outline-none placeholder:text-muted-foreground touch-manipulation"
         />
       </div>
 
@@ -337,7 +337,7 @@ const PhoneInput = ({
                   type="button"
                   onClick={() => handleCountrySelect(country)}
                   className={cn(
-                    "w-full flex items-center justify-between px-4 py-2.5 text-sm hover:bg-muted/50 transition-colors",
+                    "w-full flex items-center justify-between px-4 py-3 min-h-[48px] text-base hover:bg-muted/50 transition-colors touch-manipulation",
                     selectedCountry.id === country.id && "bg-primary/5"
                   )}
                 >
@@ -347,7 +347,7 @@ const PhoneInput = ({
                     <span className="text-muted-foreground">({country.code})</span>
                   </span>
                   {selectedCountry.id === country.id && (
-                    <Check className="w-4 h-4 text-primary" />
+                    <Check className="w-5 h-5 text-primary" />
                   )}
                 </button>
               ))

@@ -97,14 +97,14 @@ const FAQ = () => {
         </div>
 
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
           {categories.map((cat, index) => {
           const Icon = cat.icon;
-          return <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`group flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === cat.id ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"}`} style={{
+          return <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`group flex items-center gap-2 px-4 py-3 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 touch-manipulation ${activeCategory === cat.id ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"}`} style={{
             animationDelay: `${index * 50}ms`
           }}>
                 <Icon className={`w-4 h-4 transition-transform duration-300 ${activeCategory === cat.id ? "scale-110" : "group-hover:scale-110"}`} />
-                {cat.label}
+                <span className="text-base">{cat.label}</span>
               </button>;
         })}
         </div>

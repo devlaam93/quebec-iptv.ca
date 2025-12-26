@@ -68,6 +68,13 @@ const FAQPage = () => {
         keywords={["FAQ IPTV", "questions IPTV", "aide IPTV", "support IPTV Québec"]}
       />
       <StructuredData type="faq" data={faqItems} />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "FAQ", url: "https://quebec-iptv.ca/faq" },
+        ]}
+      />
       
       {/* FAQ Component */}
       <FAQ />

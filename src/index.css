@@ -32,7 +32,7 @@ All colors MUST be HSL.
     --accent: 16 100% 42%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 50%; /* Darkened for better contrast */
+    --destructive: 0 84% 40%; /* Darkened from 50% for 4.5:1 contrast on white text */
     --destructive-foreground: 0 0% 100%;
 
     --border: 220 13% 80%;

@@ -26,7 +26,7 @@ const FreeTrialSection = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-10 sm:mb-14 md:mb-16">
-            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm sm:text-base w-full sm:w-auto">
+            <Button size="lg" className="bg-emerald-700 hover:bg-emerald-800 text-white text-sm sm:text-base w-full sm:w-auto">
               <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Obtenez un test de 12 heures !
             </Button>

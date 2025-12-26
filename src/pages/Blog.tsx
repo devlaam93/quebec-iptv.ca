@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2 } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
-import { useWordPressPosts, WordPressPost } from "@/hooks/useWordPressPosts";
+import { useWordPressPosts, WordPressPost, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tous");
@@ -56,6 +56,14 @@ const Blog = () => {
   const handleArticleClick = (post: WordPressPost) => {
     window.location.href = `/blog/${post.slug}`;
   };
+
+  const handleArticleHover = useCallback((slug: string) => {
+    prefetchPostOnHover(slug);
+  }, []);
+
+  const handleArticleHoverEnd = useCallback(() => {
+    cancelPrefetch();
+  }, []);
 
   return (
     <PageLayout heroSection>
@@ -149,6 +157,8 @@ const Blog = () => {
                   <Card 
                     key={post.id} 
                     className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card border-border group"
+                    onMouseEnter={() => handleArticleHover(post.slug)}
+                    onMouseLeave={handleArticleHoverEnd}
                   >
                     <div 
                       className="relative h-48 overflow-hidden cursor-pointer"

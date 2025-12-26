@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Tag, Loader2, Globe } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
-import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType } from "@/hooks/useWordPressPosts";
+import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
 const WordPressPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -43,6 +43,14 @@ const WordPressPost = () => {
   const handleArticleClick = (article: WordPressPostType) => {
     window.location.href = `/blog/${article.slug}`;
   };
+
+  const handleArticleHover = useCallback((slug: string) => {
+    prefetchPostOnHover(slug);
+  }, []);
+
+  const handleArticleHoverEnd = useCallback(() => {
+    cancelPrefetch();
+  }, []);
 
   // Loading state
   if (loading) {
@@ -272,6 +280,8 @@ const WordPressPost = () => {
                   {prevArticle && (
                     <button
                       onClick={() => handleArticleClick(prevArticle)}
+                      onMouseEnter={() => handleArticleHover(prevArticle.slug)}
+                      onMouseLeave={handleArticleHoverEnd}
                       className="w-full p-4 rounded-xl border border-border bg-card hover:bg-accent/50 hover:border-primary/30 transition-all duration-300 text-left group"
                     >
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
@@ -290,6 +300,8 @@ const WordPressPost = () => {
                   {nextArticle && (
                     <button
                       onClick={() => handleArticleClick(nextArticle)}
+                      onMouseEnter={() => handleArticleHover(nextArticle.slug)}
+                      onMouseLeave={handleArticleHoverEnd}
                       className="w-full p-4 rounded-xl border border-border bg-card hover:bg-accent/50 hover:border-primary/30 transition-all duration-300 text-right group"
                     >
                       <div className="flex items-center justify-end gap-2 text-sm text-muted-foreground mb-2">
@@ -325,6 +337,8 @@ const WordPressPost = () => {
                     key={article.id}
                     className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border group cursor-pointer"
                     onClick={() => handleArticleClick(article)}
+                    onMouseEnter={() => handleArticleHover(article.slug)}
+                    onMouseLeave={handleArticleHoverEnd}
                   >
                     <div className="relative h-36 overflow-hidden">
                       {article.image ? (

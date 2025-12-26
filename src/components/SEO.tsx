@@ -8,6 +8,8 @@ interface SEOProps {
   path?: string;
   type?: string;
   noIndex?: boolean;
+  /** Image alt text for accessibility */
+  imageAlt?: string;
 }
 
 const BASE_URL = "https://quebec-iptv.ca";
@@ -20,6 +22,26 @@ const defaultSEO = {
   type: "website",
 };
 
+/**
+ * SEO Component for managing Open Graph and Twitter Card metadata
+ * 
+ * Features:
+ * - Unique og:image and twitter:image per page (1200×630 JPG)
+ * - Custom title, description, and URL for each route
+ * - Proper canonical URLs to prevent duplicate content
+ * - Twitter large image card support
+ * - Hreflang tags for international SEO
+ * 
+ * @example
+ * ```tsx
+ * <SEO
+ *   title="Tarifs IPTV Québec | Forfaits dès 14,99$/mois"
+ *   description="Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois..."
+ *   path="/tarifs"
+ *   image="/og-tarifs.jpg"
+ * />
+ * ```
+ */
 export default function SEO({
   title,
   description,
@@ -28,19 +50,27 @@ export default function SEO({
   path = "/",
   type,
   noIndex = false,
+  imageAlt,
 }: SEOProps) {
   const keywordsString = Array.isArray(keywords) ? keywords.join(", ") : (keywords || defaultSEO.keywords);
   
   // Normalize path to prevent duplicate content (remove trailing slashes except for root)
   const normalizedPath = path === "/" ? "/" : path.replace(/\/+$/, "");
   const fullUrl = `${BASE_URL}${normalizedPath}`;
-  const fullImage = image?.startsWith("http") ? image : `${BASE_URL}${image || defaultSEO.image}`;
+  
+  // Ensure image URL is absolute for social sharing
+  const imageUrl = image || defaultSEO.image;
+  const fullImage = imageUrl.startsWith("http") ? imageUrl : `${BASE_URL}${imageUrl}`;
+  
+  // Use title for image alt if not provided
+  const seoImageAlt = imageAlt || title || defaultSEO.title;
 
   const seo = {
     title: title || defaultSEO.title,
     description: description || defaultSEO.description,
     keywords: keywordsString,
     image: fullImage,
+    imageAlt: seoImageAlt,
     url: fullUrl,
     type: type || defaultSEO.type,
   };
@@ -50,7 +80,7 @@ export default function SEO({
     document.title = seo.title;
 
     // Helper to update or create meta tags
-    const updateMeta = (selector: string, content: string, attribute = "name") => {
+    const updateMeta = (selector: string, content: string) => {
       let element = document.querySelector(selector) as HTMLMetaElement;
       if (!element) {
         element = document.createElement("meta");
@@ -91,19 +121,21 @@ export default function SEO({
     updateMeta('meta[name="author"]', "IPTV Québec");
     updateMeta('meta[name="publisher"]', "IPTV Québec");
 
-    // Open Graph
+    // Open Graph metadata (1200×630 image recommended)
     updateMeta('meta[property="og:type"]', seo.type);
     updateMeta('meta[property="og:url"]', seo.url);
     updateMeta('meta[property="og:title"]', seo.title);
     updateMeta('meta[property="og:description"]', seo.description);
     updateMeta('meta[property="og:image"]', seo.image);
+    updateMeta('meta[property="og:image:secure_url"]', seo.image);
+    updateMeta('meta[property="og:image:type"]', "image/jpeg");
     updateMeta('meta[property="og:image:width"]', "1200");
     updateMeta('meta[property="og:image:height"]', "630");
-    updateMeta('meta[property="og:image:alt"]', seo.title);
+    updateMeta('meta[property="og:image:alt"]', seo.imageAlt);
     updateMeta('meta[property="og:locale"]', "fr_CA");
     updateMeta('meta[property="og:site_name"]', "IPTV Québec");
 
-    // Twitter Card (Large Image)
+    // Twitter Card metadata (Large Image)
     updateMeta('meta[name="twitter:card"]', "summary_large_image");
     updateMeta('meta[name="twitter:site"]', "@QuebecIPTV");
     updateMeta('meta[name="twitter:creator"]', "@QuebecIPTV");
@@ -111,7 +143,7 @@ export default function SEO({
     updateMeta('meta[name="twitter:title"]', seo.title);
     updateMeta('meta[name="twitter:description"]', seo.description);
     updateMeta('meta[name="twitter:image"]', seo.image);
-    updateMeta('meta[name="twitter:image:alt"]', seo.title);
+    updateMeta('meta[name="twitter:image:alt"]', seo.imageAlt);
 
     // Canonical URL - Critical for preventing duplicate content
     updateLink("canonical", seo.url);
@@ -121,7 +153,7 @@ export default function SEO({
     updateLink("alternate", seo.url, "fr");
     updateLink("alternate", seo.url, "x-default");
 
-  }, [seo.title, seo.description, seo.keywords, seo.image, seo.url, seo.type, noIndex]);
+  }, [seo.title, seo.description, seo.keywords, seo.image, seo.imageAlt, seo.url, seo.type, noIndex]);
 
   return null;
 }

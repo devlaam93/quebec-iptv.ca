@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import ReadingProgress from "@/components/ReadingProgress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -128,6 +129,7 @@ const WordPressPost = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ReadingProgress />
       <SEO
         title={post.metaTitle || post.title}
         description={post.metaDescription || post.excerpt}

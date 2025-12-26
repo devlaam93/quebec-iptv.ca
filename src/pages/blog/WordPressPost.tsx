@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import ReadingProgress from "@/components/ReadingProgress";
+import BackToTop from "@/components/BackToTop";
 import SocialShare from "@/components/SocialShare";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -370,6 +371,7 @@ const WordPressPost = () => {
         </article>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 };

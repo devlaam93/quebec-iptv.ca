@@ -171,27 +171,89 @@ const Tarifs = () => {
         }}
       />
       <StructuredData
-        type="product"
+        type="product-group"
         data={{
-          name: "IPTV Legacy - Abonnement 12 Mois",
-          description: "Forfait IPTV avec +15,000 chaînes TV, +50,000 VOD, sports inclus (NBA, NFL, NHL), qualité UHD/FHD/HD, 2 connexions simultanées et support 24/7.",
-          price: "139",
-          currency: "CAD",
-          availability: "InStock",
+          name: "Abonnements IPTV Québec",
+          description: "Forfaits IPTV premium avec 45 000+ chaînes TV, films et séries en qualité 4K. Activation instantanée, garantie 7 jours.",
+          brand: "IPTV Québec",
           url: "https://quebec-iptv.ca/tarifs",
-          image: "https://quebec-iptv.ca/og-image.jpg",
-        }}
-      />
-      <StructuredData
-        type="product"
-        data={{
-          name: "IPTV Advanced - Abonnement 12 Mois",
-          description: "Forfait IPTV Premium avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium (NBA, NFL, NHL, UFC, F1, PPV), qualité 8K/UHD, 4 connexions simultanées, VPN intégré et support VIP prioritaire.",
-          price: "189",
-          currency: "CAD",
-          availability: "InStock",
-          url: "https://quebec-iptv.ca/tarifs",
-          image: "https://quebec-iptv.ca/og-image.jpg",
+          image: "https://quebec-iptv.ca/og-tarifs.jpg",
+          reviewCount: 2847,
+          ratingValue: 4.9,
+          variants: [
+            {
+              name: "IPTV Legacy - 1 Mois",
+              description: "Forfait IPTV 1 mois avec +15,000 chaînes TV, +50,000 VOD, sports inclus, qualité UHD/FHD/HD, 2 connexions.",
+              sku: "IPTV-LEGACY-1M",
+              price: "19.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 1,
+            },
+            {
+              name: "IPTV Legacy - 3 Mois",
+              description: "Forfait IPTV 3 mois avec +15,000 chaînes TV, +50,000 VOD, sports inclus, qualité UHD/FHD/HD, 2 connexions.",
+              sku: "IPTV-LEGACY-3M",
+              price: "44.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 3,
+            },
+            {
+              name: "IPTV Legacy - 6 Mois",
+              description: "Forfait IPTV 6 mois avec +15,000 chaînes TV, +50,000 VOD, sports inclus, qualité UHD/FHD/HD, 2 connexions.",
+              sku: "IPTV-LEGACY-6M",
+              price: "74.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 6,
+            },
+            {
+              name: "IPTV Legacy - 12 Mois",
+              description: "Forfait IPTV 12 mois avec +15,000 chaînes TV, +50,000 VOD, sports inclus, qualité UHD/FHD/HD, 2 connexions.",
+              sku: "IPTV-LEGACY-12M",
+              price: "139",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 12,
+            },
+            {
+              name: "IPTV Advanced - 1 Mois",
+              description: "Forfait IPTV Premium 1 mois avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium, qualité 8K/UHD, 4 connexions.",
+              sku: "IPTV-ADVANCED-1M",
+              price: "24.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 1,
+            },
+            {
+              name: "IPTV Advanced - 3 Mois",
+              description: "Forfait IPTV Premium 3 mois avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium, qualité 8K/UHD, 4 connexions.",
+              sku: "IPTV-ADVANCED-3M",
+              price: "59.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 3,
+            },
+            {
+              name: "IPTV Advanced - 6 Mois",
+              description: "Forfait IPTV Premium 6 mois avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium, qualité 8K/UHD, 4 connexions.",
+              sku: "IPTV-ADVANCED-6M",
+              price: "99.99",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 6,
+            },
+            {
+              name: "IPTV Advanced - 12 Mois",
+              description: "Forfait IPTV Premium 12 mois avec +45,000 chaînes TV, +100,000 VOD 4K, sports premium, qualité 8K/UHD, 4 connexions.",
+              sku: "IPTV-ADVANCED-12M",
+              price: "189",
+              currency: "CAD",
+              availability: "InStock",
+              subscriptionMonths: 12,
+            },
+          ],
         }}
       />
       <StructuredData

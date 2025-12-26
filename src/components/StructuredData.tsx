@@ -20,13 +20,45 @@ interface ProductData {
   description: string;
   price: string;
   currency: string;
-  availability: "InStock" | "OutOfStock" | "PreOrder";
+  availability: "InStock" | "OutOfStock" | "PreOrder" | "Discontinued";
   url: string;
   image?: string;
   brand?: string;
   sku?: string;
+  gtin?: string;
+  mpn?: string;
   reviewCount?: number;
   ratingValue?: number;
+  /** Price valid until date (ISO format: YYYY-MM-DD) */
+  priceValidUntil?: string;
+  /** Item condition */
+  condition?: "NewCondition" | "UsedCondition" | "RefurbishedCondition";
+  /** Subscription billing details */
+  billingDuration?: string;
+  billingIncrement?: number;
+  unitCode?: string;
+}
+
+interface ProductGroupData {
+  name: string;
+  description: string;
+  brand?: string;
+  url: string;
+  image?: string;
+  reviewCount?: number;
+  ratingValue?: number;
+  /** Multiple product variants (e.g., different subscription durations) */
+  variants: Array<{
+    name: string;
+    description?: string;
+    sku: string;
+    price: string;
+    currency: string;
+    availability: "InStock" | "OutOfStock" | "PreOrder";
+    url?: string;
+    /** Subscription period in months */
+    subscriptionMonths?: number;
+  }>;
 }
 
 interface FAQItem {
@@ -130,6 +162,7 @@ type StructuredDataProps =
   | { type: "organization"; data: OrganizationData }
   | { type: "website"; data: WebSiteData }
   | { type: "product"; data: ProductData }
+  | { type: "product-group"; data: ProductGroupData }
   | { type: "faq"; data: FAQItem[] }
   | { type: "local-business"; data: OrganizationData & { 
       address?: { 
@@ -209,27 +242,71 @@ const StructuredData = (props: StructuredDataProps) => {
         break;
 
       case "product":
+        const priceValidDate = props.data.priceValidUntil || 
+          new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        
         jsonLd = {
           "@context": "https://schema.org",
           "@type": "Product",
+          "@id": `${props.data.url}#product`,
           name: props.data.name,
           description: props.data.description,
-          image: props.data.image,
+          image: props.data.image || "https://quebec-iptv.ca/og-image.jpg",
           brand: {
             "@type": "Brand",
             name: props.data.brand || "IPTV Québec",
           },
-          sku: props.data.sku,
+          ...(props.data.sku && { sku: props.data.sku }),
+          ...(props.data.gtin && { gtin: props.data.gtin }),
+          ...(props.data.mpn && { mpn: props.data.mpn }),
           offers: {
             "@type": "Offer",
+            "@id": `${props.data.url}#offer`,
             price: props.data.price,
             priceCurrency: props.data.currency,
             availability: `https://schema.org/${props.data.availability}`,
+            itemCondition: `https://schema.org/${props.data.condition || "NewCondition"}`,
             url: props.data.url,
-            priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            priceValidUntil: priceValidDate,
             seller: {
               "@type": "Organization",
               name: "IPTV Québec",
+              url: "https://quebec-iptv.ca",
+            },
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: "0",
+                currency: "CAD",
+              },
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 0,
+                  unitCode: "MIN",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 5,
+                  unitCode: "MIN",
+                },
+              },
+              shippingDestination: {
+                "@type": "DefinedRegion",
+                addressCountry: "CA",
+              },
+            },
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: "CA",
+              returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+              merchantReturnDays: 7,
+              returnMethod: "https://schema.org/ReturnByMail",
+              returnFees: "https://schema.org/FreeReturn",
             },
           },
           ...(props.data.reviewCount && props.data.ratingValue && {
@@ -241,6 +318,60 @@ const StructuredData = (props: StructuredDataProps) => {
               worstRating: 1,
             },
           }),
+        };
+        break;
+
+      case "product-group":
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "ProductGroup",
+          "@id": `${props.data.url}#product-group`,
+          name: props.data.name,
+          description: props.data.description,
+          image: props.data.image || "https://quebec-iptv.ca/og-image.jpg",
+          brand: {
+            "@type": "Brand",
+            name: props.data.brand || "IPTV Québec",
+          },
+          url: props.data.url,
+          ...(props.data.reviewCount && props.data.ratingValue && {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: props.data.ratingValue,
+              reviewCount: props.data.reviewCount,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          }),
+          hasVariant: props.data.variants.map((variant, index) => ({
+            "@type": "Product",
+            "@id": `${props.data.url}#variant-${index + 1}`,
+            name: variant.name,
+            description: variant.description || props.data.description,
+            sku: variant.sku,
+            offers: {
+              "@type": "Offer",
+              price: variant.price,
+              priceCurrency: variant.currency,
+              availability: `https://schema.org/${variant.availability}`,
+              itemCondition: "https://schema.org/NewCondition",
+              url: variant.url || props.data.url,
+              priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+              seller: {
+                "@type": "Organization",
+                name: "IPTV Québec",
+              },
+              ...(variant.subscriptionMonths && {
+                priceSpecification: {
+                  "@type": "UnitPriceSpecification",
+                  price: variant.price,
+                  priceCurrency: variant.currency,
+                  billingDuration: variant.subscriptionMonths,
+                  unitCode: "MON",
+                },
+              }),
+            },
+          })),
         };
         break;
 

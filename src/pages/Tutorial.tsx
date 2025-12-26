@@ -49,7 +49,7 @@ const Tutorial = () => {
         description="Installez IPTV en quelques minutes sur Android TV, Fire Stick, iOS, Smart TV. Guides étape par étape avec captures d'écran. Configuration facile!"
         path="/tutorial"
         keywords={["tutoriel IPTV", "installation IPTV", "configurer IPTV", "guide IPTV"]}
-        image="/og-image.jpg"
+        image="/og-tutorial.jpg"
       />
       <StructuredData
         type="article"

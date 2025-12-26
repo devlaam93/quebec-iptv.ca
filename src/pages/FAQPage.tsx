@@ -66,7 +66,7 @@ const FAQPage = () => {
         description="Réponses à vos questions sur l'IPTV : installation, paiement, compatibilité, qualité. Trouvez rapidement l'aide dont vous avez besoin. Support 24/7."
         path="/faq"
         keywords={["FAQ IPTV", "questions IPTV", "aide IPTV", "support IPTV Québec"]}
-        image="/og-image.jpg"
+        image="/og-faq.jpg"
       />
       <StructuredData type="faq" data={faqItems} />
       <StructuredData

@@ -115,7 +115,7 @@ const Blog = () => {
         description="Guides experts et tutoriels IPTV : installation, configuration, comparatifs. Conseils pratiques pour profiter au maximum de votre service IPTV."
         path="/blog"
         keywords={["blog IPTV", "articles IPTV", "guides IPTV", "actualités streaming"]}
-        image="/og-image.jpg"
+        image="/og-blog.jpg"
       />
       <StructuredData
         type="website"

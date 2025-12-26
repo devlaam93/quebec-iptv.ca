@@ -25,6 +25,7 @@ const HeaderLogo = ({ variant = "header" }: HeaderLogoProps) => {
                 alt="IPTV Quebec Premium - Service de streaming TV au Canada" 
                 width={24}
                 height={24}
+                fetchPriority="high"
                 className={`object-contain drop-shadow-lg ${isHeader ? 'w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500' : 'w-5 h-5'}`} 
               />
             </picture>

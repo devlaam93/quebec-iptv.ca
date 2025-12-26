@@ -153,6 +153,12 @@ const Index = () => {
           }
         }}
       />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+        ]}
+      />
       <Header />
       <main id="main-content" role="main">
         <HeroSection />

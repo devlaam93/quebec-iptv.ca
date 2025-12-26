@@ -2,8 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { OptimizedImage } from "@/components/ui/optimized-image";
+
+// Original image
 import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
-// WebP version generated at build time by vite-imagetools
+
+// Responsive srcset - different sizes for different viewports
+import showcaseTv640 from "@/assets/iptv-showcase-tv.jpg?w=640";
+import showcaseTv1024 from "@/assets/iptv-showcase-tv.jpg?w=1024";
+
+// WebP versions for modern browsers
+import showcaseTvWebp640 from "@/assets/iptv-showcase-tv.jpg?w=640&format=webp";
+import showcaseTvWebp1024 from "@/assets/iptv-showcase-tv.jpg?w=1024&format=webp";
 import showcaseTvWebp from "@/assets/iptv-showcase-tv.jpg?format=webp";
 
 const BestChoiceSection = () => {
@@ -20,6 +29,15 @@ const BestChoiceSection = () => {
               <OptimizedImage 
                 src={showcaseTv} 
                 webpSrc={showcaseTvWebp}
+                srcSet={[
+                  { src: showcaseTv640, width: 640 },
+                  { src: showcaseTv1024, width: 1024 },
+                ]}
+                webpSrcSet={[
+                  { src: showcaseTvWebp640, width: 640 },
+                  { src: showcaseTvWebp1024, width: 1024 },
+                ]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
                 width={600}
                 height={400}

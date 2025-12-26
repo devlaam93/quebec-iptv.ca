@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
 
 const BestChoiceSection = () => {
@@ -14,12 +15,11 @@ const BestChoiceSection = () => {
           {/* Left side - Image */}
           <div className="relative order-2 lg:order-1" data-aos="fade-right">
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
-              <img 
+              <OptimizedImage 
                 src={showcaseTv} 
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
                 width={600}
                 height={400}
-                loading="lazy"
                 className="w-full h-auto"
               />
               {/* Glow effect */}

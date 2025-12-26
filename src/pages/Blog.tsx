@@ -5,6 +5,7 @@ import StructuredData from "@/components/StructuredData";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 
@@ -184,13 +185,12 @@ const Blog = () => {
                   onClick={() => handleArticleClick(post)}
                 >
                   {post.image ? (
-                    <img 
+                    <OptimizedImage 
                       src={post.image} 
                       alt={post.imageAlt || `Article: ${post.title} - Guide IPTV Quebec`}
                       width={400}
                       height={225}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">

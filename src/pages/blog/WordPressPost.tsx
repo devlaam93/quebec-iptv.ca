@@ -5,11 +5,12 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import ReadingProgress from "@/components/ReadingProgress";
+import SocialShare from "@/components/SocialShare";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Tag, Loader2, Globe } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
@@ -116,25 +117,6 @@ const WordPressPost = () => {
       </div>
     );
   }
-
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: post.title,
-          text: post.excerpt,
-          url: url,
-        });
-      } catch (err) {
-        console.log("Share cancelled");
-      }
-    } else {
-      navigator.clipboard.writeText(url);
-      alert("Lien copié dans le presse-papier!");
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <ReadingProgress />
@@ -211,10 +193,15 @@ const WordPressPost = () => {
                 <Clock className="w-4 h-4" />
                 {post.readTime}
               </div>
-              <Button variant="ghost" size="sm" onClick={handleShare}>
-                <Share2 className="w-4 h-4 mr-2" />
-                Partager
-              </Button>
+            </div>
+            
+            {/* Social Share Buttons */}
+            <div className="mt-6 pt-6 border-t border-border">
+              <SocialShare 
+                url={`https://quebec-iptv.ca/blog/${post.slug}`}
+                title={post.title}
+                description={post.excerpt}
+              />
             </div>
           </div>
 

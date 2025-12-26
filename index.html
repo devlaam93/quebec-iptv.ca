@@ -16,17 +16,14 @@
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://api.whatsapp.com" />
     
     <!-- DNS Prefetch for additional resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="https://iptv-dashboard-xi.vercel.app" />
 
-    <!-- Preload critical above-the-fold images for LCP optimization -->
-    <link rel="preload" href="/og-image.jpg" as="image" type="image/jpeg" />
+    <!-- Preload critical above-the-fold assets for LCP optimization -->
     <link rel="preload" as="image" href="/src/assets/hero-background.jpg" type="image/jpeg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/src/assets/iptv-quebec-premium-logo.png" type="image/png" />
+    <link rel="preload" as="image" href="/src/assets/iptv-quebec-premium-logo.png" type="image/png" fetchpriority="high" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -34,6 +31,8 @@
     <meta property="og:title" content="Quebec IPTV - Meilleur Service IPTV au Quebec | +45,000 Chaines" />
     <meta property="og:description" content="Service IPTV premium au Quebec avec +45,000 chaines TV, films et series en 4K/HD. Essai gratuit 24h. Support 24/7." />
     <meta property="og:image" content="https://quebec-iptv.ca/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="fr_CA" />
     <meta property="og:site_name" content="Quebec IPTV" />
 
@@ -46,6 +45,9 @@
     <meta name="twitter:description" content="Service IPTV premium au Quebec avec +45,000 chaines TV, films et series en 4K/HD." />
     <meta name="twitter:image" content="https://quebec-iptv.ca/og-image.jpg" />
     <meta name="twitter:image:alt" content="Quebec IPTV - Service IPTV Premium" />
+
+    <!-- Performance hints -->
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
   </head>
 
   <body>

@@ -327,3 +327,53 @@ All colors MUST be HSL.
 .animate-particle {
   animation: particle-burst 0.7s ease-out forwards;
 }
+
+/* Performance optimizations */
+
+/* Reduce paint areas for below-the-fold sections */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Optimize animations for GPU acceleration */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce,
+  .animate-spin,
+  .animate-shimmer,
+  .animate-glow-pulse,
+  .animate-float-slow,
+  .animate-ping-slow {
+    animation: none !important;
+  }
+}
+
+/* Optimize image rendering */
+img {
+  content-visibility: auto;
+}
+
+/* Font display optimization */
+@font-face {
+  font-display: swap;
+}

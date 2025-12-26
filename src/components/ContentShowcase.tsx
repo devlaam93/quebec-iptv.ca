@@ -487,7 +487,7 @@ const ContentShowcase = () => {
           
           {/* Logo */}
           <div className="absolute inset-2 bg-background/80 rounded-xl flex items-center justify-center overflow-hidden">
-            <img src={channel.logo} alt={`Logo de la chaîne ${channel.name} - diffusion en direct disponible`} width={64} height={64} loading="lazy" className="w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-110" />
+            <img src={channel.logo} alt={`Logo de la chaîne ${channel.name} - diffusion en direct disponible`} width={64} height={64} loading="lazy" decoding="async" className="w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-110" />
           </div>
           
           {/* Glow ring on hover */}

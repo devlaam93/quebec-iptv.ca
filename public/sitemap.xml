@@ -2,114 +2,116 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://quebec-iptv.ca/</loc>
-    <lastmod>2025-01-26</lastmod>
+    <loc>https://quebec-iptv.ca</loc>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Main Pages (priority 0.8) -->
+  <!-- Main Pages (priority 0.9) -->
   <url>
     <loc>https://quebec-iptv.ca/tarifs</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/essai-gratuit</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/liste-chaines</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- Content Pages (priority 0.8) -->
   <url>
     <loc>https://quebec-iptv.ca/blog</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/tutorial</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/faq</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/contact</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/revendeur</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   
   <!-- Blog Posts (priority 0.6) -->
   <url>
     <loc>https://quebec-iptv.ca/blog/meilleur-service-iptv-quebec</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/comment-fonctionne-iptv</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/iptv-legal-quebec</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/meilleure-application-iptv</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/installer-iptv-montreal</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/fire-stick-iptv</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/apps-gratuites-firestick</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/acheter-code-iptv</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/blog/ibo-player-guide</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -117,43 +119,43 @@
   <!-- Legal/Policy Pages (priority 0.3) -->
   <url>
     <loc>https://quebec-iptv.ca/politique-remboursement</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/politique-confidentialite</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/conditions-generales</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/conditions-paiement</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/annulation-commande</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/dmca-policy</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
     <loc>https://quebec-iptv.ca/avis-non-responsabilite</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

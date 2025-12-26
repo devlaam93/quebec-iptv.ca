@@ -21,6 +21,7 @@ import Contact from "./pages/Contact";
 import DmcaPolicy from "./pages/DmcaPolicy";
 import AvisNonResponsabilite from "./pages/AvisNonResponsabilite";
 import ConditionsPaiement from "./pages/ConditionsPaiement";
+import Accessibilite from "./pages/Accessibilite";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollToTop from "./components/ScrollToTop";
 import RouteAnnouncer from "./components/RouteAnnouncer";
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/essai-gratuit" element={<EssaiGratuit />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/accessibilite" element={<Accessibilite />} />
         <Route path="/annulation-commande" element={<AnnulationCommande />} />
         <Route path="/politique-remboursement" element={<PolitiqueRemboursement />} />
         <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />

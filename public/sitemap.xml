@@ -255,6 +255,18 @@
   </url>
 
   <!-- ============================================ -->
+  <!-- ACCESSIBILITY PAGE - Medium Priority (0.5) -->
+  <!-- ============================================ -->
+  <url>
+    <loc>https://quebec-iptv.ca/accessibilite</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://quebec-iptv.ca/accessibilite"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://quebec-iptv.ca/accessibilite"/>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ============================================ -->
   <!-- LEGAL PAGES - Low Priority (0.3-0.4) -->
   <!-- ============================================ -->
   <url>

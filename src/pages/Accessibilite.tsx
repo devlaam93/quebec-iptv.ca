@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Eye, 
@@ -91,6 +92,25 @@ const Accessibilite = () => {
       <SEO 
         title="Déclaration d'Accessibilité | IPTV Quebec"
         description="Notre engagement pour l'accessibilité numérique. Découvrez les mesures prises pour rendre notre site accessible à tous selon les normes WCAG 2.1 AA."
+        path="/accessibilite"
+      />
+      <StructuredData
+        type="article"
+        data={{
+          headline: "Déclaration d'Accessibilité - IPTV Québec",
+          description: "Engagement pour l'accessibilité numérique selon les normes WCAG 2.1 AA. Navigation au clavier, lecteurs d'écran, contraste des couleurs.",
+          datePublished: "2025-01-01",
+          dateModified: "2025-01-15",
+          author: "IPTV Québec",
+          url: "https://quebec-iptv.ca/accessibilite",
+        }}
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Accessibilité", url: "https://quebec-iptv.ca/accessibilite" },
+        ]}
       />
 
       <article className="max-w-4xl mx-auto">

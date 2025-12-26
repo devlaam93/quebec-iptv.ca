@@ -1,5 +1,6 @@
 import { useState, ImgHTMLAttributes, useMemo, useRef, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { imageCache } from "@/lib/image-cache";
 
 /**
  * Responsive image source set configuration
@@ -242,9 +243,12 @@ const OptimizedImage = ({
   className,
   ...props
 }: OptimizedImageProps) => {
+  // Check if image is already in global cache
+  const isCachedGlobally = imageCache.peek(src);
+  
   const [hasError, setHasError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [showPlaceholder, setShowPlaceholder] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(isCachedGlobally);
+  const [showPlaceholder, setShowPlaceholder] = useState(!isCachedGlobally);
   const imgRef = useRef<HTMLImageElement>(null);
   
   // Use intersection observer for non-priority images
@@ -311,7 +315,14 @@ const OptimizedImage = ({
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
-  }, []);
+    // Add to global cache
+    if (imgRef.current) {
+      imageCache.set(src, {
+        width: imgRef.current.naturalWidth,
+        height: imgRef.current.naturalHeight,
+      });
+    }
+  }, [src]);
 
   const containerStyles: React.CSSProperties = {
     position: 'relative',

@@ -1,8 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import heroBackground from "@/assets/hero-background.jpg";
+
+// Preload hero background image for LCP optimization
+const preloadHeroImage = () => {
+  if (typeof window !== 'undefined') {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = heroBackground;
+    link.fetchPriority = 'high';
+    // Only add if not already preloaded
+    if (!document.querySelector(`link[href="${heroBackground}"]`)) {
+      document.head.appendChild(link);
+    }
+  }
+};
 
 // Live viewer count with fluctuation
 const useLiveViewerCount = (min: number, max: number) => {
@@ -20,6 +35,11 @@ const useLiveViewerCount = (min: number, max: number) => {
 };
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
+  
+  // Preload hero image as early as possible
+  useLayoutEffect(() => {
+    preloadHeroImage();
+  }, []);
   return <section 
     aria-labelledby="hero-heading"
     className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" 

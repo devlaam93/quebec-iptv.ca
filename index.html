@@ -23,8 +23,10 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="dns-prefetch" href="https://iptv-dashboard-xi.vercel.app" />
 
-    <!-- Preload critical assets -->
+    <!-- Preload critical above-the-fold images for LCP optimization -->
     <link rel="preload" href="/og-image.jpg" as="image" type="image/jpeg" />
+    <link rel="preload" as="image" href="/src/assets/hero-background.jpg" type="image/jpeg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/src/assets/iptv-quebec-premium-logo.png" type="image/png" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

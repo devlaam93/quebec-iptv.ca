@@ -78,7 +78,7 @@ const RenewalPlans = () => {
     features: ["Qualité 8K / UHD / FHD / HD", "Catch-up TV (14 jours)", "Guide TV électronique (EPG)", "Anti-Freeze™ 9.9 Pro", "VPN Premium intégré", "4 connexions simultanées", "Support VIP prioritaire", "Activation instantanée", "Mises à jour prioritaires", "Chaînes adultes incluses"],
     isPopular: true
   }];
-  return <section ref={sectionRef} id="renewal" className="py-16 lg:py-24 relative overflow-hidden">
+  return <section ref={sectionRef} id="renewal" aria-labelledby="plans-heading" className="py-16 lg:py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-card"></div>
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
@@ -100,7 +100,7 @@ const RenewalPlans = () => {
               Jusqu'à 30% de Réduction
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground mb-4">
+          <h2 id="plans-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground mb-4">
             Choisissez votre <span className="text-primary">Forfait</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-lg mx-auto">

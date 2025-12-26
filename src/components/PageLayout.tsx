@@ -31,6 +31,7 @@ const PageLayout = ({
       <Header />
       
       <main 
+        role="main"
         className={cn(
           "flex-1 pt-32 sm:pt-28",
           container && "container mx-auto px-4 sm:px-6 pb-12 sm:pb-20",

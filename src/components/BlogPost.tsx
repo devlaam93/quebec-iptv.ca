@@ -74,61 +74,64 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
         ]}
       />
       <Header />
-      <main className="pt-20">
+      <main className="pt-20" role="main">
         {/* Hero Section */}
-        <article className="max-w-4xl mx-auto px-4 py-12">
-          <Button 
-            variant="ghost" 
-            className="mb-6"
-            onClick={() => window.history.back()}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour au blog
-          </Button>
+        <article className="max-w-4xl mx-auto px-4 py-12" itemScope itemType="https://schema.org/Article">
+          <nav aria-label="Retour">
+            <Button 
+              variant="ghost" 
+              className="mb-6"
+              onClick={() => window.history.back()}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Retour au blog
+            </Button>
+          </nav>
 
-          <div className="mb-6">
+          <header className="mb-6">
             <Badge variant="secondary" className="mb-4">{category}</Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight" itemProp="headline">
               {title}
             </h1>
-            <p className="text-xl text-muted-foreground mb-6">
+            <p className="text-xl text-muted-foreground mb-6" itemProp="description">
               {excerpt}
             </p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                {date}
+                <time dateTime={parseDate(date)} itemProp="datePublished">{date}</time>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                {readTime}
+                <span>{readTime}</span>
               </div>
               <Button variant="ghost" size="sm">
                 <Share2 className="w-4 h-4 mr-2" />
                 Partager
               </Button>
             </div>
-          </div>
+          </header>
 
           {/* Featured Image with Watermark */}
-          <div className="relative mb-12 rounded-xl overflow-hidden">
+          <figure className="relative mb-12 rounded-xl overflow-hidden">
             <img 
               src={image} 
               alt={title}
               className="w-full h-auto object-cover"
+              itemProp="image"
             />
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">
               <img src={logo} alt="IPTV Quebec" className="h-6" />
             </div>
-          </div>
+          </figure>
 
           {/* Article Content */}
-          <div className="prose prose-lg dark:prose-invert max-w-none">
+          <section className="prose prose-lg dark:prose-invert max-w-none" itemProp="articleBody">
             {content}
-          </div>
+          </section>
 
           {/* Call to Action */}
-          <div className="mt-12 p-8 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">
+          <aside className="mt-12 p-8 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">
             <h3 className="text-2xl font-bold mb-4">
               Prêt à profiter de l'IPTV au Québec ?
             </h3>
@@ -137,14 +140,14 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
               support 24/7 et activation instantanée.
             </p>
             <div className="flex gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Voir nos forfaits
+              <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
+                <a href="/tarifs">Voir nos forfaits</a>
               </Button>
-              <Button size="lg" variant="outline">
-                Essai gratuit
+              <Button size="lg" variant="outline" asChild>
+                <a href="/essai-gratuit">Essai gratuit</a>
               </Button>
             </div>
-          </div>
+          </aside>
         </article>
       </main>
       <Footer />

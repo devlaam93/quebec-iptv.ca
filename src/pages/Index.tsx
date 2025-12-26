@@ -70,15 +70,19 @@ const Index = () => {
         }}
       />
       <Header />
-      <main>
-        <HeroSection />
+      <main role="main">
+        <article>
+          <HeroSection />
+        </article>
         <ContentShowcase />
         <RenewalPlans />
         <Features />
         <BestChoiceSection />
         <FreeTrialSection />
         <DeviceCompatibility />
-        <FAQ />
+        <aside aria-label="Questions fréquentes">
+          <FAQ />
+        </aside>
       </main>
       <Footer />
       

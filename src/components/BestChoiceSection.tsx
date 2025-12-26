@@ -16,7 +16,10 @@ const BestChoiceSection = () => {
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
               <img 
                 src={showcaseTv} 
-                alt="Interface IPTV Quebec sur smart TV" 
+                alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
+                width={600}
+                height={400}
+                loading="lazy"
                 className="w-full h-auto"
               />
               {/* Glow effect */}

@@ -18,7 +18,9 @@ const HeaderLogo = ({ variant = "header" }: HeaderLogoProps) => {
           <div className={`bg-gradient-to-br from-background to-background/95 rounded-[50%] backdrop-blur-sm ${isHeader ? 'p-1 sm:p-1.5' : 'p-1'}`}>
             <img 
               src={animatedLogo} 
-              alt="IPTV Quebec Premium" 
+              alt="IPTV Quebec Premium - Service de streaming TV au Canada" 
+              width={24}
+              height={24}
               className={`object-contain drop-shadow-lg ${isHeader ? 'w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500' : 'w-5 h-5'}`} 
             />
           </div>

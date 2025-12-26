@@ -89,7 +89,7 @@ const DeviceCompatibility = () => {
                   {/* Device Icon Container - Circular like channel logos */}
                   <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary-glow/20 hover:scale-110 transition-all duration-300 shadow-elegant hover:shadow-glow">
                     <div className="w-full h-full rounded-full bg-background/50 backdrop-blur-sm border-2 border-primary/30 flex items-center justify-center p-2 group-hover:bg-primary/10 group-hover:border-primary/60 transition-all duration-300">
-                      <img src={device.logo} alt={`${device.name} logo`} className="w-8 h-8 md:w-10 md:h-10 object-contain filter drop-shadow-lg grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                      <img src={device.logo} alt={`Logo ${device.name} - application IPTV compatible`} width={40} height={40} loading="lazy" className="w-8 h-8 md:w-10 md:h-10 object-contain filter drop-shadow-lg grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
                     </div>
                   </div>
                 </div>

@@ -246,7 +246,10 @@ const EssaiGratuit = () => {
                       <img 
                         key={i} 
                         src={client.src} 
-                        alt={`Photo de ${client.name}, client satisfait`} 
+                        alt={`Photo de profil de ${client.name}, client satisfait du service IPTV Quebec`} 
+                        width={36}
+                        height={36}
+                        loading="lazy"
                         className="w-9 h-9 rounded-full border-2 border-background object-cover" 
                       />
                     ))}

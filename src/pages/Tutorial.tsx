@@ -45,7 +45,7 @@ const Tutorial = () => {
   return (
     <PageLayout>
       <SEO
-        title="Tutoriels Installation IPTV - Guides pour Tous Appareils"
+        title="Guide Installation IPTV | Tutoriels Tous Appareils"
         description="Guides d'installation IPTV étape par étape pour Android TV, iOS, Fire Stick, Smart TV Samsung, LG et plus. Configuration facile en quelques minutes."
         path="/tutorial"
         keywords={["tutoriel IPTV", "installation IPTV", "configurer IPTV", "guide IPTV"]}

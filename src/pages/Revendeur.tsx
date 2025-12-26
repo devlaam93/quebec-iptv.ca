@@ -10,7 +10,7 @@ const Revendeur = () => {
   return (
     <PageLayout>
       <SEO
-        title="Programme Revendeur IPTV - Devenez Partenaire"
+        title="Programme Revendeur IPTV | Devenez Partenaire"
         description="Rejoignez notre programme revendeur IPTV. Tarifs préférentiels, panel de gestion, support dédié et marges attractives. Développez votre business IPTV."
         path="/revendeur"
         keywords={["revendeur IPTV", "partenaire IPTV", "revente IPTV", "panel revendeur"]}

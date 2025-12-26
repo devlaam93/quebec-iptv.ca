@@ -111,7 +111,7 @@ const Blog = () => {
   return (
     <PageLayout heroSection>
       <SEO
-        title="Blog IPTV Québec - Guides, Tutoriels et Actualités"
+        title="Blog IPTV Québec | Guides, Tutoriels et Actualités"
         description="Articles experts sur l'IPTV au Québec : guides d'installation, comparatifs, tutoriels et conseils. Restez informé sur les dernières nouveautés IPTV."
         path="/blog"
         keywords={["blog IPTV", "articles IPTV", "guides IPTV", "actualités streaming"]}

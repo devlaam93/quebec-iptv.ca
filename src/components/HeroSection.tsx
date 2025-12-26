@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, memo } from "react";
 import heroBackground from "@/assets/hero-background.jpg";
 
 // Preload hero background image for LCP optimization
@@ -11,6 +11,7 @@ const preloadHeroImage = () => {
     link.rel = 'preload';
     link.as = 'image';
     link.href = heroBackground;
+    // @ts-ignore - fetchPriority is valid but not in TS types
     link.fetchPriority = 'high';
     // Only add if not already preloaded
     if (!document.querySelector(`link[href="${heroBackground}"]`)) {
@@ -19,7 +20,7 @@ const preloadHeroImage = () => {
   }
 };
 
-// Live viewer count with fluctuation
+// Live viewer count with fluctuation - memoized for performance
 const useLiveViewerCount = (min: number, max: number) => {
   const baseCount = useRef(Math.floor(Math.random() * (max - min + 1)) + min).current;
   const [count, setCount] = useState(baseCount);
@@ -33,6 +34,37 @@ const useLiveViewerCount = (min: number, max: number) => {
   }, [min, max]);
   return count;
 };
+
+// Memoized background elements for performance
+const BackgroundElements = memo(() => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Glowing orbs */}
+    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[100px] animate-glow-pulse" />
+    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-glow-pulse" style={{ animationDelay: '1s' }} />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] animate-glow-pulse" style={{ animationDelay: '2s' }} />
+    
+    {/* Floating icons - hidden on mobile for performance */}
+    <div className="absolute top-32 left-[10%] text-primary/30 animate-float-slow hidden lg:block" style={{ animationDelay: '0s' }}>
+      <Tv className="w-12 h-12" aria-hidden="true" />
+    </div>
+    <div className="absolute top-48 right-[15%] text-primary/20 animate-float-slow hidden lg:block" style={{ animationDelay: '1s' }}>
+      <Play className="w-10 h-10" aria-hidden="true" />
+    </div>
+    <div className="absolute bottom-32 left-[20%] text-primary/25 animate-float-slow hidden lg:block" style={{ animationDelay: '2s' }}>
+      <Zap className="w-8 h-8" aria-hidden="true" />
+    </div>
+    <div className="absolute bottom-48 right-[10%] text-primary/15 animate-float-slow hidden lg:block" style={{ animationDelay: '0.5s' }}>
+      <Star className="w-10 h-10" aria-hidden="true" />
+    </div>
+    
+    {/* Animated particles/dots - reduced for performance */}
+    <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary/40 rounded-full animate-ping-slow hidden md:block" />
+    <div className="absolute top-2/3 right-[8%] w-2 h-2 bg-primary/30 rounded-full animate-ping-slow hidden md:block" style={{ animationDelay: '0.5s' }} />
+  </div>
+));
+
+BackgroundElements.displayName = 'BackgroundElements';
+
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
   
@@ -40,61 +72,19 @@ const HeroSection = () => {
   useLayoutEffect(() => {
     preloadHeroImage();
   }, []);
-  return <section 
-    aria-labelledby="hero-heading"
-    className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" 
-    style={{
-      backgroundImage: `linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95)), url(${heroBackground})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed'
-    }}
-  >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Glowing orbs */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[100px] animate-glow-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-glow-pulse" style={{
-        animationDelay: '1s'
-      }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] animate-glow-pulse" style={{
-        animationDelay: '2s'
-      }} />
-        
-        {/* Floating icons */}
-        <div className="absolute top-32 left-[10%] text-primary/30 animate-float-slow hidden lg:block" style={{
-        animationDelay: '0s'
-      }}>
-          <Tv className="w-12 h-12" />
-        </div>
-        <div className="absolute top-48 right-[15%] text-primary/20 animate-float-slow hidden lg:block" style={{
-        animationDelay: '1s'
-      }}>
-          <Play className="w-10 h-10" />
-        </div>
-        <div className="absolute bottom-32 left-[20%] text-primary/25 animate-float-slow hidden lg:block" style={{
-        animationDelay: '2s'
-      }}>
-          <Zap className="w-8 h-8" />
-        </div>
-        <div className="absolute bottom-48 right-[10%] text-primary/15 animate-float-slow hidden lg:block" style={{
-        animationDelay: '0.5s'
-      }}>
-          <Star className="w-10 h-10" />
-        </div>
-        
-        {/* Animated particles/dots */}
-        <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary/40 rounded-full animate-ping-slow" />
-        <div className="absolute top-2/3 right-[8%] w-2 h-2 bg-primary/30 rounded-full animate-ping-slow" style={{
-        animationDelay: '0.5s'
-      }} />
-        <div className="absolute bottom-1/4 left-[30%] w-1.5 h-1.5 bg-primary/35 rounded-full animate-ping-slow" style={{
-        animationDelay: '1s'
-      }} />
-        <div className="absolute top-1/4 right-[25%] w-1.5 h-1.5 bg-primary/25 rounded-full animate-ping-slow" style={{
-        animationDelay: '1.5s'
-      }} />
-      </div>
+
+  return (
+    <section 
+      aria-labelledby="hero-heading"
+      className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" 
+      style={{
+        backgroundImage: `linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95)), url(${heroBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'scroll' // Changed from 'fixed' for better mobile performance
+      }}
+    >
+      <BackgroundElements />
       
       <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
         <div className="w-full max-w-4xl space-y-6 sm:space-y-8 flex flex-col items-center">
@@ -136,32 +126,37 @@ const HeroSection = () => {
             Compatible avec toutes les plateformes pour un streaming fluide et une activation instantanée.
           </p>
           
+          
           {/* Feature pills */}
           <div className="opacity-0 animate-fade-in-up-delay-2 flex flex-wrap justify-center gap-2 sm:gap-3">
-            {['Activation Instantanée', 'Support 24/7', 'Qualité 4K', 'Multi-Écrans'].map((feature, index) => <div key={feature} className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary/50 border border-border/50 rounded-full text-xs sm:text-sm text-muted-foreground backdrop-blur-sm">
-                <CheckCircle className="w-3.5 h-3.5 text-primary" />
+            {['Activation Instantanée', 'Support 24/7', 'Qualité 4K', 'Multi-Écrans'].map((feature) => (
+              <div key={feature} className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary/50 border border-border/50 rounded-full text-xs sm:text-sm text-muted-foreground backdrop-blur-sm">
+                <CheckCircle className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
                 {feature}
-              </div>)}
+              </div>
+            ))}
           </div>
 
           {/* CTA Buttons */}
           <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 w-full">
-            <Button variant="renewal" size="lg" className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group relative overflow-hidden shadow-glow hover:shadow-[0_0_40px_hsl(16,100%,60%,0.5)] transition-all duration-300" onClick={() => {
-            const element = document.getElementById('renewal');
-            element?.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }}>
+            <Button 
+              variant="renewal" 
+              size="lg" 
+              className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group relative overflow-hidden shadow-glow hover:shadow-[0_0_40px_hsl(16,100%,60%,0.5)] transition-all duration-300" 
+              onClick={() => {
+                const element = document.getElementById('renewal');
+                element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
               <span className="relative z-10 flex items-center gap-2">
-                <Zap className="w-4 h-4" />
+                <Zap className="w-4 h-4" aria-hidden="true" />
                 S'abonner Maintenant
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </Button>
             <Button variant="outline-hero" size="lg" className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group" asChild>
               <Link to="/essai-gratuit" className="flex items-center gap-2">
-                <Play className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <Play className="w-4 h-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
                 Essai Gratuit 24H
               </Link>
             </Button>
@@ -170,16 +165,18 @@ const HeroSection = () => {
           {/* Trust indicators */}
           <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row items-center gap-4 pt-4">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
+              <div className="flex items-center gap-1" aria-label="Note de 4.9 sur 5 étoiles">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-primary text-primary" aria-hidden="true" />
+                ))}
               </div>
               <span className="text-sm text-muted-foreground">
                 <span className="text-foreground font-medium">4.9/5</span> basé sur 2000+ avis
               </span>
             </div>
-            <div className="hidden sm:block w-px h-4 bg-border" />
+            <div className="hidden sm:block w-px h-4 bg-border" aria-hidden="true" />
             <div className="flex items-center gap-2 text-sm">
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
               </span>
@@ -192,7 +189,9 @@ const HeroSection = () => {
       </div>
       
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-    </section>;
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" aria-hidden="true" />
+    </section>
+  );
 };
+
 export default HeroSection;

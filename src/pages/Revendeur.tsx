@@ -14,6 +14,7 @@ const Revendeur = () => {
         description="Lancez votre business IPTV avec notre programme revendeur. Marges jusqu'à 40%, panel de gestion inclus, support dédié. Rejoignez notre réseau!"
         path="/revendeur"
         keywords={["revendeur IPTV", "partenaire IPTV", "revente IPTV", "panel revendeur"]}
+        image="/og-image.jpg"
       />
       <StructuredData
         type="breadcrumb"

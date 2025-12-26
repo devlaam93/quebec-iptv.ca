@@ -14,13 +14,13 @@ const WhatsAppButton = () => {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-24 lg:bottom-6 right-4 lg:right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:bg-[#20bd5a] animate-pulse"
+      className="fixed bottom-24 lg:bottom-6 right-4 lg:right-6 z-50 flex h-14 w-14 min-w-[56px] min-h-[56px] items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:bg-[#20bd5a] animate-pulse touch-manipulation"
       aria-label="Contacter sur WhatsApp"
     >
       <WhatsAppIcon />
-      <span className="absolute -top-1 -right-1 flex h-4 w-4">
+      <span className="absolute -top-1 -right-1 flex h-5 w-5">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 text-[10px] text-white items-center justify-center font-bold">1</span>
+        <span className="relative inline-flex rounded-full h-5 w-5 bg-red-500 text-xs text-white items-center justify-center font-bold">1</span>
       </span>
     </a>
   );

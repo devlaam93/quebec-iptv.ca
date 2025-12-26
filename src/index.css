@@ -106,8 +106,32 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Minimum text size for mobile accessibility */
+  @media (max-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+    
+    p, li, span, label, a {
+      font-size: max(1rem, 16px);
+    }
+    
+    /* Prevent zoom on input focus for iOS */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 
   /* ========================================

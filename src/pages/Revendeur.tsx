@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Users, TrendingUp, Headphones, Shield, Zap } from "lucide-react";
@@ -13,6 +14,13 @@ const Revendeur = () => {
         description="Rejoignez notre programme revendeur IPTV. Tarifs préférentiels, panel de gestion, support dédié et marges attractives. Développez votre business IPTV."
         path="/revendeur"
         keywords={["revendeur IPTV", "partenaire IPTV", "revente IPTV", "panel revendeur"]}
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Revendeur", url: "https://quebec-iptv.ca/revendeur" },
+        ]}
       />
       {/* Hero Section */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-background to-muted/20">

@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, CheckCircle2, AlertCircle, Scale, Shield, Users } from "lucide-react";
 
@@ -11,6 +12,13 @@ const ConditionsGenerales = () => {
         description="Consultez les conditions générales d'utilisation du service IPTV Québec. Règles d'utilisation, droits et obligations des utilisateurs."
         path="/conditions-generales"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Conditions Generales", url: "https://quebec-iptv.ca/conditions-generales" },
+        ]}
       />
       {/* Hero Section */}
       <div className="text-center mb-12 sm:mb-16">

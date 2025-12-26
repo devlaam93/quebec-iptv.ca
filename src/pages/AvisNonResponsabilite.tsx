@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle, Info, Shield } from "lucide-react";
 
@@ -11,6 +12,13 @@ const AvisNonResponsabilite = () => {
         description="Avis de non-responsabilité et limitations d'utilisation du service IPTV Québec. Informations importantes sur les conditions du service."
         path="/avis-non-responsabilite"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Avis de Non-Responsabilite", url: "https://quebec-iptv.ca/avis-non-responsabilite" },
+        ]}
       />
       {/* Hero Section */}
       <section className="bg-gradient-hero border-b border-border/50 pt-36 sm:pt-40 pb-16 sm:pb-20">

@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, CheckCircle, XCircle, AlertTriangle, Clock } from "lucide-react";
@@ -12,6 +13,13 @@ const PolitiqueRemboursement = () => {
         description="Politique de remboursement IPTV Québec. Conditions, délais et procédure pour demander un remboursement de votre abonnement IPTV."
         path="/politique-remboursement"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Politique de Remboursement", url: "https://quebec-iptv.ca/politique-remboursement" },
+        ]}
       />
       {/* Hero Section */}
         <div className="text-center mb-12 sm:mb-16">

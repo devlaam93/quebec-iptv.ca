@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Clock, RefreshCw, CheckCircle } from "lucide-react";
@@ -12,6 +13,13 @@ const AnnulationCommande = () => {
         description="Politique d'annulation de commande IPTV Québec. Découvrez les conditions et démarches pour annuler votre abonnement IPTV."
         path="/annulation-commande"
         noIndex
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: "Accueil", url: "https://quebec-iptv.ca" },
+          { name: "Annulation de Commande", url: "https://quebec-iptv.ca/annulation-commande" },
+        ]}
       />
       {/* Hero Section */}
       <div className="text-center mb-12 sm:mb-16">

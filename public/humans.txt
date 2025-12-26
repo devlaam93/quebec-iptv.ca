@@ -1,0 +1,64 @@
+/* TEAM */
+
+Company: IPTV Québec
+Location: Montréal, Québec, Canada
+Contact: support@quebec-iptv.ca
+Languages: Français, English
+
+/* SITE */
+
+Last update: 2024-12-26
+Standards: HTML5, CSS3, ECMAScript 2024
+Components: React 18, TypeScript 5
+Build: Vite 5
+Hosting: Lovable Cloud
+
+/* TECHNOLOGY STACK */
+
+Frontend:
+- React 18.3
+- TypeScript 5
+- Tailwind CSS 3
+- Vite 5
+- React Router 6
+
+UI Components:
+- Radix UI (Accordion, Dialog, Dropdown, Tabs, Toast)
+- Lucide React (Icons)
+- Shadcn/ui
+- Framer Motion (Animations)
+
+Backend:
+- Supabase (Database, Auth, Storage)
+- Edge Functions (Serverless)
+- PostgreSQL
+
+Payments:
+- Stripe
+- PayPal
+- Interac e-Transfer
+- Cryptocurrency
+
+Analytics & SEO:
+- Schema.org JSON-LD
+- Open Graph
+- Twitter Cards
+- Sitemap XML
+
+/* THANKS */
+
+Built with Lovable - https://lovable.dev
+Icons by Lucide - https://lucide.dev
+UI by Radix - https://radix-ui.com
+Styling by Tailwind - https://tailwindcss.com
+Backend by Supabase - https://supabase.com
+
+/* COLOPHON */
+
+This site was designed and built with care in Québec, Canada.
+We believe in accessible, fast, and user-friendly web experiences.
+
+Site: https://quebec-iptv.ca
+Sitemap: https://quebec-iptv.ca/sitemap.xml
+Robots: https://quebec-iptv.ca/robots.txt
+LLM Info: https://quebec-iptv.ca/llm.html

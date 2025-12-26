@@ -33,7 +33,11 @@ const PromoBanner = ({
         
         
         
-        <button onClick={handleClose} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors" aria-label="Fermer la bannière">
+        <button 
+          onClick={handleClose} 
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-destructive" 
+          aria-label="Fermer la bannière promotionnelle"
+        >
           <X className="w-4 h-4" />
         </button>
       </div>

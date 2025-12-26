@@ -222,7 +222,8 @@ const EssaiGratuit = () => {
                 {features.map((item, i) => (
                   <div 
                     key={i} 
-                    className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 cursor-default group"
+                    className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 group"
+                    aria-label={item.label}
                   >
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-primary group-hover:scale-110">
                       <item.icon className="w-5 h-5 text-primary transition-colors duration-300 group-hover:text-primary-foreground" />

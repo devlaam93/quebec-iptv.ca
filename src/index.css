@@ -110,6 +110,38 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
+  /* High contrast focus indicators - WCAG 2.1 AA compliant */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--focus));
+    outline-offset: 2px;
+  }
+
+  /* Enhanced focus for interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid hsl(var(--focus));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Remove default focus ring for mouse users */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* High contrast mode support */
+  @media (forced-colors: active) {
+    *:focus-visible {
+      outline: 3px solid CanvasText;
+      outline-offset: 2px;
+    }
+  }
+
   /* Reduced motion preferences - WCAG 2.1 AAA */
   @media (prefers-reduced-motion: reduce) {
     *,

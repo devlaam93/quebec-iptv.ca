@@ -67,19 +67,25 @@ User-agent: TelegramBot
 Allow: /
 
 # AI Bots - Allow for enhanced visibility
+# LLM-friendly page with structured company information: /llm.html
 User-agent: GPTBot
+Allow: /llm.html
 Allow: /
 
 User-agent: PerplexityBot
+Allow: /llm.html
 Allow: /
 
 User-agent: ChatGPT-User
+Allow: /llm.html
 Allow: /
 
 User-agent: Claude-Web
+Allow: /llm.html
 Allow: /
 
 User-agent: Anthropic-AI
+Allow: /llm.html
 Allow: /
 
 # Block AI training bots

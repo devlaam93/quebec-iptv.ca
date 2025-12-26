@@ -15,10 +15,15 @@ import { toast } from "@/hooks/use-toast";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tous");
-  const [visibleArticles, setVisibleArticles] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
   const [showReadingList, setShowReadingList] = useState(false);
+  const postsPerPage = 6;
   
-  const { posts, loading, error } = useWordPressPosts({ perPage: 20 });
+  const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
+    perPage: postsPerPage, 
+    page: currentPage,
+    append: currentPage > 1
+  });
   const { readingList, addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
 
   const handleBookmarkToggle = useCallback((post: WordPressPost) => {
@@ -62,18 +67,16 @@ const Blog = () => {
     ? posts 
     : posts.filter(post => post.category === selectedCategory);
 
-  // Show only visible number of articles
-  const displayedArticles = filteredArticles.slice(0, visibleArticles);
-
-  // Handler to load more articles
+  // Handler to load more articles from server
   const loadMoreArticles = () => {
-    setVisibleArticles(prev => prev + 6);
+    if (currentPage < totalPages && !loadingMore) {
+      setCurrentPage(prev => prev + 1);
+    }
   };
 
-  // Reset visible articles when category changes
+  // Reset pagination when category changes
   const handleCategoryChange = (categoryName: string) => {
     setSelectedCategory(categoryName);
-    setVisibleArticles(6);
   };
 
   const handleArticleClick = (post: WordPressPost) => {
@@ -267,7 +270,7 @@ const Blog = () => {
           {!loading && !error && posts.length > 0 && !showReadingList && (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {displayedArticles.map((post) => (
+                {filteredArticles.map((post) => (
                   <Card 
                     key={post.id} 
                     className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card border-border group"
@@ -352,14 +355,22 @@ const Blog = () => {
               </div>
 
               {/* Load More */}
-              {visibleArticles < filteredArticles.length && (
+              {currentPage < totalPages && (
                 <div className="text-center mt-12">
                   <Button 
                     size="lg" 
                     variant="outline"
                     onClick={loadMoreArticles}
+                    disabled={loadingMore}
                   >
-                    Charger plus d'articles ({filteredArticles.length - visibleArticles} restants)
+                    {loadingMore ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Chargement...
+                      </>
+                    ) : (
+                      "Charger plus d'articles"
+                    )}
                   </Button>
                 </div>
               )}

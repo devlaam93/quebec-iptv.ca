@@ -59,7 +59,22 @@ type StructuredDataProps =
   | { type: "website"; data: WebSiteData }
   | { type: "product"; data: ProductData }
   | { type: "faq"; data: FAQItem[] }
-  | { type: "local-business"; data: OrganizationData & { address?: string; telephone?: string } }
+  | { type: "local-business"; data: OrganizationData & { 
+      address?: { 
+        streetAddress?: string;
+        addressLocality?: string;
+        addressRegion?: string;
+        postalCode?: string;
+        addressCountry?: string;
+      };
+      telephone?: string;
+      priceRange?: string;
+      openingHours?: string[];
+      geo?: { latitude: number; longitude: number };
+      paymentAccepted?: string[];
+      currenciesAccepted?: string;
+      areaServed?: string[];
+    } }
   | { type: "service"; data: ServiceData }
   | { type: "breadcrumb"; data: BreadcrumbItem[] }
   | { type: "article"; data: ArticleData };
@@ -143,13 +158,52 @@ const StructuredData = (props: StructuredDataProps) => {
         jsonLd = {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
+          "@id": `${props.data.url}/#localbusiness`,
           name: props.data.name,
           url: props.data.url,
           logo: props.data.logo,
+          image: props.data.logo,
           description: props.data.description,
-          address: props.data.address,
           telephone: props.data.telephone,
-          priceRange: "$$",
+          priceRange: props.data.priceRange || "$$",
+          ...(props.data.address && {
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: props.data.address.streetAddress,
+              addressLocality: props.data.address.addressLocality,
+              addressRegion: props.data.address.addressRegion,
+              postalCode: props.data.address.postalCode,
+              addressCountry: props.data.address.addressCountry || "CA",
+            },
+          }),
+          ...(props.data.geo && {
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: props.data.geo.latitude,
+              longitude: props.data.geo.longitude,
+            },
+          }),
+          ...(props.data.openingHours && {
+            openingHoursSpecification: {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              opens: "00:00",
+              closes: "23:59",
+            },
+          }),
+          ...(props.data.paymentAccepted && {
+            paymentAccepted: props.data.paymentAccepted.join(", "),
+          }),
+          ...(props.data.currenciesAccepted && {
+            currenciesAccepted: props.data.currenciesAccepted,
+          }),
+          ...(props.data.areaServed && {
+            areaServed: props.data.areaServed.map(area => ({
+              "@type": "Country",
+              name: area,
+            })),
+          }),
+          sameAs: props.data.sameAs || [],
         };
         break;
 

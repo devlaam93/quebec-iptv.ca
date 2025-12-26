@@ -27,6 +27,18 @@ const WordPressPost = () => {
       .slice(0, 3);
   }, [post, allPosts]);
 
+  // Get previous and next articles for sequential navigation
+  const { prevArticle, nextArticle } = useMemo(() => {
+    if (!post || !allPosts.length) return { prevArticle: null, nextArticle: null };
+    const currentIndex = allPosts.findIndex(p => p.slug === post.slug);
+    if (currentIndex === -1) return { prevArticle: null, nextArticle: null };
+    
+    return {
+      prevArticle: currentIndex > 0 ? allPosts[currentIndex - 1] : null,
+      nextArticle: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null,
+    };
+  }, [post, allPosts]);
+
   const handleArticleClick = (article: WordPressPostType) => {
     window.location.href = `/blog/${article.slug}`;
   };
@@ -248,6 +260,49 @@ const WordPressPost = () => {
               </Button>
             </div>
           </div>
+
+          {/* Previous/Next Navigation */}
+          {(prevArticle || nextArticle) && (
+            <div className="mt-12 pt-8 border-t border-border">
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Previous Article */}
+                <div className={prevArticle ? "" : "md:col-start-2"}>
+                  {prevArticle && (
+                    <button
+                      onClick={() => handleArticleClick(prevArticle)}
+                      className="w-full p-4 rounded-xl border border-border bg-card hover:bg-accent/50 hover:border-primary/30 transition-all duration-300 text-left group"
+                    >
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        Article précédent
+                      </div>
+                      <h4 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                        {prevArticle.title}
+                      </h4>
+                    </button>
+                  )}
+                </div>
+                
+                {/* Next Article */}
+                <div>
+                  {nextArticle && (
+                    <button
+                      onClick={() => handleArticleClick(nextArticle)}
+                      className="w-full p-4 rounded-xl border border-border bg-card hover:bg-accent/50 hover:border-primary/30 transition-all duration-300 text-right group"
+                    >
+                      <div className="flex items-center justify-end gap-2 text-sm text-muted-foreground mb-2">
+                        Article suivant
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                      <h4 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                        {nextArticle.title}
+                      </h4>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Related Articles Section */}
           <div className="mt-12 pt-8 border-t border-border">

@@ -559,10 +559,12 @@ export function useWordPressCategories() {
         const response = await fetch(`${API_BASE}/categories?per_page=100`);
         if (response.ok) {
           const data = await response.json();
-          const transformedCategories = data.map((cat: { id: number; name: string; slug: string }) => ({
+          const transformedCategories: WordPressCategory[] = data.map((cat: { id: number; name: string; slug: string; description?: string; count?: number }) => ({
             id: cat.id,
             name: cat.name,
             slug: cat.slug,
+            description: cat.description || '',
+            count: cat.count || 0,
           }));
           setCache(cacheKey, transformedCategories);
           setCategories(transformedCategories);

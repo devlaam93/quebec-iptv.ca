@@ -162,7 +162,7 @@ const Tutorial = () => {
                           className="bg-muted text-foreground hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.location.href = `/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`;
+                            window.location.href = `/category/${post.categorySlug}`;
                           }}
                         >
                           {post.category}

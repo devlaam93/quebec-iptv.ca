@@ -324,7 +324,7 @@ const Blog = () => {
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
                         <a 
-                          href={`/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`}
+                          href={`/category/${post.categorySlug}`}
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Badge 

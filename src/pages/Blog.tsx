@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, BookmarkX, Library } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
+import CategorySidebar from "@/components/CategorySidebar";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPosts, WordPressPost, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 import { useReadingList } from "@/hooks/useReadingList";
@@ -177,12 +178,18 @@ const Blog = () => {
       {/* Articles Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          {/* Loading State with Skeletons */}
-          {loading && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <BlogCardSkeleton count={postsPerPage} />
-            </div>
-          )}
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar */}
+            <CategorySidebar />
+
+            {/* Main Content */}
+            <div className="flex-1">
+              {/* Loading State with Skeletons */}
+              {loading && (
+                <div className="grid md:grid-cols-2 gap-8">
+                  <BlogCardSkeleton count={postsPerPage} />
+                </div>
+              )}
 
           {/* Error State */}
           {error && !loading && (
@@ -210,7 +217,7 @@ const Blog = () => {
                   <Button onClick={() => setShowReadingList(false)}>Parcourir les articles</Button>
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 gap-8">
                   {readingList.map((item) => (
                     <Card 
                       key={item.slug} 
@@ -285,7 +292,7 @@ const Blog = () => {
           {/* Articles */}
           {!loading && !error && posts.length > 0 && !showReadingList && (
             <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 {filteredArticles.map((post) => (
                   <Card 
                     key={post.id} 
@@ -395,17 +402,19 @@ const Blog = () => {
             </>
           )}
 
-          {/* Contextual Links */}
-          <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
-            <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
-            <p className="text-muted-foreground mb-6">
-              Consultez notre <a href="/tutorial" className="text-primary hover:underline font-medium">guide d'installation complet</a>, 
-              explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
-              ou découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
-            </p>
+              {/* Contextual Links */}
+              <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
+                <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
+                <p className="text-muted-foreground mb-6">
+                  Consultez notre <a href="/tutorial" className="text-primary hover:underline font-medium">guide d'installation complet</a>, 
+                  explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
+                  ou découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

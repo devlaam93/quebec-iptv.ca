@@ -8,14 +8,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, Search, X } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, Search, X, Smartphone, Tv, Monitor, Flame, Apple, Play } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import { useWordPressPosts, useWordPressTags, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
+
+// Device filters configuration
+const DEVICE_FILTERS = [
+  { id: 'all', label: 'Tous', icon: Tv, keywords: [] },
+  { id: 'firestick', label: 'Fire Stick', icon: Flame, keywords: ['fire', 'firestick', 'fire stick', 'amazon fire', 'fire tv'] },
+  { id: 'android', label: 'Android TV', icon: Play, keywords: ['android', 'android tv', 'google tv', 'nvidia shield', 'chromecast'] },
+  { id: 'ios', label: 'iOS / Apple', icon: Apple, keywords: ['ios', 'iphone', 'ipad', 'apple tv', 'apple', 'mac'] },
+  { id: 'smarttv', label: 'Smart TV', icon: Monitor, keywords: ['smart tv', 'samsung', 'lg', 'sony', 'philips', 'tcl', 'hisense'] },
+  { id: 'mobile', label: 'Mobile', icon: Smartphone, keywords: ['mobile', 'téléphone', 'smartphone', 'tablette'] },
+];
 
 const Tutorial = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string>("all");
+  const [selectedDevice, setSelectedDevice] = useState<string>("all");
   
   const {
     posts,
@@ -47,7 +58,7 @@ const Tutorial = () => {
     return Array.from(tagMap.values()).sort((a, b) => b.count - a.count);
   }, [posts]);
 
-  // Filter posts by search query and selected tag
+  // Filter posts by search query, selected tag, and device
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
       const matchesSearch = searchQuery === "" || 
@@ -57,16 +68,25 @@ const Tutorial = () => {
       const matchesTag = selectedTag === "all" || 
         post.tags?.some(tag => tag.slug === selectedTag);
       
-      return matchesSearch && matchesTag;
+      // Device filter
+      const deviceFilter = DEVICE_FILTERS.find(d => d.id === selectedDevice);
+      const matchesDevice = selectedDevice === "all" || 
+        deviceFilter?.keywords.some(keyword => 
+          post.title.toLowerCase().includes(keyword) ||
+          post.excerpt.toLowerCase().includes(keyword)
+        );
+      
+      return matchesSearch && matchesTag && matchesDevice;
     });
-  }, [posts, searchQuery, selectedTag]);
+  }, [posts, searchQuery, selectedTag, selectedDevice]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedTag("all");
+    setSelectedDevice("all");
   };
 
-  const hasActiveFilters = searchQuery !== "" || selectedTag !== "all";
+  const hasActiveFilters = searchQuery !== "" || selectedTag !== "all" || selectedDevice !== "all";
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -169,8 +189,33 @@ const Tutorial = () => {
         </div>
       </section>
 
+      {/* Device Filter Buttons */}
+      <section className="py-6 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {DEVICE_FILTERS.map(device => {
+              const Icon = device.icon;
+              const isActive = selectedDevice === device.id;
+              return (
+                <Button
+                  key={device.id}
+                  variant={isActive ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedDevice(device.id)}
+                  className={`gap-2 transition-all ${isActive ? 'shadow-md' : 'hover:border-primary/50'}`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="hidden sm:inline">{device.label}</span>
+                  <span className="sm:hidden">{device.label.split(' ')[0]}</span>
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Search and Filter Section */}
-      <section className="py-8 bg-card/50 border-y border-border">
+      <section className="py-6 bg-card/50 border-y border-border">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center max-w-3xl mx-auto">
             {/* Search Input */}
@@ -220,7 +265,7 @@ const Tutorial = () => {
           
           {/* Active Filters Display */}
           {hasActiveFilters && (
-            <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
               <span className="text-sm text-muted-foreground">
                 {filteredPosts.length} résultat{filteredPosts.length !== 1 ? 's' : ''}
               </span>
@@ -228,6 +273,14 @@ const Tutorial = () => {
                 <Badge variant="secondary" className="gap-1">
                   Recherche: "{searchQuery}"
                   <button onClick={() => setSearchQuery("")}>
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+              {selectedDevice !== "all" && (
+                <Badge variant="secondary" className="gap-1">
+                  {DEVICE_FILTERS.find(d => d.id === selectedDevice)?.label}
+                  <button onClick={() => setSelectedDevice("all")}>
                     <X className="w-3 h-3" />
                   </button>
                 </Badge>

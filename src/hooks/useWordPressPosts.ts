@@ -219,6 +219,7 @@ function transformPost(post: WPPostRaw): WordPressPost {
 export function useWordPressPosts(options?: { 
   categoryId?: number;
   categoryName?: string;
+  categorySlug?: string;
   perPage?: number; 
   page?: number;
   append?: boolean;
@@ -230,16 +231,21 @@ export function useWordPressPosts(options?: {
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(null);
-  const [resolvingCategory, setResolvingCategory] = useState(!!options?.categoryName);
+  const [resolvedCategoryName, setResolvedCategoryName] = useState<string>('');
+  const [resolvingCategory, setResolvingCategory] = useState(!!options?.categoryName || !!options?.categorySlug);
   const isFetchingRef = useRef(false);
   const currentPageRef = useRef(1);
   const initializedRef = useRef(false);
 
-  // Resolve category name to ID if provided
+  // Resolve category name/slug to ID if provided
   useEffect(() => {
     // Helper to find category by name or slug
-    const findCategory = (categories: WordPressCategory[], searchTerm: string): WordPressCategory | undefined => {
+    const findCategory = (categories: WordPressCategory[], searchTerm: string, bySlug = false): WordPressCategory | undefined => {
       const term = searchTerm.toLowerCase();
+      if (bySlug) {
+        // For slug search, try exact slug match first
+        return categories.find(c => c.slug.toLowerCase() === term);
+      }
       // Try exact name match first
       let found = categories.find(c => c.name.toLowerCase() === term);
       if (!found) {
@@ -253,6 +259,9 @@ export function useWordPressPosts(options?: {
       return found;
     };
 
+    const searchTerm = options?.categorySlug || options?.categoryName;
+    const isSlugSearch = !!options?.categorySlug;
+
     // Set categoryId directly if provided
     if (options?.categoryId) {
       setResolvedCategoryId(options.categoryId);
@@ -260,21 +269,22 @@ export function useWordPressPosts(options?: {
       return;
     }
     
-    if (options?.categoryName) {
+    if (searchTerm) {
       setResolvingCategory(true);
       const cacheKey = getCacheKey("categories", {});
       const cached = getFromCache<WordPressCategory[]>(cacheKey);
       
       if (cached) {
-        const found = findCategory(cached.data, options.categoryName);
+        const found = findCategory(cached.data, searchTerm, isSlugSearch);
         if (found) {
           setResolvedCategoryId(found.id);
+          setResolvedCategoryName(found.name);
           setResolvingCategory(false);
           return;
         }
       }
 
-      // Fetch categories to resolve the name
+      // Fetch categories to resolve the name/slug
       async function fetchAndResolve() {
         try {
           const response = await fetch(`${API_BASE}/categories?per_page=100`);
@@ -286,9 +296,10 @@ export function useWordPressPosts(options?: {
               slug: cat.slug,
             }));
             setCache(cacheKey, transformedCategories);
-            const found = findCategory(transformedCategories, options.categoryName!);
+            const found = findCategory(transformedCategories, searchTerm!, isSlugSearch);
             if (found) {
               setResolvedCategoryId(found.id);
+              setResolvedCategoryName(found.name);
             }
           }
         } catch (err) {
@@ -301,9 +312,10 @@ export function useWordPressPosts(options?: {
     } else {
       // No category filter, reset to null
       setResolvedCategoryId(null);
+      setResolvedCategoryName('');
       setResolvingCategory(false);
     }
-  }, [options?.categoryName, options?.categoryId]);
+  }, [options?.categoryName, options?.categorySlug, options?.categoryId]);
 
   useEffect(() => {
     // Wait for category resolution if categoryName is provided
@@ -434,9 +446,9 @@ export function useWordPressPosts(options?: {
     }
 
     fetchPosts();
-  }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName]);
+  }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName, options?.categorySlug]);
 
-  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts };
+  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts, categoryName: resolvedCategoryName };
 }
 
 export function useWordPressPost(slug: string | undefined) {

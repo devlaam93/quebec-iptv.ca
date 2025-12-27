@@ -323,13 +323,17 @@ const Blog = () => {
                     </div>
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-                        <Badge 
-                          variant="secondary" 
-                          className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                          onClick={(e) => { e.stopPropagation(); handleCategoryChange(post.category); setShowReadingList(false); }}
+                        <a 
+                          href={`/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`}
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          {post.category}
-                        </Badge>
+                          <Badge 
+                            variant="secondary" 
+                            className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            {post.category}
+                          </Badge>
+                        </a>
                         <div className="flex items-center gap-3 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Calendar className="w-4 h-4" />

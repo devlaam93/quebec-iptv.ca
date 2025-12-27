@@ -136,7 +136,15 @@ const Tutorial = () => {
                       
                       {/* Tags */}
                       {post.tags && post.tags.length > 0 && <div className="flex flex-wrap gap-2 mb-4">
-                          {post.tags.slice(0, 2).map(tag => <Badge key={tag.id} variant="outline" className="text-xs font-normal">
+                          {post.tags.slice(0, 2).map(tag => <Badge 
+                              key={tag.id} 
+                              variant="outline" 
+                              className="text-xs font-normal hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.location.href = `/tag/${tag.slug}`;
+                              }}
+                            >
                               <Tag className="w-3 h-3 mr-1" />
                               {tag.name}
                             </Badge>)}

@@ -18,6 +18,7 @@ const Revendeur = lazy(() => import("./pages/Revendeur"));
 const Tutorial = lazy(() => import("./pages/Tutorial"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Category = lazy(() => import("./pages/Category"));
+const TagPage = lazy(() => import("./pages/Tag"));
 const WordPressPost = lazy(() => import("./pages/blog/WordPressPost"));
 const EssaiGratuit = lazy(() => import("./pages/EssaiGratuit"));
 const AnnulationCommande = lazy(() => import("./pages/AnnulationCommande"));
@@ -78,6 +79,7 @@ const AppContent = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<WordPressPost />} />
           <Route path="/category/:slug" element={<Category />} />
+          <Route path="/tag/:slug" element={<TagPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -1,46 +1,57 @@
+import { useState, useCallback, useEffect, useRef } from "react";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Smartphone, Tv, Monitor, Download, PlayCircle, Settings, CheckCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2 } from "lucide-react";
+import BlogCardSkeleton from "@/components/BlogCardSkeleton";
+import logo from "@/assets/iptv-quebec-premium-logo.png";
+import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
 const Tutorial = () => {
-  const devices = [
-    {
-      id: "android",
-      label: "Android TV",
-      icon: Tv,
-      steps: [
-        { icon: Download, title: "Télécharger l'application", description: "Installez IPTV Smarters Pro depuis le Google Play Store" },
-        { icon: Settings, title: "Configurer l'application", description: "Ouvrez l'app et sélectionnez 'Login with Xtream Codes API'" },
-        { icon: PlayCircle, title: "Entrer vos identifiants", description: "Saisissez le nom d'utilisateur, mot de passe et URL fournis" },
-        { icon: CheckCircle, title: "Profiter du contenu", description: "Parcourez les chaînes et commencez à regarder" }
-      ]
-    },
-    {
-      id: "ios",
-      label: "iOS / Apple TV",
-      icon: Smartphone,
-      steps: [
-        { icon: Download, title: "Télécharger IPTV Smarters", description: "Téléchargez l'app depuis l'App Store" },
-        { icon: Settings, title: "Lancer la configuration", description: "Ouvrez l'application et choisissez 'Add User'" },
-        { icon: PlayCircle, title: "Connecter votre compte", description: "Entrez vos informations de connexion IPTV" },
-        { icon: CheckCircle, title: "Commencer à regarder", description: "Accédez à tous vos contenus favoris" }
-      ]
-    },
-    {
-      id: "windows",
-      label: "Windows / Mac",
-      icon: Monitor,
-      steps: [
-        { icon: Download, title: "Installer VLC Player", description: "Téléchargez et installez VLC Media Player" },
-        { icon: Settings, title: "Ouvrir la playlist", description: "Allez dans Media > Open Network Stream" },
-        { icon: PlayCircle, title: "Ajouter l'URL M3U", description: "Collez l'URL de votre playlist M3U" },
-        { icon: CheckCircle, title: "Regarder en streaming", description: "Profitez de vos chaînes sur votre ordinateur" }
-      ]
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
+    perPage: 12, 
+    page: currentPage,
+    categoryName: "Guide",
+    append: currentPage > 1
+  });
+
+  // Infinite scroll observer
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && currentPage < totalPages && !loadingMore && !loading) {
+          setCurrentPage(prev => prev + 1);
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
     }
-  ];
+
+    return () => observer.disconnect();
+  }, [currentPage, totalPages, loadingMore, loading, setCurrentPage]);
+
+  const handleArticleClick = (slug: string) => {
+    window.location.href = `/blog/${slug}`;
+  };
+
+  const handleArticleHover = useCallback((slug: string) => {
+    prefetchPostOnHover(slug);
+  }, []);
+
+  const handleArticleHoverEnd = useCallback(() => {
+    cancelPrefetch();
+  }, []);
 
   return (
     <PageLayout>
@@ -64,151 +75,159 @@ const Tutorial = () => {
         }}
       />
       <StructuredData
-        type="how-to"
-        data={{
-          name: "Comment installer IPTV sur Android TV",
-          description: "Guide étape par étape pour installer et configurer IPTV sur votre Android TV en moins de 5 minutes.",
-          totalTime: "PT5M",
-          estimatedCost: "0",
-          steps: [
-            { name: "Télécharger l'application", text: "Installez IPTV Smarters Pro depuis le Google Play Store sur votre Android TV." },
-            { name: "Configurer l'application", text: "Ouvrez l'application et sélectionnez 'Login with Xtream Codes API'." },
-            { name: "Entrer vos identifiants", text: "Saisissez le nom d'utilisateur, mot de passe et URL fournis par IPTV Québec." },
-            { name: "Profiter du contenu", text: "Parcourez les chaînes et commencez à regarder vos émissions favorites." },
-          ],
-        }}
-      />
-      <StructuredData
-        type="software-application"
-        data={{
-          name: "IPTV Smarters Pro",
-          description: "Application IPTV recommandée pour regarder vos chaînes TV en streaming sur tous vos appareils.",
-          applicationCategory: "MultimediaApplication",
-          operatingSystem: "Android, iOS, Windows, macOS",
-          url: "https://quebec-iptv.ca/tutorial",
-          aggregateRating: {
-            ratingValue: 4.8,
-            ratingCount: 15000,
-          },
-        }}
-      />
-      <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },
           { name: "Tutoriels", url: "https://quebec-iptv.ca/tutorial" },
         ]}
       />
+
       {/* Hero Section */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 bg-gradient-orange bg-clip-text text-transparent">
-              Guide d'Installation
+              Guides d'Installation
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground">
-              Installez et configurez IPTV Quebec sur tous vos appareils en quelques minutes
+              Tutoriels complets pour installer et configurer IPTV sur tous vos appareils
             </p>
           </div>
         </div>
       </section>
 
-      {/* Tutorial Tabs */}
-      <section className="py-16 sm:py-20">
+      {/* Articles Grid */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="android" className="max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-3 mb-12">
-              {devices.map((device) => (
-                <TabsTrigger key={device.id} value={device.id} className="flex items-center gap-2">
-                  <device.icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{device.label}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          {/* Loading State with Skeletons */}
+          {loading && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <BlogCardSkeleton count={6} />
+            </div>
+          )}
 
-            {devices.map((device) => (
-              <TabsContent key={device.id} value={device.id}>
-                <div className="grid gap-6">
-                  {device.steps.map((step, index) => (
-                    <Card key={index} className="border-border/50">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <div className="w-12 h-12 rounded-full bg-gradient-orange flex items-center justify-center text-white font-bold">
-                              {index + 1}
-                            </div>
+          {/* Error State */}
+          {error && !loading && (
+            <div className="text-center py-12">
+              <p className="text-destructive text-lg mb-4">Une erreur est survenue lors du chargement des guides.</p>
+              <Button onClick={() => window.location.reload()}>Réessayer</Button>
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && !error && posts.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">Aucun guide disponible pour le moment.</p>
+            </div>
+          )}
+
+          {/* Articles */}
+          {!loading && !error && posts.length > 0 && (
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts.map((post) => (
+                  <Card 
+                    key={post.id} 
+                    className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card border-border group"
+                    onMouseEnter={() => handleArticleHover(post.slug)}
+                    onMouseLeave={handleArticleHoverEnd}
+                  >
+                    <div 
+                      className="relative h-48 overflow-hidden cursor-pointer"
+                      onClick={() => handleArticleClick(post.slug)}
+                    >
+                      {post.image ? (
+                        <OptimizedImage 
+                          src={post.image} 
+                          alt={post.imageAlt || `Guide: ${post.title}`}
+                          width={400}
+                          height={225}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <Globe className="w-12 h-12 text-primary/50" />
+                        </div>
+                      )}
+                      <div className="absolute top-4 left-4">
+                        <img src={logo} alt="" width={80} height={32} className="h-8 opacity-90" aria-hidden="true" />
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+                        <Badge variant="secondary">{post.category}</Badge>
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {post.date}
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <step.icon className="w-6 h-6 text-primary" />
-                              <h3 className="text-xl font-bold">{step.title}</h3>
-                            </div>
-                            <p className="text-muted-foreground">{step.description}</p>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {post.readTime}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </section>
+                      </div>
+                      
+                      {/* Tags */}
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Badge key={tag.id} variant="outline" className="text-xs">
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <h3 
+                        className="text-xl font-bold mb-3 group-hover:text-primary transition-colors cursor-pointer line-clamp-2"
+                        onClick={() => handleArticleClick(post.slug)}
+                      >
+                        {post.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <Button 
+                        variant="ghost" 
+                        className="group-hover:text-primary"
+                        onClick={() => handleArticleClick(post.slug)}
+                      >
+                        Lire le guide 
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
 
-      {/* Apps Recommendations */}
-      <section className="py-16 sm:py-20 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Applications Recommandées
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {[
-              { name: "IPTV Smarters Pro", platform: "Tous appareils", recommended: true },
-              { name: "TiviMate", platform: "Android TV", recommended: true },
-              { name: "VLC Player", platform: "Windows / Mac", recommended: false },
-              { name: "GSE Smart IPTV", platform: "iOS / Apple TV", recommended: false }
-            ].map((app, index) => (
-              <Card key={index} className={`border-border/50 ${app.recommended ? 'ring-2 ring-primary' : ''}`}>
-                <CardContent className="p-6 text-center">
-                  {app.recommended && (
-                    <span className="inline-block bg-gradient-orange text-white text-xs px-3 py-1 rounded-full mb-3 font-semibold">
-                      Recommandé
-                    </span>
-                  )}
-                  <h3 className="text-lg font-bold mb-2">{app.name}</h3>
-                  <p className="text-sm text-muted-foreground">{app.platform}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+              {/* Infinite Scroll Trigger */}
+              <div ref={loadMoreRef} className="h-20 flex items-center justify-center mt-8">
+                {loadingMore && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Chargement...</span>
+                  </div>
+                )}
+                {currentPage >= totalPages && posts.length > 6 && (
+                  <p className="text-muted-foreground text-sm">Tous les guides ont été chargés</p>
+                )}
+              </div>
+            </>
+          )}
 
-      {/* Support Section */}
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Besoin d'Aide ?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Notre équipe de support est disponible 24/7 pour vous aider avec l'installation
+          {/* Contextual Links */}
+          <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
+            <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
+            <p className="text-muted-foreground mb-6">
+              Explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
+              découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>,
+              ou consultez <a href="/blog" className="text-primary hover:underline font-medium">tous nos articles</a>.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Card className="border-border/50">
-                <CardContent className="p-6">
-                  <p className="text-sm text-muted-foreground mb-1">Support par Email</p>
-                  <p className="font-semibold">support@iptvquebec.com</p>
-                </CardContent>
-              </Card>
-              <Card className="border-border/50">
-                <CardContent className="p-6">
-                  <p className="text-sm text-muted-foreground mb-1">WhatsApp</p>
-                  <p className="font-semibold">+1 (514) 123-4567</p>
-                </CardContent>
-              </Card>
-            </div>
+            <p className="text-sm text-muted-foreground">
+              Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
+            </p>
           </div>
         </div>
       </section>

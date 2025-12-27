@@ -17,6 +17,7 @@ import { useWordPressPosts, WordPressPost, prefetchPostOnHover, cancelPrefetch }
 import { useReadingList } from "@/hooks/useReadingList";
 import BookmarkButton from "@/components/BookmarkButton";
 import { toast } from "@/hooks/use-toast";
+import { useAllViewCounts } from "@/hooks/useViewCount";
 
 const Blog = () => {
   const [searchParams] = useSearchParams();
@@ -45,6 +46,7 @@ const Blog = () => {
     append: useInfiniteScroll && currentPage > 1
   });
   const { readingList, addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
+  const { getViewCount } = useAllViewCounts();
 
   const handleBookmarkToggle = useCallback((post: WordPressPost) => {
     if (isInReadingList(post.slug)) {
@@ -115,12 +117,15 @@ const Blog = () => {
       case 'alpha-desc':
         articles.sort((a, b) => b.title.localeCompare(a.title, 'fr'));
         break;
+      case 'popular':
+        articles.sort((a, b) => getViewCount(b.slug) - getViewCount(a.slug));
+        break;
       default:
         break;
     }
     
     return articles;
-  }, [posts, selectedCategory, sortOrder, readingTimeFilter]);
+  }, [posts, selectedCategory, sortOrder, readingTimeFilter, getViewCount]);
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -521,6 +526,7 @@ const Blog = () => {
                       <SelectContent className="bg-popover border border-border z-50">
                         <SelectItem value="date-desc">Plus récent</SelectItem>
                         <SelectItem value="date-asc">Plus ancien</SelectItem>
+                        <SelectItem value="popular">Plus populaire</SelectItem>
                         <SelectItem value="alpha-asc">A → Z</SelectItem>
                         <SelectItem value="alpha-desc">Z → A</SelectItem>
                       </SelectContent>

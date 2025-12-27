@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, BookmarkX, Library } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, BookmarkX, Library, ArrowUpDown } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import BlogPagination from "@/components/BlogPagination";
 import CategorySidebar from "@/components/CategorySidebar";
@@ -31,6 +31,9 @@ const Blog = () => {
   const [postsPerPage, setPostsPerPage] = useState(() => {
     const saved = localStorage.getItem('blog_posts_per_page');
     return saved ? parseInt(saved, 10) : 6;
+  });
+  const [sortOrder, setSortOrder] = useState(() => {
+    return localStorage.getItem('blog_sort_order') || 'date-desc';
   });
   
   const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
@@ -76,10 +79,32 @@ const Blog = () => {
     ];
   }, [posts]);
 
-  // Filter articles based on selected category
-  const filteredArticles = selectedCategory === "Tous" 
-    ? posts 
-    : posts.filter(post => post.category === selectedCategory);
+  // Filter and sort articles based on selected category and sort order
+  const filteredArticles = useMemo(() => {
+    let articles = selectedCategory === "Tous" 
+      ? [...posts] 
+      : posts.filter(post => post.category === selectedCategory);
+    
+    // Sort articles
+    switch (sortOrder) {
+      case 'date-asc':
+        articles.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        break;
+      case 'date-desc':
+        articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        break;
+      case 'alpha-asc':
+        articles.sort((a, b) => a.title.localeCompare(b.title, 'fr'));
+        break;
+      case 'alpha-desc':
+        articles.sort((a, b) => b.title.localeCompare(a.title, 'fr'));
+        break;
+      default:
+        break;
+    }
+    
+    return articles;
+  }, [posts, selectedCategory, sortOrder]);
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -122,6 +147,12 @@ const Blog = () => {
     setPostsPerPage(newValue);
     setCurrentPage(1);
     localStorage.setItem('blog_posts_per_page', value);
+  };
+
+  // Handle sort order change
+  const handleSortOrderChange = (value: string) => {
+    setSortOrder(value);
+    localStorage.setItem('blog_sort_order', value);
   };
 
   // Reset pagination when category changes
@@ -443,7 +474,7 @@ const Blog = () => {
 
               {/* Pagination controls */}
               {totalPages > 1 && (
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 flex-wrap">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -454,7 +485,22 @@ const Blog = () => {
                   </Button>
                   
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Articles par page:</span>
+                    <ArrowUpDown className="w-4 h-4 text-muted-foreground" />
+                    <Select value={sortOrder} onValueChange={handleSortOrderChange}>
+                      <SelectTrigger className="w-40 h-8 bg-background">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border border-border z-50">
+                        <SelectItem value="date-desc">Plus récent</SelectItem>
+                        <SelectItem value="date-asc">Plus ancien</SelectItem>
+                        <SelectItem value="alpha-asc">A → Z</SelectItem>
+                        <SelectItem value="alpha-desc">Z → A</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Par page:</span>
                     <Select value={String(postsPerPage)} onValueChange={handlePostsPerPageChange}>
                       <SelectTrigger className="w-20 h-8 bg-background">
                         <SelectValue />

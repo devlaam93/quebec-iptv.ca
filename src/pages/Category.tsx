@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX, ArrowUpDown } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import BlogPagination from "@/components/BlogPagination";
 import CategorySidebar from "@/components/CategorySidebar";
@@ -24,6 +24,9 @@ const Category = () => {
   const [postsPerPage, setPostsPerPage] = useState(() => {
     const saved = localStorage.getItem('blog_posts_per_page');
     return saved ? parseInt(saved, 10) : 12;
+  });
+  const [sortOrder, setSortOrder] = useState(() => {
+    return localStorage.getItem('blog_sort_order') || 'date-desc';
   });
   
   const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount, categoryNotFound } = useWordPressPosts({ 
@@ -47,6 +50,28 @@ const Category = () => {
   const postCountText = categoryCount > 0 
     ? `${categoryCount} article${categoryCount > 1 ? 's' : ''}`
     : '';
+
+  // Sort posts
+  const sortedPosts = useMemo(() => {
+    const sorted = [...posts];
+    switch (sortOrder) {
+      case 'date-asc':
+        sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        break;
+      case 'date-desc':
+        sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        break;
+      case 'alpha-asc':
+        sorted.sort((a, b) => a.title.localeCompare(b.title, 'fr'));
+        break;
+      case 'alpha-desc':
+        sorted.sort((a, b) => b.title.localeCompare(a.title, 'fr'));
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }, [posts, sortOrder]);
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -89,6 +114,12 @@ const Category = () => {
     setPostsPerPage(newValue);
     setCurrentPage(1);
     localStorage.setItem('blog_posts_per_page', value);
+  };
+
+  // Handle sort order change
+  const handleSortOrderChange = (value: string) => {
+    setSortOrder(value);
+    localStorage.setItem('blog_sort_order', value);
   };
 
   const handleArticleClick = (postSlug: string) => {
@@ -214,10 +245,10 @@ const Category = () => {
               )}
 
               {/* Articles */}
-              {!loading && !error && posts.length > 0 && (
+              {!loading && !error && sortedPosts.length > 0 && (
                 <>
                   <div className="grid md:grid-cols-2 gap-8">
-                    {posts.map((post) => (
+                    {sortedPosts.map((post) => (
                       <Card 
                         key={post.id} 
                         className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-card border-border group cursor-pointer"
@@ -299,7 +330,7 @@ const Category = () => {
                           <span>Chargement...</span>
                         </div>
                       )}
-                      {currentPage >= totalPages && posts.length > postsPerPage && (
+                      {currentPage >= totalPages && sortedPosts.length > postsPerPage && (
                         <p className="text-muted-foreground text-sm">Tous les articles ont été chargés</p>
                       )}
                     </div>
@@ -314,7 +345,7 @@ const Category = () => {
 
                   {/* Pagination controls */}
                   {totalPages > 1 && (
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 flex-wrap">
                       <Button
                         variant="ghost"
                         size="sm"
@@ -325,7 +356,22 @@ const Category = () => {
                       </Button>
                       
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">Articles par page:</span>
+                        <ArrowUpDown className="w-4 h-4 text-muted-foreground" />
+                        <Select value={sortOrder} onValueChange={handleSortOrderChange}>
+                          <SelectTrigger className="w-40 h-8 bg-background">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border border-border z-50">
+                            <SelectItem value="date-desc">Plus récent</SelectItem>
+                            <SelectItem value="date-asc">Plus ancien</SelectItem>
+                            <SelectItem value="alpha-asc">A → Z</SelectItem>
+                            <SelectItem value="alpha-desc">Z → A</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Par page:</span>
                         <Select value={String(postsPerPage)} onValueChange={handlePostsPerPageChange}>
                           <SelectTrigger className="w-20 h-8 bg-background">
                             <SelectValue />

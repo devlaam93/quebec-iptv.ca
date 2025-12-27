@@ -42,7 +42,7 @@ const Tutorial = () => {
   }, [currentPage, totalPages, loadingMore, loading, setCurrentPage]);
 
   const handleArticleClick = (slug: string) => {
-    window.location.href = `/blog/${slug}`;
+    window.location.href = `/tutorial/${slug}`;
   };
 
   const handleArticleHover = useCallback((slug: string) => {

@@ -73,6 +73,7 @@ const AppContent = () => {
           <Route path="/liste-chaines" element={<ListeChaines />} />
           <Route path="/revendeur" element={<Revendeur />} />
           <Route path="/tutorial" element={<Tutorial />} />
+          <Route path="/tutorial/:slug" element={<WordPressPost basePath="tutorial" />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<WordPressPost />} />
           <Route path="*" element={<NotFound />} />

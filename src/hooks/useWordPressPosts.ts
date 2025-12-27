@@ -229,13 +229,20 @@ export function useWordPressPosts(options?: {
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
-  const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(options?.categoryId || null);
+  const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(null);
   const isFetchingRef = useRef(false);
-  const currentPageRef = useRef(options?.page || 1);
+  const currentPageRef = useRef(1);
+  const initializedRef = useRef(false);
 
   // Resolve category name to ID if provided
   useEffect(() => {
-    if (options?.categoryName && !options?.categoryId) {
+    // Set categoryId directly if provided
+    if (options?.categoryId) {
+      setResolvedCategoryId(options.categoryId);
+      return;
+    }
+    
+    if (options?.categoryName) {
       const cacheKey = getCacheKey("categories", {});
       const cached = getFromCache<WordPressCategory[]>(cacheKey);
       
@@ -269,8 +276,9 @@ export function useWordPressPosts(options?: {
         }
       }
       fetchAndResolve();
-    } else if (options?.categoryId) {
-      setResolvedCategoryId(options.categoryId);
+    } else {
+      // No category filter, reset to null
+      setResolvedCategoryId(null);
     }
   }, [options?.categoryName, options?.categoryId]);
 

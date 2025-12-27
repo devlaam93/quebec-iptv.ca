@@ -6,6 +6,7 @@ import StructuredData from "@/components/StructuredData";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
@@ -20,7 +21,10 @@ const Category = () => {
     const saved = localStorage.getItem('blog_pagination_mode');
     return saved !== 'pagination';
   });
-  const postsPerPage = 12;
+  const [postsPerPage, setPostsPerPage] = useState(() => {
+    const saved = localStorage.getItem('blog_posts_per_page');
+    return saved ? parseInt(saved, 10) : 12;
+  });
   
   const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount, categoryNotFound } = useWordPressPosts({ 
     perPage: postsPerPage, 
@@ -77,6 +81,14 @@ const Category = () => {
     setUseInfiniteScroll(newMode);
     setCurrentPage(1);
     localStorage.setItem('blog_pagination_mode', newMode ? 'infinite' : 'pagination');
+  };
+
+  // Handle posts per page change
+  const handlePostsPerPageChange = (value: string) => {
+    const newValue = parseInt(value, 10);
+    setPostsPerPage(newValue);
+    setCurrentPage(1);
+    localStorage.setItem('blog_posts_per_page', value);
   };
 
   const handleArticleClick = (postSlug: string) => {
@@ -300,9 +312,9 @@ const Category = () => {
                     />
                   )}
 
-                  {/* Toggle pagination mode */}
+                  {/* Pagination controls */}
                   {totalPages > 1 && (
-                    <div className="flex justify-center mt-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
                       <Button
                         variant="ghost"
                         size="sm"
@@ -311,6 +323,21 @@ const Category = () => {
                       >
                         {useInfiniteScroll ? "Afficher la pagination" : "Utiliser le défilement infini"}
                       </Button>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Articles par page:</span>
+                        <Select value={String(postsPerPage)} onValueChange={handlePostsPerPageChange}>
+                          <SelectTrigger className="w-20 h-8 bg-background">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border border-border z-50">
+                            <SelectItem value="6">6</SelectItem>
+                            <SelectItem value="12">12</SelectItem>
+                            <SelectItem value="24">24</SelectItem>
+                            <SelectItem value="48">48</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   )}
                 </>

@@ -18,7 +18,11 @@ import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType
 import { useReadingList } from "@/hooks/useReadingList";
 import { toast } from "@/hooks/use-toast";
 
-const WordPressPost = () => {
+interface WordPressPostProps {
+  basePath?: string;
+}
+
+const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
@@ -68,7 +72,7 @@ const WordPressPost = () => {
   }, [post, allPosts]);
 
   const handleArticleClick = (article: WordPressPostType) => {
-    window.location.href = `/blog/${article.slug}`;
+    window.location.href = `/${basePath}/${article.slug}`;
   };
 
   const handleArticleHover = useCallback((slug: string) => {
@@ -110,9 +114,9 @@ const WordPressPost = () => {
               <Button onClick={() => window.location.reload()}>
                 Réessayer
               </Button>
-              <Button variant="outline" onClick={() => navigate("/blog")}>
+              <Button variant="outline" onClick={() => navigate(`/${basePath}`)}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour au blog
+                Retour
               </Button>
             </div>
           </div>
@@ -133,9 +137,9 @@ const WordPressPost = () => {
             <p className="text-muted-foreground mb-6">
               L&apos;article que vous recherchez n&apos;existe pas ou a été supprimé.
             </p>
-            <Button onClick={() => navigate("/blog")}>
+            <Button onClick={() => navigate(`/${basePath}`)}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Retour au blog
+              Retour
             </Button>
           </div>
         </main>
@@ -149,7 +153,7 @@ const WordPressPost = () => {
       <SEO
         title={post.metaTitle || post.title}
         description={post.metaDescription || post.excerpt}
-        path={`/blog/${post.slug}`}
+        path={`/${basePath}/${post.slug}`}
         keywords={post.tags?.map(t => t.name) || []}
         image={post.image}
         type="article"
@@ -162,15 +166,15 @@ const WordPressPost = () => {
           image: post.image,
           datePublished: post.date,
           author: "Quebec IPTV",
-          url: `https://quebec-iptv.ca/blog/${post.slug}`,
+          url: `https://quebec-iptv.ca/${basePath}/${post.slug}`,
         }}
       />
       <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },
-          { name: "Blog", url: "https://quebec-iptv.ca/blog" },
-          { name: post.title, url: `https://quebec-iptv.ca/blog/${post.slug}` },
+          { name: basePath === "tutorial" ? "Tutoriels" : "Blog", url: `https://quebec-iptv.ca/${basePath}` },
+          { name: post.title, url: `https://quebec-iptv.ca/${basePath}/${post.slug}` },
         ]}
       />
       <Header />
@@ -179,10 +183,10 @@ const WordPressPost = () => {
           <Button 
             variant="ghost" 
             className="mb-6"
-            onClick={() => navigate("/blog")}
+            onClick={() => navigate(`/${basePath}`)}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour au blog
+            Retour
           </Button>
 
           <div className="mb-6">
@@ -224,7 +228,7 @@ const WordPressPost = () => {
             {/* Social Share & Bookmark Buttons */}
             <div className="mt-6 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-4">
               <SocialShare 
-                url={`https://quebec-iptv.ca/blog/${post.slug}`}
+                url={`https://quebec-iptv.ca/${basePath}/${post.slug}`}
                 title={post.title}
                 description={post.excerpt}
               />

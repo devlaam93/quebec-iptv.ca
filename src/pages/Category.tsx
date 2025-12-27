@@ -15,17 +15,17 @@ const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   
-  // Convert slug back to category name (e.g., "fire-tv-stick" -> "Fire TV Stick")
-  const categoryName = slug
-    ? slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    : '';
-  
-  const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
+  const { posts, loading, loadingMore, error, totalPages, categoryName } = useWordPressPosts({ 
     perPage: 12, 
     page: currentPage,
-    categoryName: categoryName,
+    categorySlug: slug,
     append: currentPage > 1
   });
+
+  // Display name from resolved category or fallback to formatted slug
+  const displayName = categoryName || (slug
+    ? slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    : '');
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -62,17 +62,17 @@ const Category = () => {
   return (
     <PageLayout>
       <SEO
-        title={`${categoryName} | Articles IPTV Québec`}
-        description={`Découvrez tous nos articles dans la catégorie ${categoryName}. Guides, tutoriels et conseils IPTV.`}
+        title={`${displayName} | Articles IPTV Québec`}
+        description={`Découvrez tous nos articles dans la catégorie ${displayName}. Guides, tutoriels et conseils IPTV.`}
         path={`/category/${slug}`}
-        keywords={[categoryName, "IPTV", "articles", "guides"]}
+        keywords={[displayName, "IPTV", "articles", "guides"]}
       />
       <StructuredData
         type="breadcrumb"
         data={[
           { name: "Accueil", url: "https://quebec-iptv.ca" },
           { name: "Blog", url: "https://quebec-iptv.ca/blog" },
-          { name: categoryName, url: `https://quebec-iptv.ca/category/${slug}` },
+          { name: displayName, url: `https://quebec-iptv.ca/category/${slug}` },
         ]}
       />
 
@@ -80,12 +80,12 @@ const Category = () => {
       <section className="py-16 sm:py-24 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 text-sm">{categoryName}</Badge>
+            <Badge className="mb-4 text-sm">{displayName}</Badge>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6">
-              Articles <span className="bg-gradient-orange bg-clip-text text-transparent">{categoryName}</span>
+              Articles <span className="bg-gradient-orange bg-clip-text text-transparent">{displayName}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground">
-              Tous nos articles dans la catégorie {categoryName}
+              Tous nos articles dans la catégorie {displayName}
             </p>
           </div>
         </div>

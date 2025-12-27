@@ -217,7 +217,8 @@ function transformPost(post: WPPostRaw): WordPressPost {
 }
 
 export function useWordPressPosts(options?: { 
-  categoryId?: number; 
+  categoryId?: number;
+  categoryName?: string;
   perPage?: number; 
   page?: number;
   append?: boolean;
@@ -354,9 +355,14 @@ export function useWordPressPosts(options?: {
     }
 
     fetchPosts();
-  }, [options?.categoryId, options?.perPage, options?.page, options?.append]);
+  }, [options?.categoryId, options?.categoryName, options?.perPage, options?.page, options?.append]);
 
-  return { posts, loading, loadingMore, error, totalPages, totalPosts };
+  // Filter by category name if provided (client-side filtering when categoryId is not available)
+  const filteredPosts = options?.categoryName 
+    ? posts.filter(p => p.category.toLowerCase() === options.categoryName!.toLowerCase())
+    : posts;
+
+  return { posts: filteredPosts, loading, loadingMore, error, totalPages, totalPosts };
 }
 
 export function useWordPressPost(slug: string | undefined) {

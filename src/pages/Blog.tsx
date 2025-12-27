@@ -35,6 +35,9 @@ const Blog = () => {
   const [sortOrder, setSortOrder] = useState(() => {
     return localStorage.getItem('blog_sort_order') || 'date-desc';
   });
+  const [readingTimeFilter, setReadingTimeFilter] = useState(() => {
+    return localStorage.getItem('blog_reading_time_filter') || 'all';
+  });
   
   const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
     perPage: postsPerPage, 
@@ -79,11 +82,24 @@ const Blog = () => {
     ];
   }, [posts]);
 
-  // Filter and sort articles based on selected category and sort order
+  // Filter and sort articles based on selected category, reading time, and sort order
   const filteredArticles = useMemo(() => {
     let articles = selectedCategory === "Tous" 
       ? [...posts] 
       : posts.filter(post => post.category === selectedCategory);
+    
+    // Filter by reading time
+    if (readingTimeFilter !== 'all') {
+      articles = articles.filter(post => {
+        const minutes = parseReadingTime(post.readTime);
+        switch (readingTimeFilter) {
+          case 'quick': return minutes <= 3;
+          case 'medium': return minutes > 3 && minutes <= 7;
+          case 'long': return minutes > 7;
+          default: return true;
+        }
+      });
+    }
     
     // Sort articles
     switch (sortOrder) {
@@ -104,7 +120,7 @@ const Blog = () => {
     }
     
     return articles;
-  }, [posts, selectedCategory, sortOrder]);
+  }, [posts, selectedCategory, sortOrder, readingTimeFilter]);
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -153,6 +169,18 @@ const Blog = () => {
   const handleSortOrderChange = (value: string) => {
     setSortOrder(value);
     localStorage.setItem('blog_sort_order', value);
+  };
+
+  // Handle reading time filter change
+  const handleReadingTimeFilterChange = (value: string) => {
+    setReadingTimeFilter(value);
+    localStorage.setItem('blog_reading_time_filter', value);
+  };
+
+  // Helper to parse reading time from string like "5 min"
+  const parseReadingTime = (readTime: string): number => {
+    const match = readTime.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
   };
 
   // Reset pagination when category changes
@@ -254,21 +282,21 @@ const Blog = () => {
                 </div>
               )}
 
-          {/* Error State */}
-          {error && !loading && (
-            <div className="text-center py-12">
-              <p className="text-destructive text-lg mb-4">Une erreur est survenue lors du chargement des articles.</p>
-              <Button onClick={() => window.location.reload()}>Réessayer</Button>
-            </div>
-          )}
+              {/* Error State */}
+              {error && !loading && (
+                <div className="text-center py-12">
+                  <p className="text-destructive text-lg mb-4">Une erreur est survenue lors du chargement des articles.</p>
+                  <Button onClick={() => window.location.reload()}>Réessayer</Button>
+                </div>
+              )}
 
-          {/* Empty State */}
-          {!loading && !error && posts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">Aucun article disponible pour le moment.</p>
-            </div>
-          )}
-          
+              {/* Empty State */}
+              {!loading && !error && posts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground text-lg">Aucun article disponible pour le moment.</p>
+                </div>
+              )}
+
           {/* Reading List View */}
           {showReadingList && (
             <>
@@ -500,6 +528,21 @@ const Blog = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-muted-foreground" />
+                    <Select value={readingTimeFilter} onValueChange={handleReadingTimeFilterChange}>
+                      <SelectTrigger className="w-36 h-8 bg-background">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border border-border z-50">
+                        <SelectItem value="all">Tous</SelectItem>
+                        <SelectItem value="quick">≤ 3 min</SelectItem>
+                        <SelectItem value="medium">4-7 min</SelectItem>
+                        <SelectItem value="long">&gt; 7 min</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">Par page:</span>
                     <Select value={String(postsPerPage)} onValueChange={handlePostsPerPageChange}>
                       <SelectTrigger className="w-20 h-8 bg-background">
@@ -518,23 +561,23 @@ const Blog = () => {
             </>
           )}
 
-              {/* Contextual Links */}
-              <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
-                <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
-                <p className="text-muted-foreground mb-6">
-                  Consultez notre <a href="/tutorial" className="text-primary hover:underline font-medium">guide d'installation complet</a>, 
-                  explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
-                  ou découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
-                </p>
-              </div>
-            </div>
+          {/* Contextual Links */}
+          <div className="mt-16 p-8 rounded-2xl bg-card border border-border text-center">
+            <h3 className="text-xl font-bold mb-4">Besoin d'aide pour démarrer?</h3>
+            <p className="text-muted-foreground mb-6">
+              Consultez notre <a href="/tutorial" className="text-primary hover:underline font-medium">guide d'installation complet</a>, 
+              explorez <a href="/liste-chaines" className="text-primary hover:underline font-medium">notre catalogue de chaînes</a>, 
+              ou découvrez <a href="/tarifs" className="text-primary hover:underline font-medium">nos forfaits abordables</a>.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Des questions? Visitez notre <a href="/faq" className="text-primary hover:underline font-medium">foire aux questions</a>.
+            </p>
           </div>
         </div>
-      </section>
-    </PageLayout>
+      </div>
+    </div>
+  </section>
+</PageLayout>
   );
 };
 

@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2 } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
-import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
 const Tutorial = () => {
@@ -130,44 +129,42 @@ const Tutorial = () => {
           {/* Articles */}
           {!loading && !error && posts.length > 0 && (
             <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 {posts.map((post) => (
                   <Card 
                     key={post.id} 
-                    className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card border-border group"
+                    className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-card border-border group cursor-pointer"
                     onMouseEnter={() => handleArticleHover(post.slug)}
                     onMouseLeave={handleArticleHoverEnd}
+                    onClick={() => handleArticleClick(post.slug)}
                   >
-                    <div 
-                      className="relative h-48 overflow-hidden cursor-pointer"
-                      onClick={() => handleArticleClick(post.slug)}
-                    >
+                    {/* Full-width image */}
+                    <div className="relative aspect-video overflow-hidden">
                       {post.image ? (
                         <OptimizedImage 
                           src={post.image} 
                           alt={post.imageAlt || `Guide: ${post.title}`}
-                          width={400}
-                          height={225}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          width={600}
+                          height={338}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                          <Globe className="w-12 h-12 text-primary/50" />
+                          <Globe className="w-16 h-16 text-primary/50" />
                         </div>
                       )}
-                      <div className="absolute top-4 left-4">
-                        <img src={logo} alt="" width={80} height={32} className="h-8 opacity-90" aria-hidden="true" />
-                      </div>
                     </div>
+                    
                     <div className="p-6">
-                      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-                        <Badge variant="secondary">{post.category}</Badge>
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
+                      {/* Category badge and meta info */}
+                      <div className="flex items-center justify-between mb-4">
+                        <Badge className="bg-muted text-foreground hover:bg-muted">{post.category}</Badge>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1.5">
                             <Calendar className="w-4 h-4" />
                             {post.date}
                           </div>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1.5">
                             <Clock className="w-4 h-4" />
                             {post.readTime}
                           </div>
@@ -176,9 +173,9 @@ const Tutorial = () => {
                       
                       {/* Tags */}
                       {post.tags && post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {post.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag.id} variant="outline" className="text-xs">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {post.tags.slice(0, 2).map((tag) => (
+                            <Badge key={tag.id} variant="outline" className="text-xs font-normal">
                               <Tag className="w-3 h-3 mr-1" />
                               {tag.name}
                             </Badge>
@@ -186,23 +183,21 @@ const Tutorial = () => {
                         </div>
                       )}
                       
-                      <h3 
-                        className="text-xl font-bold mb-3 group-hover:text-primary transition-colors cursor-pointer line-clamp-2"
-                        onClick={() => handleArticleClick(post.slug)}
-                      >
+                      {/* Title */}
+                      <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
                       </h3>
-                      <p className="text-muted-foreground mb-4 line-clamp-3">
+                      
+                      {/* Excerpt */}
+                      <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
                         {post.excerpt}
                       </p>
-                      <Button 
-                        variant="ghost" 
-                        className="group-hover:text-primary"
-                        onClick={() => handleArticleClick(post.slug)}
-                      >
-                        Lire le guide 
+                      
+                      {/* Read link */}
+                      <div className="flex items-center text-foreground font-medium group-hover:text-primary transition-colors">
+                        Lire l'article
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </Button>
+                      </div>
                     </div>
                   </Card>
                 ))}

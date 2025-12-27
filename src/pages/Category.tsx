@@ -16,7 +16,10 @@ import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/
 const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
+  const [useInfiniteScroll, setUseInfiniteScroll] = useState(() => {
+    const saved = localStorage.getItem('blog_pagination_mode');
+    return saved !== 'pagination';
+  });
   const postsPerPage = 12;
   
   const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount, categoryNotFound } = useWordPressPosts({ 
@@ -70,8 +73,10 @@ const Category = () => {
 
   // Toggle pagination mode
   const togglePaginationMode = () => {
-    setUseInfiniteScroll(!useInfiniteScroll);
+    const newMode = !useInfiniteScroll;
+    setUseInfiniteScroll(newMode);
     setCurrentPage(1);
+    localStorage.setItem('blog_pagination_mode', newMode ? 'infinite' : 'pagination');
   };
 
   const handleArticleClick = (postSlug: string) => {

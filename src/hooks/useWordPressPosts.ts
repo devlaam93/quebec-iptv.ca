@@ -229,19 +229,67 @@ export function useWordPressPosts(options?: {
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
+  const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(options?.categoryId || null);
   const isFetchingRef = useRef(false);
   const currentPageRef = useRef(options?.page || 1);
 
+  // Resolve category name to ID if provided
   useEffect(() => {
+    if (options?.categoryName && !options?.categoryId) {
+      const cacheKey = getCacheKey("categories", {});
+      const cached = getFromCache<WordPressCategory[]>(cacheKey);
+      
+      if (cached) {
+        const found = cached.data.find(c => c.name.toLowerCase() === options.categoryName!.toLowerCase());
+        if (found) {
+          setResolvedCategoryId(found.id);
+          return;
+        }
+      }
+
+      // Fetch categories to resolve the name
+      async function fetchAndResolve() {
+        try {
+          const response = await fetch(`${API_BASE}/categories?per_page=100`);
+          if (response.ok) {
+            const data = await response.json();
+            const transformedCategories: WordPressCategory[] = data.map((cat: { id: number; name: string; slug: string }) => ({
+              id: cat.id,
+              name: cat.name,
+              slug: cat.slug,
+            }));
+            setCache(cacheKey, transformedCategories);
+            const found = transformedCategories.find(c => c.name.toLowerCase() === options.categoryName!.toLowerCase());
+            if (found) {
+              setResolvedCategoryId(found.id);
+            }
+          }
+        } catch (err) {
+          console.error("Error resolving category:", err);
+        }
+      }
+      fetchAndResolve();
+    } else if (options?.categoryId) {
+      setResolvedCategoryId(options.categoryId);
+    }
+  }, [options?.categoryName, options?.categoryId]);
+
+  useEffect(() => {
+    // Wait for category resolution if categoryName is provided
+    if (options?.categoryName && !resolvedCategoryId) {
+      return;
+    }
+
     const page = options?.page || 1;
     const isAppending = options?.append && page > 1;
+    const categoryToUse = resolvedCategoryId || options?.categoryId;
     
     const cacheParams: Record<string, string> = {
       per_page: String(options?.perPage || 20),
       page: String(page),
     };
-    if (options?.categoryId) {
-      cacheParams.categories = String(options.categoryId);
+    if (categoryToUse) {
+      cacheParams.categories = String(categoryToUse);
     }
     
     const cacheKey = getCacheKey("posts", cacheParams);
@@ -303,8 +351,8 @@ export function useWordPressPosts(options?: {
           page: String(page),
         });
         
-        if (options?.categoryId) {
-          params.append("categories", String(options.categoryId));
+        if (categoryToUse) {
+          params.append("categories", String(categoryToUse));
         }
 
         const response = await fetch(`${API_BASE}/posts?${params}`);
@@ -355,14 +403,9 @@ export function useWordPressPosts(options?: {
     }
 
     fetchPosts();
-  }, [options?.categoryId, options?.categoryName, options?.perPage, options?.page, options?.append]);
+  }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName]);
 
-  // Filter by category name if provided (client-side filtering when categoryId is not available)
-  const filteredPosts = options?.categoryName 
-    ? posts.filter(p => p.category.toLowerCase() === options.categoryName!.toLowerCase())
-    : posts;
-
-  return { posts: filteredPosts, loading, loadingMore, error, totalPages, totalPosts };
+  return { posts, loading, loadingMore, error, totalPages, totalPosts };
 }
 
 export function useWordPressPost(slug: string | undefined) {

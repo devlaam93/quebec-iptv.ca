@@ -1,20 +1,38 @@
 import { Link, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FolderOpen, ChevronRight } from "lucide-react";
-import { useWordPressCategories } from "@/hooks/useWordPressPosts";
+import { FolderOpen, ChevronRight, Tag } from "lucide-react";
+import { useWordPressCategories, useWordPressTags } from "@/hooks/useWordPressPosts";
 import { cn } from "@/lib/utils";
 
 const CategorySidebar = () => {
   const { slug: currentSlug } = useParams<{ slug: string }>();
-  const { categories, loading } = useWordPressCategories();
+  const { categories, loading: categoriesLoading } = useWordPressCategories();
+  const { tags, loading: tagsLoading } = useWordPressTags();
 
   // Filter out "Uncategorized" and sort by count
   const sortedCategories = categories
     .filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'non-classe')
     .sort((a, b) => (b.count || 0) - (a.count || 0));
 
-  if (loading) {
+  // Sort tags by count and take top 15
+  const sortedTags = [...tags]
+    .filter(tag => tag.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 15);
+
+  // Calculate font size based on count (for tag cloud effect)
+  const maxCount = Math.max(...sortedTags.map(t => t.count), 1);
+  const minCount = Math.min(...sortedTags.map(t => t.count), 1);
+  const getTagSize = (count: number) => {
+    if (maxCount === minCount) return 'text-xs';
+    const ratio = (count - minCount) / (maxCount - minCount);
+    if (ratio > 0.7) return 'text-sm font-medium';
+    if (ratio > 0.4) return 'text-xs font-medium';
+    return 'text-xs';
+  };
+
+  if (categoriesLoading) {
     return (
       <aside className="w-full lg:w-64 shrink-0">
         <div className="sticky top-24 bg-card rounded-xl border border-border p-6">
@@ -33,7 +51,8 @@ const CategorySidebar = () => {
   }
 
   return (
-    <aside className="w-full lg:w-64 shrink-0">
+    <aside className="w-full lg:w-64 shrink-0 space-y-6">
+      {/* Categories Section */}
       <div className="sticky top-24 bg-card rounded-xl border border-border p-6">
         <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
           <FolderOpen className="w-5 h-5" />
@@ -85,6 +104,41 @@ const CategorySidebar = () => {
 
         {sortedCategories.length === 0 && (
           <p className="text-muted-foreground text-sm">Aucune catégorie disponible</p>
+        )}
+      </div>
+
+      {/* Tag Cloud Section */}
+      <div className="sticky top-[400px] bg-card rounded-xl border border-border p-6">
+        <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+          <Tag className="w-5 h-5" />
+          Tags populaires
+        </h3>
+        
+        {tagsLoading ? (
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <Skeleton key={i} className="h-6 w-16" />
+            ))}
+          </div>
+        ) : sortedTags.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {sortedTags.map(tag => (
+              <Link
+                key={tag.id}
+                to={`/tag/${tag.slug}`}
+                className={cn(
+                  "inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all duration-200",
+                  "border-border bg-muted/50 hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                  getTagSize(tag.count)
+                )}
+              >
+                {tag.name}
+                <span className="text-[10px] opacity-60">({tag.count})</span>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-sm">Aucun tag disponible</p>
         )}
       </div>
     </aside>

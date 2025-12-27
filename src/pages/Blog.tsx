@@ -453,7 +453,15 @@ const Blog = () => {
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-3">
                           {post.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag.id} variant="outline" className="text-xs">
+                            <Badge 
+                              key={tag.id} 
+                              variant="outline" 
+                              className="text-xs hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.location.href = `/tag/${tag.slug}`;
+                              }}
+                            >
                               <Tag className="w-3 h-3 mr-1" />
                               {tag.name}
                             </Badge>

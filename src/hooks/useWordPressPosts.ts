@@ -237,6 +237,22 @@ export function useWordPressPosts(options?: {
 
   // Resolve category name to ID if provided
   useEffect(() => {
+    // Helper to find category by name or slug
+    const findCategory = (categories: WordPressCategory[], searchTerm: string): WordPressCategory | undefined => {
+      const term = searchTerm.toLowerCase();
+      // Try exact name match first
+      let found = categories.find(c => c.name.toLowerCase() === term);
+      if (!found) {
+        // Try slug match as fallback
+        found = categories.find(c => c.slug.toLowerCase() === term);
+      }
+      if (!found) {
+        // Try partial name match (e.g., "Guide" matches "Guides")
+        found = categories.find(c => c.name.toLowerCase().startsWith(term) || term.startsWith(c.name.toLowerCase()));
+      }
+      return found;
+    };
+
     // Set categoryId directly if provided
     if (options?.categoryId) {
       setResolvedCategoryId(options.categoryId);
@@ -250,7 +266,7 @@ export function useWordPressPosts(options?: {
       const cached = getFromCache<WordPressCategory[]>(cacheKey);
       
       if (cached) {
-        const found = cached.data.find(c => c.name.toLowerCase() === options.categoryName!.toLowerCase());
+        const found = findCategory(cached.data, options.categoryName);
         if (found) {
           setResolvedCategoryId(found.id);
           setResolvingCategory(false);
@@ -270,7 +286,7 @@ export function useWordPressPosts(options?: {
               slug: cat.slug,
             }));
             setCache(cacheKey, transformedCategories);
-            const found = transformedCategories.find(c => c.name.toLowerCase() === options.categoryName!.toLowerCase());
+            const found = findCategory(transformedCategories, options.categoryName!);
             if (found) {
               setResolvedCategoryId(found.id);
             }

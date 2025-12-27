@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AUTHOR, SITE } from "@/config/author";
 
 interface OrganizationData {
   name: string;
@@ -97,7 +98,10 @@ interface ArticleData {
   image?: string;
   datePublished: string;
   dateModified?: string;
-  author: string;
+  author?: string;
+  authorUrl?: string;
+  authorImage?: string;
+  authorDescription?: string;
   url: string;
 }
 
@@ -509,16 +513,19 @@ const StructuredData = (props: StructuredDataProps) => {
           datePublished: props.data.datePublished,
           dateModified: props.data.dateModified || props.data.datePublished,
           author: {
-            "@type": "Organization",
-            name: props.data.author,
-            url: "https://quebec-iptv.ca",
+            "@type": "Person",
+            name: props.data.author || AUTHOR.name,
+            url: props.data.authorUrl || AUTHOR.url,
+            image: props.data.authorImage || `${SITE.url}${AUTHOR.avatar}`,
+            description: props.data.authorDescription || AUTHOR.description,
           },
           publisher: {
             "@type": "Organization",
-            name: "IPTV Québec",
+            name: SITE.name,
+            url: SITE.url,
             logo: {
               "@type": "ImageObject",
-              url: "https://quebec-iptv.ca/og-image.jpg",
+              url: SITE.logo,
               width: 1200,
               height: 630,
             },

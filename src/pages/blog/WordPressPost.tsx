@@ -12,13 +12,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe, User } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 import { useReadingList } from "@/hooks/useReadingList";
 import { toast } from "@/hooks/use-toast";
 import { useViewCount } from "@/hooks/useViewCount";
+import { AUTHOR, SITE } from "@/config/author";
 
 interface WordPressPostProps {
   basePath?: string;
@@ -188,8 +190,11 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
           description: post.excerpt,
           image: post.image,
           datePublished: post.date,
-          author: "Quebec IPTV",
-          url: `https://quebec-iptv.ca/${basePath}/${post.slug}`,
+          author: AUTHOR.name,
+          authorUrl: AUTHOR.url,
+          authorImage: `${SITE.url}${AUTHOR.avatar}`,
+          authorDescription: AUTHOR.description,
+          url: `${SITE.url}/${basePath}/${post.slug}`,
         }}
       />
       <StructuredData
@@ -242,7 +247,21 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
               </div>
             )}
             
+            {/* Author & Meta Info */}
             <div className="flex items-center gap-6 text-sm text-muted-foreground flex-wrap">
+              {/* Author Info */}
+              <div className="flex items-center gap-3">
+                <Avatar className="w-10 h-10 border-2 border-primary/20">
+                  <AvatarImage src={AUTHOR.avatar} alt={AUTHOR.name} />
+                  <AvatarFallback className="bg-primary/10 text-primary">
+                    <User className="w-5 h-5" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="font-medium text-foreground">{AUTHOR.name}</span>
+                  <span className="text-xs text-muted-foreground">{AUTHOR.shortDescription}</span>
+                </div>
+              </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {post.date}
@@ -303,6 +322,27 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
               prose-img:rounded-lg prose-img:shadow-lg"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
+
+          {/* Author Bio Section */}
+          <div className="mt-12 p-6 bg-card rounded-xl border border-border">
+            <div className="flex items-start gap-4">
+              <Avatar className="w-16 h-16 border-2 border-primary/20">
+                <AvatarImage src={AUTHOR.avatar} alt={AUTHOR.name} />
+                <AvatarFallback className="bg-primary/10 text-primary text-xl">
+                  <User className="w-8 h-8" />
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h4 className="font-bold text-lg text-foreground">À propos de l'auteur</h4>
+                </div>
+                <p className="font-semibold text-primary mb-2">{AUTHOR.name}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {AUTHOR.description}
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Call to Action */}
           <div className="mt-12 p-8 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">

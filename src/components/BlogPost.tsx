@@ -4,9 +4,11 @@ import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
+import { AUTHOR, SITE } from "@/config/author";
 
 interface BlogPostProps {
   title: string;
@@ -62,7 +64,10 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
           description: excerpt,
           image: imageUrl,
           datePublished: parseDate(date),
-          author: "Quebec IPTV",
+          author: AUTHOR.name,
+          authorUrl: AUTHOR.url,
+          authorImage: `${SITE.url}${AUTHOR.avatar}`,
+          authorDescription: AUTHOR.description,
           url: articleUrl,
         }} 
       />
@@ -97,7 +102,20 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
             <p className="text-xl text-muted-foreground mb-6" itemProp="description">
               {excerpt}
             </p>
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-6 text-sm text-muted-foreground flex-wrap">
+              {/* Author Info */}
+              <div className="flex items-center gap-3">
+                <Avatar className="w-10 h-10 border-2 border-primary/20">
+                  <AvatarImage src={AUTHOR.avatar} alt={AUTHOR.name} />
+                  <AvatarFallback className="bg-primary/10 text-primary">
+                    <User className="w-5 h-5" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="font-medium text-foreground" itemProp="author">{AUTHOR.name}</span>
+                  <span className="text-xs text-muted-foreground">{AUTHOR.shortDescription}</span>
+                </div>
+              </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 <time dateTime={parseDate(date)} itemProp="datePublished">{date}</time>
@@ -132,6 +150,27 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
           <section className="prose prose-lg dark:prose-invert max-w-none" itemProp="articleBody">
             {content}
           </section>
+
+          {/* Author Bio Section */}
+          <aside className="mt-12 p-6 bg-card rounded-xl border border-border">
+            <div className="flex items-start gap-4">
+              <Avatar className="w-16 h-16 border-2 border-primary/20">
+                <AvatarImage src={AUTHOR.avatar} alt={AUTHOR.name} />
+                <AvatarFallback className="bg-primary/10 text-primary text-xl">
+                  <User className="w-8 h-8" />
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h4 className="font-bold text-lg text-foreground">À propos de l'auteur</h4>
+                </div>
+                <p className="font-semibold text-primary mb-2">{AUTHOR.name}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {AUTHOR.description}
+                </p>
+              </div>
+            </div>
+          </aside>
 
           {/* Call to Action */}
           <aside className="mt-12 p-8 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">

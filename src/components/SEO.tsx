@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AUTHOR, SITE } from "@/config/author";
 
 interface SEOProps {
   title?: string;
@@ -10,9 +11,11 @@ interface SEOProps {
   noIndex?: boolean;
   /** Image alt text for accessibility */
   imageAlt?: string;
+  /** Author name override */
+  author?: string;
 }
 
-const BASE_URL = "https://quebec-iptv.ca";
+const BASE_URL = SITE.url;
 
 const defaultSEO = {
   title: "Quebec IPTV - Meilleur Service IPTV au Quebec | +20,000 Chaines",
@@ -20,6 +23,7 @@ const defaultSEO = {
   keywords: "iptv quebec, iptv canada, service iptv, chaines tv, streaming tv, iptv montreal, abonnement iptv, meilleur iptv",
   image: "/og-image.jpg",
   type: "website",
+  author: AUTHOR.name,
 };
 
 /**
@@ -118,8 +122,8 @@ export default function SEO({
     updateMeta('meta[name="language"]', "French");
     updateMeta('meta[name="geo.region"]', "CA-QC");
     updateMeta('meta[name="geo.placename"]', "Quebec");
-    updateMeta('meta[name="author"]', "IPTV Québec");
-    updateMeta('meta[name="publisher"]', "IPTV Québec");
+    updateMeta('meta[name="author"]', AUTHOR.name);
+    updateMeta('meta[name="publisher"]', SITE.name);
 
     // Open Graph metadata (1200×630 image recommended)
     updateMeta('meta[property="og:type"]', seo.type);
@@ -133,12 +137,12 @@ export default function SEO({
     updateMeta('meta[property="og:image:height"]', "630");
     updateMeta('meta[property="og:image:alt"]', seo.imageAlt);
     updateMeta('meta[property="og:locale"]', "fr_CA");
-    updateMeta('meta[property="og:site_name"]', "IPTV Québec");
+    updateMeta('meta[property="og:site_name"]', SITE.name);
 
     // Twitter Card metadata (Large Image)
     updateMeta('meta[name="twitter:card"]', "summary_large_image");
-    updateMeta('meta[name="twitter:site"]', "@QuebecIPTV");
-    updateMeta('meta[name="twitter:creator"]', "@QuebecIPTV");
+    updateMeta('meta[name="twitter:site"]', AUTHOR.social.twitter);
+    updateMeta('meta[name="twitter:creator"]', AUTHOR.social.twitter);
     updateMeta('meta[name="twitter:url"]', seo.url);
     updateMeta('meta[name="twitter:title"]', seo.title);
     updateMeta('meta[name="twitter:description"]', seo.description);

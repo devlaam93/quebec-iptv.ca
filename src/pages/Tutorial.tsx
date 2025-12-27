@@ -58,6 +58,21 @@ const Tutorial = () => {
     return Array.from(tagMap.values()).sort((a, b) => b.count - a.count);
   }, [posts]);
 
+  // Count posts per device filter
+  const deviceCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: posts.length };
+    DEVICE_FILTERS.forEach(device => {
+      if (device.id === 'all') return;
+      counts[device.id] = posts.filter(post =>
+        device.keywords.some(keyword =>
+          post.title.toLowerCase().includes(keyword) ||
+          post.excerpt.toLowerCase().includes(keyword)
+        )
+      ).length;
+    });
+    return counts;
+  }, [posts]);
+
   // Filter posts by search query, selected tag, and device
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
@@ -196,6 +211,7 @@ const Tutorial = () => {
             {DEVICE_FILTERS.map(device => {
               const Icon = device.icon;
               const isActive = selectedDevice === device.id;
+              const count = deviceCounts[device.id] || 0;
               return (
                 <Button
                   key={device.id}
@@ -207,6 +223,12 @@ const Tutorial = () => {
                   <Icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{device.label}</span>
                   <span className="sm:hidden">{device.label.split(' ')[0]}</span>
+                  <Badge 
+                    variant={isActive ? "secondary" : "outline"} 
+                    className={`ml-1 px-1.5 py-0 text-xs h-5 min-w-5 flex items-center justify-center ${isActive ? 'bg-background/20 text-primary-foreground border-0' : ''}`}
+                  >
+                    {count}
+                  </Badge>
                 </Button>
               );
             })}

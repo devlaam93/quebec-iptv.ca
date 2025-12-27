@@ -15,7 +15,7 @@ const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   
-  const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription } = useWordPressPosts({ 
+  const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount } = useWordPressPosts({ 
     perPage: 12, 
     page: currentPage,
     categorySlug: slug,
@@ -30,6 +30,11 @@ const Category = () => {
   // Clean HTML from description
   const cleanDescription = categoryDescription 
     ? categoryDescription.replace(/<[^>]*>/g, '').trim()
+    : '';
+  
+  // Post count display
+  const postCountText = categoryCount > 0 
+    ? `${categoryCount} article${categoryCount > 1 ? 's' : ''}`
     : '';
 
   // Infinite scroll observer
@@ -85,7 +90,12 @@ const Category = () => {
       <section className="py-16 sm:py-24 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 text-sm">{displayName}</Badge>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Badge className="text-sm">{displayName}</Badge>
+              {postCountText && (
+                <Badge variant="outline" className="text-sm">{postCountText}</Badge>
+              )}
+            </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6">
               Articles <span className="bg-gradient-orange bg-clip-text text-transparent">{displayName}</span>
             </h1>

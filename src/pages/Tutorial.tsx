@@ -69,16 +69,57 @@ const Tutorial = () => {
     }]} />
 
       {/* Hero Section */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-background to-muted/20">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 sm:py-32 overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.1)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.1)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        
+        <div className="container relative mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 bg-gradient-orange bg-clip-text text-transparent">
-              Guides d'Installation
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 animate-fade-in">
+              <Globe className="w-4 h-4" />
+              <span>Guides étape par étape</span>
+            </div>
+            
+            {/* Title */}
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+                Guides d'
+              </span>
+              <span className="bg-gradient-orange bg-clip-text text-transparent">
+                Installation
+              </span>
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground mb-6">
-              Tutoriels complets pour installer et configurer IPTV sur tous vos appareils
+            
+            {/* Subtitle */}
+            <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Tutoriels complets pour installer et configurer IPTV sur tous vos appareils. 
+              <span className="text-foreground font-medium"> Simple, rapide et efficace.</span>
             </p>
             
+            {/* Stats Row */}
+            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="text-center">
+                <p className="text-3xl sm:text-4xl font-bold text-primary">{posts.length}+</p>
+                <p className="text-sm text-muted-foreground">Guides disponibles</p>
+              </div>
+              <div className="w-px h-12 bg-border hidden sm:block" />
+              <div className="text-center">
+                <p className="text-3xl sm:text-4xl font-bold text-primary">10+</p>
+                <p className="text-sm text-muted-foreground">Appareils couverts</p>
+              </div>
+              <div className="w-px h-12 bg-border hidden sm:block" />
+              <div className="text-center">
+                <p className="text-3xl sm:text-4xl font-bold text-primary">24/7</p>
+                <p className="text-sm text-muted-foreground">Support disponible</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -67,19 +67,18 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
     const currentTagIds = new Set(post.tags?.map(t => t.id) || []);
     const otherPosts = allPosts.filter(p => p.slug !== post.slug);
     
-    // Score posts by number of shared tags
+    // Score posts by number of shared tags and include shared tag info
     const scoredPosts = otherPosts.map(p => {
-      const sharedTags = p.tags?.filter(t => currentTagIds.has(t.id)).length || 0;
+      const sharedTags = p.tags?.filter(t => currentTagIds.has(t.id)) || [];
       const sameCategory = p.category === post.category ? 1 : 0;
-      return { post: p, score: sharedTags * 2 + sameCategory };
+      return { post: p, sharedTags, score: sharedTags.length * 2 + sameCategory };
     });
     
     // Sort by score descending and take top 3
     return scoredPosts
       .sort((a, b) => b.score - a.score)
       .filter(item => item.score > 0)
-      .slice(0, 3)
-      .map(item => item.post);
+      .slice(0, 3);
   }, [post, allPosts]);
 
   // Get previous and next articles for sequential navigation
@@ -384,7 +383,7 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
             
             {relatedArticles.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
-                {relatedArticles.map((article) => (
+                {relatedArticles.map(({ post: article, sharedTags }) => (
                   <Card 
                     key={article.id}
                     className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border group cursor-pointer"
@@ -412,6 +411,28 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
                       <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
                         {article.title}
                       </h4>
+                      {/* Shared Tags */}
+                      {sharedTags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {sharedTags.slice(0, 2).map(tag => (
+                            <Badge 
+                              key={tag.id} 
+                              variant="outline" 
+                              className="text-[10px] px-1.5 py-0 bg-primary/10 border-primary/30 text-primary"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/tag/${tag.slug}`);
+                              }}
+                            >
+                              <Tag className="w-2.5 h-2.5 mr-0.5" />
+                              {tag.name}
+                            </Badge>
+                          ))}
+                          {sharedTags.length > 2 && (
+                            <span className="text-[10px] text-muted-foreground">+{sharedTags.length - 2}</span>
+                          )}
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
                         <Clock className="w-3 h-3" />
                         {article.readTime}

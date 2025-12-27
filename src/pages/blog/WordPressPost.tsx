@@ -60,12 +60,26 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
     }
   }, [post, isBookmarked, addToReadingList, removeFromReadingList]);
   
-  // Get related articles from the same category, excluding current post
+  // Get related articles by shared tags first, then by category
   const relatedArticles = useMemo(() => {
     if (!post || !allPosts.length) return [];
-    return allPosts
-      .filter(p => p.category === post.category && p.slug !== post.slug)
-      .slice(0, 3);
+    
+    const currentTagIds = new Set(post.tags?.map(t => t.id) || []);
+    const otherPosts = allPosts.filter(p => p.slug !== post.slug);
+    
+    // Score posts by number of shared tags
+    const scoredPosts = otherPosts.map(p => {
+      const sharedTags = p.tags?.filter(t => currentTagIds.has(t.id)).length || 0;
+      const sameCategory = p.category === post.category ? 1 : 0;
+      return { post: p, score: sharedTags * 2 + sameCategory };
+    });
+    
+    // Sort by score descending and take top 3
+    return scoredPosts
+      .sort((a, b) => b.score - a.score)
+      .filter(item => item.score > 0)
+      .slice(0, 3)
+      .map(item => item.post);
   }, [post, allPosts]);
 
   // Get previous and next articles for sequential navigation
@@ -215,7 +229,12 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 {post.tags.map((tag) => (
-                  <Badge key={tag.id} variant="outline" className="text-sm">
+                  <Badge 
+                    key={tag.id} 
+                    variant="outline" 
+                    className="text-sm hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors"
+                    onClick={() => navigate(`/tag/${tag.slug}`)}
+                  >
                     <Tag className="w-3 h-3 mr-1" />
                     {tag.name}
                   </Badge>
@@ -351,10 +370,10 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
             </div>
           )}
 
-          {/* Related Articles Section */}
+          {/* Related Articles by Tags */}
           <div className="mt-12 pt-8 border-t border-border">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold">Articles similaires</h3>
+              <h3 className="text-xl font-bold">Articles connexes</h3>
               <Button variant="outline" size="sm" asChild>
                 <Link to="/blog">
                   Voir tous les articles

@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FolderOpen, ChevronRight, Tag } from "lucide-react";
@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 
 const CategorySidebar = () => {
   const { slug: currentSlug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const isTagPage = location.pathname.startsWith('/tag/');
   const { categories, loading: categoriesLoading } = useWordPressCategories();
   const { tags, loading: tagsLoading } = useWordPressTags();
 
@@ -123,20 +125,27 @@ const CategorySidebar = () => {
         ) : sortedTags.length > 0 ? (
           <>
             <div className="flex flex-wrap gap-2">
-              {sortedTags.map(tag => (
-                <Link
-                  key={tag.id}
-                  to={`/tag/${tag.slug}`}
-                  className={cn(
-                    "inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all duration-200",
-                    "border-border bg-muted/50 hover:bg-primary hover:text-primary-foreground hover:border-primary",
-                    getTagSize(tag.count)
-                  )}
-                >
-                  {tag.name}
-                  <span className="text-[10px] opacity-60">({tag.count})</span>
-                </Link>
-              ))}
+              {sortedTags.map(tag => {
+                const isActiveTag = isTagPage && currentSlug === tag.slug;
+                return (
+                  <Link
+                    key={tag.id}
+                    to={`/tag/${tag.slug}`}
+                    className={cn(
+                      "inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all duration-200",
+                      isActiveTag
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "border-border bg-muted/50 hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                      getTagSize(tag.count)
+                    )}
+                  >
+                    {tag.name}
+                    <span className={cn("text-[10px]", isActiveTag ? "opacity-80" : "opacity-60")}>
+                      ({tag.count})
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
             <Link
               to="/tags"

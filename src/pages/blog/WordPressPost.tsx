@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
@@ -384,61 +385,80 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
             {relatedArticles.length > 0 ? (
               <div className="grid md:grid-cols-3 gap-6">
                 {relatedArticles.map(({ post: article, sharedTags }) => (
-                  <Card 
-                    key={article.id}
-                    className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border group cursor-pointer"
-                    onClick={() => handleArticleClick(article)}
-                    onMouseEnter={() => handleArticleHover(article.slug)}
-                    onMouseLeave={handleArticleHoverEnd}
-                  >
-                    <div className="relative h-36 overflow-hidden">
-                      {article.image ? (
-                        <OptimizedImage 
-                          src={article.image} 
-                          alt={article.imageAlt || article.title}
-                          width={300}
-                          height={170}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                          <Globe className="w-8 h-8 text-primary/50" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <Badge variant="secondary" className="mb-2 text-xs">{article.category}</Badge>
-                      <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
-                        {article.title}
-                      </h4>
-                      {/* Shared Tags */}
-                      {sharedTags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {sharedTags.slice(0, 2).map(tag => (
-                            <Badge 
-                              key={tag.id} 
-                              variant="outline" 
-                              className="text-[10px] px-1.5 py-0 bg-primary/10 border-primary/30 text-primary"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/tag/${tag.slug}`);
-                              }}
-                            >
-                              <Tag className="w-2.5 h-2.5 mr-0.5" />
-                              {tag.name}
-                            </Badge>
-                          ))}
-                          {sharedTags.length > 2 && (
-                            <span className="text-[10px] text-muted-foreground">+{sharedTags.length - 2}</span>
+                  <Tooltip key={article.id}>
+                    <TooltipTrigger asChild>
+                      <Card 
+                        className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card border-border group cursor-pointer"
+                        onClick={() => handleArticleClick(article)}
+                        onMouseEnter={() => handleArticleHover(article.slug)}
+                        onMouseLeave={handleArticleHoverEnd}
+                      >
+                        <div className="relative h-36 overflow-hidden">
+                          {article.image ? (
+                            <OptimizedImage 
+                              src={article.image} 
+                              alt={article.imageAlt || article.title}
+                              width={300}
+                              height={170}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                              <Globe className="w-8 h-8 text-primary/50" />
+                            </div>
                           )}
                         </div>
+                        <div className="p-4">
+                          <Badge variant="secondary" className="mb-2 text-xs">{article.category}</Badge>
+                          <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors">
+                            {article.title}
+                          </h4>
+                          {/* Shared Tags */}
+                          {sharedTags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {sharedTags.slice(0, 2).map(tag => (
+                                <Badge 
+                                  key={tag.id} 
+                                  variant="outline" 
+                                  className="text-[10px] px-1.5 py-0 bg-primary/10 border-primary/30 text-primary"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/tag/${tag.slug}`);
+                                  }}
+                                >
+                                  <Tag className="w-2.5 h-2.5 mr-0.5" />
+                                  {tag.name}
+                                </Badge>
+                              ))}
+                              {sharedTags.length > 2 && (
+                                <span className="text-[10px] text-muted-foreground">+{sharedTags.length - 2}</span>
+                              )}
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                            <Clock className="w-3 h-3" />
+                            {article.readTime}
+                          </div>
+                        </div>
+                      </Card>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-xs">
+                      <p className="font-medium mb-1">Vous aimerez peut-être</p>
+                      {sharedTags.length > 0 ? (
+                        <p className="text-xs text-muted-foreground">
+                          Cet article partage {sharedTags.length === 1 ? 'le tag' : 'les tags'}{' '}
+                          <span className="text-primary font-medium">
+                            {sharedTags.map(t => t.name).join(', ')}
+                          </span>{' '}
+                          avec l'article actuel.
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">
+                          Article de la même catégorie: {article.category}
+                        </p>
                       )}
-                      <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                        <Clock className="w-3 h-3" />
-                        {article.readTime}
-                      </div>
-                    </div>
-                  </Card>
+                    </TooltipContent>
+                  </Tooltip>
                 ))}
               </div>
             ) : (

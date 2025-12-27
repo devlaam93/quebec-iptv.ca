@@ -591,6 +591,53 @@ export function useWordPressCategories() {
   return { categories, loading };
 }
 
+// Hook to fetch all tags from WordPress API
+export function useWordPressTags() {
+  const [tags, setTags] = useState<(WordPressTag & { count: number })[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const cacheKey = getCacheKey("tags", {});
+    const cached = getFromCache<(WordPressTag & { count: number })[]>(cacheKey);
+
+    if (cached && isCacheFresh(cached.timestamp)) {
+      setTags(cached.data);
+      setLoading(false);
+      return;
+    }
+
+    if (cached && !isCacheStale(cached.timestamp)) {
+      setTags(cached.data);
+      setLoading(false);
+    }
+
+    async function fetchTags() {
+      try {
+        const response = await fetch(`${API_BASE}/tags?per_page=100`);
+        if (response.ok) {
+          const data = await response.json();
+          const transformedTags: (WordPressTag & { count: number })[] = data.map((tag: { id: number; name: string; slug: string; count?: number }) => ({
+            id: tag.id,
+            name: tag.name,
+            slug: tag.slug,
+            count: tag.count || 0,
+          }));
+          setCache(cacheKey, transformedTags);
+          setTags(transformedTags);
+        }
+      } catch (err) {
+        console.error("Error fetching tags:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTags();
+  }, []);
+
+  return { tags, loading };
+}
+
 // Utility to manually clear the WordPress cache
 export function clearWordPressCache(): void {
   const keysToRemove: string[] = [];

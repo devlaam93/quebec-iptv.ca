@@ -239,6 +239,7 @@ export function useWordPressPosts(options?: {
   const [resolvedCategoryDescription, setResolvedCategoryDescription] = useState<string>('');
   const [resolvedCategoryCount, setResolvedCategoryCount] = useState<number>(0);
   const [resolvingCategory, setResolvingCategory] = useState(!!options?.categoryName || !!options?.categorySlug);
+  const [categoryNotFound, setCategoryNotFound] = useState(false);
   const isFetchingRef = useRef(false);
   const currentPageRef = useRef(1);
   const initializedRef = useRef(false);
@@ -277,6 +278,7 @@ export function useWordPressPosts(options?: {
     
     if (searchTerm) {
       setResolvingCategory(true);
+      setCategoryNotFound(false);
       const cacheKey = getCacheKey("categories", {});
       const cached = getFromCache<WordPressCategory[]>(cacheKey);
       
@@ -287,8 +289,11 @@ export function useWordPressPosts(options?: {
           setResolvedCategoryName(found.name);
           setResolvedCategoryDescription(found.description || '');
           setResolvedCategoryCount(found.count || 0);
+          setCategoryNotFound(false);
           setResolvingCategory(false);
           return;
+        } else {
+          // Category not found in cache, still try fetching fresh data
         }
       }
 
@@ -312,6 +317,10 @@ export function useWordPressPosts(options?: {
               setResolvedCategoryName(found.name);
               setResolvedCategoryDescription(found.description || '');
               setResolvedCategoryCount(found.count || 0);
+              setCategoryNotFound(false);
+            } else {
+              // Category truly not found
+              setCategoryNotFound(true);
             }
           }
         } catch (err) {
@@ -462,7 +471,7 @@ export function useWordPressPosts(options?: {
     fetchPosts();
   }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName, options?.categorySlug]);
 
-  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts, categoryName: resolvedCategoryName, categoryDescription: resolvedCategoryDescription, categoryCount: resolvedCategoryCount };
+  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts, categoryName: resolvedCategoryName, categoryDescription: resolvedCategoryDescription, categoryCount: resolvedCategoryCount, categoryNotFound };
 }
 
 export function useWordPressPost(slug: string | undefined) {

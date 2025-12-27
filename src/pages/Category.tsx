@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2 } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import CategorySidebar from "@/components/CategorySidebar";
 import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
@@ -16,7 +16,7 @@ const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   
-  const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount } = useWordPressPosts({ 
+  const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount, categoryNotFound } = useWordPressPosts({ 
     perPage: 12, 
     page: currentPage,
     categorySlug: slug,
@@ -69,6 +69,47 @@ const Category = () => {
   const handleArticleHoverEnd = useCallback(() => {
     cancelPrefetch();
   }, []);
+
+  // Category Not Found State
+  if (!loading && categoryNotFound) {
+    return (
+      <PageLayout>
+        <SEO
+          title="Catégorie introuvable | IPTV Québec"
+          description="La catégorie demandée n'existe pas. Découvrez nos autres catégories d'articles."
+          path={`/category/${slug}`}
+        />
+        <section className="py-24 sm:py-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-muted flex items-center justify-center">
+                <SearchX className="w-10 h-10 text-muted-foreground" />
+              </div>
+              <h1 className="text-4xl sm:text-5xl font-black mb-6">Catégorie introuvable</h1>
+              <p className="text-lg text-muted-foreground mb-8">
+                La catégorie « <span className="font-semibold text-foreground">{slug}</span> » n'existe pas ou a été supprimée.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button onClick={() => window.location.href = '/blog'} size="lg">
+                  <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                  Voir tous les articles
+                </Button>
+                <Button variant="outline" onClick={() => window.history.back()} size="lg">
+                  Retour
+                </Button>
+              </div>
+            </div>
+            
+            {/* Show category sidebar for navigation */}
+            <div className="mt-16 max-w-sm mx-auto">
+              <h3 className="text-lg font-semibold mb-4 text-center">Catégories disponibles</h3>
+              <CategorySidebar />
+            </div>
+          </div>
+        </section>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>

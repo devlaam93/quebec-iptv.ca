@@ -4,11 +4,17 @@ import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowLeft, Share2, User } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, User, FileText, Timer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { AUTHOR, SITE } from "@/config/author";
+
+// Author stats - these could be fetched dynamically in the future
+const AUTHOR_STATS = {
+  articleCount: 25,
+  totalReadingTime: "2h 30min",
+};
 
 interface BlogPostProps {
   title: string;
@@ -165,9 +171,22 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
                   <h4 className="font-bold text-lg text-foreground">À propos de l'auteur</h4>
                 </div>
                 <p className="font-semibold text-primary mb-2">{AUTHOR.name}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                   {AUTHOR.description}
                 </p>
+                {/* Author Stats */}
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <FileText className="w-4 h-4 text-primary" />
+                    <span className="font-medium">{AUTHOR_STATS.articleCount}</span>
+                    <span>articles</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <Timer className="w-4 h-4 text-primary" />
+                    <span className="font-medium">{AUTHOR_STATS.totalReadingTime}</span>
+                    <span>de lecture</span>
+                  </div>
+                </div>
               </div>
             </div>
           </aside>

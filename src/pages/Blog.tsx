@@ -23,7 +23,10 @@ const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "Tous");
   const [currentPage, setCurrentPage] = useState(1);
   const [showReadingList, setShowReadingList] = useState(false);
-  const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
+  const [useInfiniteScroll, setUseInfiniteScroll] = useState(() => {
+    const saved = localStorage.getItem('blog_pagination_mode');
+    return saved !== 'pagination';
+  });
   const postsPerPage = 6;
   
   const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
@@ -103,8 +106,10 @@ const Blog = () => {
 
   // Toggle pagination mode
   const togglePaginationMode = () => {
-    setUseInfiniteScroll(!useInfiniteScroll);
+    const newMode = !useInfiniteScroll;
+    setUseInfiniteScroll(newMode);
     setCurrentPage(1);
+    localStorage.setItem('blog_pagination_mode', newMode ? 'infinite' : 'pagination');
   };
 
   // Reset pagination when category changes

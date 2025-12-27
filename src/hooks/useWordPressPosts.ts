@@ -230,6 +230,7 @@ export function useWordPressPosts(options?: {
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(null);
+  const [resolvingCategory, setResolvingCategory] = useState(!!options?.categoryName);
   const isFetchingRef = useRef(false);
   const currentPageRef = useRef(1);
   const initializedRef = useRef(false);
@@ -239,10 +240,12 @@ export function useWordPressPosts(options?: {
     // Set categoryId directly if provided
     if (options?.categoryId) {
       setResolvedCategoryId(options.categoryId);
+      setResolvingCategory(false);
       return;
     }
     
     if (options?.categoryName) {
+      setResolvingCategory(true);
       const cacheKey = getCacheKey("categories", {});
       const cached = getFromCache<WordPressCategory[]>(cacheKey);
       
@@ -250,6 +253,7 @@ export function useWordPressPosts(options?: {
         const found = cached.data.find(c => c.name.toLowerCase() === options.categoryName!.toLowerCase());
         if (found) {
           setResolvedCategoryId(found.id);
+          setResolvingCategory(false);
           return;
         }
       }
@@ -273,12 +277,15 @@ export function useWordPressPosts(options?: {
           }
         } catch (err) {
           console.error("Error resolving category:", err);
+        } finally {
+          setResolvingCategory(false);
         }
       }
       fetchAndResolve();
     } else {
       // No category filter, reset to null
       setResolvedCategoryId(null);
+      setResolvingCategory(false);
     }
   }, [options?.categoryName, options?.categoryId]);
 
@@ -413,7 +420,7 @@ export function useWordPressPosts(options?: {
     fetchPosts();
   }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName]);
 
-  return { posts, loading, loadingMore, error, totalPages, totalPosts };
+  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts };
 }
 
 export function useWordPressPost(slug: string | undefined) {

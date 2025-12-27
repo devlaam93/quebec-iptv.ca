@@ -121,6 +121,7 @@ export interface WordPressPost {
   image: string;
   imageAlt: string;
   category: string;
+  categorySlug: string;
   categoryId: number;
   tags: WordPressTag[];
   metaTitle?: string;
@@ -209,6 +210,7 @@ function transformPost(post: WPPostRaw): WordPressPost {
     image,
     imageAlt,
     category: category.name,
+    categorySlug: category.slug,
     categoryId: category.id,
     tags: tags.map(t => ({ id: t.id, name: t.name, slug: t.slug })),
     metaTitle: yoast?.title,

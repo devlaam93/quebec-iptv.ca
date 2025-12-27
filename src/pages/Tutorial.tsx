@@ -158,7 +158,15 @@ const Tutorial = () => {
                     <div className="p-6">
                       {/* Category badge and meta info */}
                       <div className="flex items-center justify-between mb-4">
-                        <Badge className="bg-muted text-foreground hover:bg-muted">{post.category}</Badge>
+                        <Badge 
+                          className="bg-muted text-foreground hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = `/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`;
+                          }}
+                        >
+                          {post.category}
+                        </Badge>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Calendar className="w-4 h-4" />

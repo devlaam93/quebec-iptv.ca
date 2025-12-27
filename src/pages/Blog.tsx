@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, BookmarkX, Library } from "lucide-react";
+import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPosts, WordPressPost, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 import { useReadingList } from "@/hooks/useReadingList";
@@ -160,11 +161,10 @@ const Blog = () => {
       {/* Articles Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          {/* Loading State */}
+          {/* Loading State with Skeletons */}
           {loading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary mr-3" />
-              <span className="text-muted-foreground">Chargement des articles...</span>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <BlogCardSkeleton count={postsPerPage} />
             </div>
           )}
 

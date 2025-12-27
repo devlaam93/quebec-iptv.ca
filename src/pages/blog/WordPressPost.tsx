@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -17,6 +17,7 @@ import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 import { useReadingList } from "@/hooks/useReadingList";
 import { toast } from "@/hooks/use-toast";
+import { useViewCount } from "@/hooks/useViewCount";
 
 interface WordPressPostProps {
   basePath?: string;
@@ -29,8 +30,16 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
   const { post, loading, error } = useWordPressPost(slug);
   const { posts: allPosts } = useWordPressPosts({ perPage: 10 });
   const { addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
+  const { incrementViewCount } = useViewCount(slug);
   
   const isBookmarked = post ? isInReadingList(post.slug) : false;
+
+  // Track view count when post loads
+  useEffect(() => {
+    if (post?.slug) {
+      incrementViewCount(post.slug);
+    }
+  }, [post?.slug, incrementViewCount]);
 
   const handleBookmarkToggle = useCallback(() => {
     if (!post) return;

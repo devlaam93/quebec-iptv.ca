@@ -13,6 +13,7 @@ import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import BlogPagination from "@/components/BlogPagination";
 import CategorySidebar from "@/components/CategorySidebar";
 import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
+import { useAllViewCounts } from "@/hooks/useViewCount";
 
 const Category = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -38,6 +39,7 @@ const Category = () => {
     categorySlug: slug,
     append: useInfiniteScroll && currentPage > 1
   });
+  const { getViewCount } = useAllViewCounts();
 
   // Display name from resolved category or fallback to formatted slug
   const displayName = categoryName || (slug
@@ -91,11 +93,14 @@ const Category = () => {
       case 'alpha-desc':
         filtered.sort((a, b) => b.title.localeCompare(a.title, 'fr'));
         break;
+      case 'popular':
+        filtered.sort((a, b) => getViewCount(b.slug) - getViewCount(a.slug));
+        break;
       default:
         break;
     }
     return filtered;
-  }, [posts, sortOrder, readingTimeFilter]);
+  }, [posts, sortOrder, readingTimeFilter, getViewCount]);
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -394,6 +399,7 @@ const Category = () => {
                           <SelectContent className="bg-popover border border-border z-50">
                             <SelectItem value="date-desc">Plus récent</SelectItem>
                             <SelectItem value="date-asc">Plus ancien</SelectItem>
+                            <SelectItem value="popular">Plus populaire</SelectItem>
                             <SelectItem value="alpha-asc">A → Z</SelectItem>
                             <SelectItem value="alpha-desc">Z → A</SelectItem>
                           </SelectContent>

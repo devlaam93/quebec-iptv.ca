@@ -1,16 +1,22 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2 } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, Search, X } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
-import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
+import { useWordPressPosts, useWordPressTags, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
+
 const Tutorial = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState<string>("all");
+  
   const {
     posts,
     loading,
@@ -23,6 +29,44 @@ const Tutorial = () => {
     categoryName: "Guides",
     append: currentPage > 1
   });
+
+  const { tags } = useWordPressTags();
+
+  // Get unique tags from posts for the filter
+  const availableTags = useMemo(() => {
+    const tagMap = new Map<number, { id: number; name: string; slug: string; count: number }>();
+    posts.forEach(post => {
+      post.tags?.forEach(tag => {
+        if (tagMap.has(tag.id)) {
+          tagMap.get(tag.id)!.count++;
+        } else {
+          tagMap.set(tag.id, { ...tag, count: 1 });
+        }
+      });
+    });
+    return Array.from(tagMap.values()).sort((a, b) => b.count - a.count);
+  }, [posts]);
+
+  // Filter posts by search query and selected tag
+  const filteredPosts = useMemo(() => {
+    return posts.filter(post => {
+      const matchesSearch = searchQuery === "" || 
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesTag = selectedTag === "all" || 
+        post.tags?.some(tag => tag.slug === selectedTag);
+      
+      return matchesSearch && matchesTag;
+    });
+  }, [posts, searchQuery, selectedTag]);
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedTag("all");
+  };
+
+  const hasActiveFilters = searchQuery !== "" || selectedTag !== "all";
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -40,6 +84,7 @@ const Tutorial = () => {
     }
     return () => observer.disconnect();
   }, [currentPage, totalPages, loadingMore, loading, setCurrentPage]);
+  
   const handleArticleClick = (slug: string) => {
     window.location.href = `/tutorial/${slug}`;
   };
@@ -124,6 +169,82 @@ const Tutorial = () => {
         </div>
       </section>
 
+      {/* Search and Filter Section */}
+      <section className="py-8 bg-card/50 border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center max-w-3xl mx-auto">
+            {/* Search Input */}
+            <div className="relative flex-1 w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Rechercher un guide..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-10"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            
+            {/* Tags Select */}
+            <Select value={selectedTag} onValueChange={setSelectedTag}>
+              <SelectTrigger className="w-full sm:w-[200px]">
+                <Tag className="w-4 h-4 mr-2" />
+                <SelectValue placeholder="Filtrer par tag" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les tags</SelectItem>
+                {availableTags.map(tag => (
+                  <SelectItem key={tag.id} value={tag.slug}>
+                    {tag.name} ({tag.count})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            {/* Clear Filters */}
+            {hasActiveFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters} className="shrink-0">
+                <X className="w-4 h-4 mr-1" />
+                Effacer
+              </Button>
+            )}
+          </div>
+          
+          {/* Active Filters Display */}
+          {hasActiveFilters && (
+            <div className="flex items-center justify-center gap-2 mt-4">
+              <span className="text-sm text-muted-foreground">
+                {filteredPosts.length} résultat{filteredPosts.length !== 1 ? 's' : ''}
+              </span>
+              {searchQuery && (
+                <Badge variant="secondary" className="gap-1">
+                  Recherche: "{searchQuery}"
+                  <button onClick={() => setSearchQuery("")}>
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+              {selectedTag !== "all" && (
+                <Badge variant="secondary" className="gap-1">
+                  Tag: {availableTags.find(t => t.slug === selectedTag)?.name}
+                  <button onClick={() => setSelectedTag("all")}>
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Articles Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -143,10 +264,22 @@ const Tutorial = () => {
               <p className="text-muted-foreground text-lg">Aucun guide disponible pour le moment.</p>
             </div>}
 
+          {/* No Results State */}
+          {!loading && !error && posts.length > 0 && filteredPosts.length === 0 && (
+            <div className="text-center py-12">
+              <Search className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Aucun résultat trouvé</h3>
+              <p className="text-muted-foreground mb-6">
+                Aucun guide ne correspond à vos critères de recherche.
+              </p>
+              <Button onClick={clearFilters}>Effacer les filtres</Button>
+            </div>
+          )}
+
           {/* Articles */}
-          {!loading && !error && posts.length > 0 && <>
+          {!loading && !error && filteredPosts.length > 0 && <>
               <div className="grid md:grid-cols-2 gap-8">
-                {posts.map(post => <Card key={post.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-card border-border group cursor-pointer" onMouseEnter={() => handleArticleHover(post.slug)} onMouseLeave={handleArticleHoverEnd} onClick={() => handleArticleClick(post.slug)}>
+                {filteredPosts.map(post => <Card key={post.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-card border-border group cursor-pointer" onMouseEnter={() => handleArticleHover(post.slug)} onMouseLeave={handleArticleHoverEnd} onClick={() => handleArticleClick(post.slug)}>
                     {/* Full-width image */}
                     <div className="relative aspect-video overflow-hidden">
                       {post.image ? <OptimizedImage src={post.image} alt={post.imageAlt || `Guide: ${post.title}`} width={600} height={338} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">

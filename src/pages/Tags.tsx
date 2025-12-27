@@ -1,21 +1,35 @@
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tag, ArrowLeft, TrendingUp } from "lucide-react";
+import { Tag, ArrowLeft, TrendingUp, ArrowDownAZ, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWordPressTags } from "@/hooks/useWordPressPosts";
 import { cn } from "@/lib/utils";
 
+type SortMode = 'popular' | 'alpha-asc' | 'alpha-desc';
+
 const Tags = () => {
   const { tags, loading } = useWordPressTags();
+  const [sortMode, setSortMode] = useState<SortMode>('popular');
 
-  // Sort tags by count descending
-  const sortedTags = [...tags]
-    .filter(tag => tag.count > 0)
-    .sort((a, b) => b.count - a.count);
+  // Filter and sort tags based on mode
+  const sortedTags = useMemo(() => {
+    const filtered = tags.filter(tag => tag.count > 0);
+    
+    switch (sortMode) {
+      case 'alpha-asc':
+        return [...filtered].sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+      case 'alpha-desc':
+        return [...filtered].sort((a, b) => b.name.localeCompare(a.name, 'fr'));
+      case 'popular':
+      default:
+        return [...filtered].sort((a, b) => b.count - a.count);
+    }
+  }, [tags, sortMode]);
 
   // Calculate size classes based on count
   const maxCount = Math.max(...sortedTags.map(t => t.count), 1);
@@ -32,6 +46,32 @@ const Tags = () => {
   };
 
   const totalArticles = sortedTags.reduce((sum, tag) => sum + tag.count, 0);
+
+  const cycleSortMode = () => {
+    setSortMode(prev => {
+      if (prev === 'popular') return 'alpha-asc';
+      if (prev === 'alpha-asc') return 'alpha-desc';
+      return 'popular';
+    });
+  };
+
+  const getSortLabel = () => {
+    switch (sortMode) {
+      case 'alpha-asc': return 'A → Z';
+      case 'alpha-desc': return 'Z → A';
+      default: return 'Populaires';
+    }
+  };
+
+  const getSortIcon = () => {
+    switch (sortMode) {
+      case 'alpha-asc':
+      case 'alpha-desc':
+        return <ArrowDownAZ className="w-4 h-4" />;
+      default:
+        return <TrendingUp className="w-4 h-4" />;
+    }
+  };
 
   return (
     <PageLayout>
@@ -138,7 +178,19 @@ const Tags = () => {
 
               {/* All Tags Cloud */}
               <div>
-                <h2 className="text-xl font-bold mb-6">Tous les tags</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold">Tous les tags</h2>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={cycleSortMode}
+                    className="gap-2"
+                  >
+                    {getSortIcon()}
+                    {getSortLabel()}
+                    <ArrowUpDown className="w-3 h-3 opacity-50" />
+                  </Button>
+                </div>
                 <div className="flex flex-wrap gap-3 justify-center p-8 rounded-2xl bg-card border border-border">
                   {sortedTags.map(tag => {
                     const style = getTagStyle(tag.count);

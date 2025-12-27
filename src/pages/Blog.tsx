@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -68,12 +68,25 @@ const Blog = () => {
     ? posts 
     : posts.filter(post => post.category === selectedCategory);
 
-  // Handler to load more articles from server
-  const loadMoreArticles = () => {
-    if (currentPage < totalPages && !loadingMore) {
-      setCurrentPage(prev => prev + 1);
+  // Infinite scroll observer
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && currentPage < totalPages && !loadingMore && !loading) {
+          setCurrentPage(prev => prev + 1);
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
     }
-  };
+
+    return () => observer.disconnect();
+  }, [currentPage, totalPages, loadingMore, loading]);
 
   // Reset pagination when category changes
   const handleCategoryChange = (categoryName: string) => {
@@ -354,26 +367,18 @@ const Blog = () => {
                 ))}
               </div>
 
-              {/* Load More */}
-              {currentPage < totalPages && (
-                <div className="text-center mt-12">
-                  <Button 
-                    size="lg" 
-                    variant="outline"
-                    onClick={loadMoreArticles}
-                    disabled={loadingMore}
-                  >
-                    {loadingMore ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Chargement...
-                      </>
-                    ) : (
-                      "Charger plus d'articles"
-                    )}
-                  </Button>
-                </div>
-              )}
+              {/* Infinite Scroll Trigger */}
+              <div ref={loadMoreRef} className="h-20 flex items-center justify-center mt-8">
+                {loadingMore && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Chargement...</span>
+                  </div>
+                )}
+                {currentPage >= totalPages && posts.length > postsPerPage && (
+                  <p className="text-muted-foreground text-sm">Tous les articles ont été chargés</p>
+                )}
+              </div>
             </>
           )}
 

@@ -109,6 +109,7 @@ export interface WordPressCategory {
   name: string;
   slug: string;
   description?: string;
+  count?: number;
 }
 
 export interface WordPressPost {
@@ -236,6 +237,7 @@ export function useWordPressPosts(options?: {
   const [resolvedCategoryId, setResolvedCategoryId] = useState<number | null>(null);
   const [resolvedCategoryName, setResolvedCategoryName] = useState<string>('');
   const [resolvedCategoryDescription, setResolvedCategoryDescription] = useState<string>('');
+  const [resolvedCategoryCount, setResolvedCategoryCount] = useState<number>(0);
   const [resolvingCategory, setResolvingCategory] = useState(!!options?.categoryName || !!options?.categorySlug);
   const isFetchingRef = useRef(false);
   const currentPageRef = useRef(1);
@@ -284,6 +286,7 @@ export function useWordPressPosts(options?: {
           setResolvedCategoryId(found.id);
           setResolvedCategoryName(found.name);
           setResolvedCategoryDescription(found.description || '');
+          setResolvedCategoryCount(found.count || 0);
           setResolvingCategory(false);
           return;
         }
@@ -295,11 +298,12 @@ export function useWordPressPosts(options?: {
           const response = await fetch(`${API_BASE}/categories?per_page=100`);
           if (response.ok) {
             const data = await response.json();
-            const transformedCategories: WordPressCategory[] = data.map((cat: { id: number; name: string; slug: string; description?: string }) => ({
+            const transformedCategories: WordPressCategory[] = data.map((cat: { id: number; name: string; slug: string; description?: string; count?: number }) => ({
               id: cat.id,
               name: cat.name,
               slug: cat.slug,
               description: cat.description || '',
+              count: cat.count || 0,
             }));
             setCache(cacheKey, transformedCategories);
             const found = findCategory(transformedCategories, searchTerm!, isSlugSearch);
@@ -307,6 +311,7 @@ export function useWordPressPosts(options?: {
               setResolvedCategoryId(found.id);
               setResolvedCategoryName(found.name);
               setResolvedCategoryDescription(found.description || '');
+              setResolvedCategoryCount(found.count || 0);
             }
           }
         } catch (err) {
@@ -321,6 +326,7 @@ export function useWordPressPosts(options?: {
       setResolvedCategoryId(null);
       setResolvedCategoryName('');
       setResolvedCategoryDescription('');
+      setResolvedCategoryCount(0);
       setResolvingCategory(false);
     }
   }, [options?.categoryName, options?.categorySlug, options?.categoryId]);
@@ -456,7 +462,7 @@ export function useWordPressPosts(options?: {
     fetchPosts();
   }, [resolvedCategoryId, options?.perPage, options?.page, options?.append, options?.categoryName, options?.categorySlug]);
 
-  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts, categoryName: resolvedCategoryName, categoryDescription: resolvedCategoryDescription };
+  return { posts, loading: loading || resolvingCategory, loadingMore, error, totalPages, totalPosts, categoryName: resolvedCategoryName, categoryDescription: resolvedCategoryDescription, categoryCount: resolvedCategoryCount };
 }
 
 export function useWordPressPost(slug: string | undefined) {

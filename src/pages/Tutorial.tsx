@@ -89,9 +89,15 @@ const Tutorial = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 bg-gradient-orange bg-clip-text text-transparent">
               Guides d'Installation
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-6">
               Tutoriels complets pour installer et configurer IPTV sur tous vos appareils
             </p>
+            <a 
+              href="/blog?category=Guide" 
+              className="text-primary hover:underline font-medium"
+            >
+              Voir tous les guides sur le blog →
+            </a>
           </div>
         </div>
       </section>

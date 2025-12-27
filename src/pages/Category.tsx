@@ -15,7 +15,7 @@ const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   
-  const { posts, loading, loadingMore, error, totalPages, categoryName } = useWordPressPosts({ 
+  const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription } = useWordPressPosts({ 
     perPage: 12, 
     page: currentPage,
     categorySlug: slug,
@@ -26,6 +26,11 @@ const Category = () => {
   const displayName = categoryName || (slug
     ? slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
     : '');
+  
+  // Clean HTML from description
+  const cleanDescription = categoryDescription 
+    ? categoryDescription.replace(/<[^>]*>/g, '').trim()
+    : '';
 
   // Infinite scroll observer
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -85,7 +90,7 @@ const Category = () => {
               Articles <span className="bg-gradient-orange bg-clip-text text-transparent">{displayName}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground">
-              Tous nos articles dans la catégorie {displayName}
+              {cleanDescription || `Tous nos articles dans la catégorie ${displayName}`}
             </p>
           </div>
         </div>

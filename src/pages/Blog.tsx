@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -15,7 +16,9 @@ import BookmarkButton from "@/components/BookmarkButton";
 import { toast } from "@/hooks/use-toast";
 
 const Blog = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Tous");
+  const [searchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
+  const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "Tous");
   const [currentPage, setCurrentPage] = useState(1);
   const [showReadingList, setShowReadingList] = useState(false);
   const postsPerPage = 6;

@@ -16,7 +16,7 @@ const Tutorial = () => {
   const { posts, loading, loadingMore, error, totalPages } = useWordPressPosts({ 
     perPage: 12, 
     page: currentPage,
-    categoryName: "Guide",
+    categoryName: "Guides",
     append: currentPage > 1
   });
 

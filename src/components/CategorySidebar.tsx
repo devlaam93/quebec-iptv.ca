@@ -121,22 +121,31 @@ const CategorySidebar = () => {
             ))}
           </div>
         ) : sortedTags.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {sortedTags.map(tag => (
-              <Link
-                key={tag.id}
-                to={`/tag/${tag.slug}`}
-                className={cn(
-                  "inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all duration-200",
-                  "border-border bg-muted/50 hover:bg-primary hover:text-primary-foreground hover:border-primary",
-                  getTagSize(tag.count)
-                )}
-              >
-                {tag.name}
-                <span className="text-[10px] opacity-60">({tag.count})</span>
-              </Link>
-            ))}
-          </div>
+          <>
+            <div className="flex flex-wrap gap-2">
+              {sortedTags.map(tag => (
+                <Link
+                  key={tag.id}
+                  to={`/tag/${tag.slug}`}
+                  className={cn(
+                    "inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all duration-200",
+                    "border-border bg-muted/50 hover:bg-primary hover:text-primary-foreground hover:border-primary",
+                    getTagSize(tag.count)
+                  )}
+                >
+                  {tag.name}
+                  <span className="text-[10px] opacity-60">({tag.count})</span>
+                </Link>
+              ))}
+            </div>
+            <Link
+              to="/tags"
+              className="inline-flex items-center gap-1 mt-4 text-sm text-primary hover:underline font-medium"
+            >
+              Voir tous les tags
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </>
         ) : (
           <p className="text-muted-foreground text-sm">Aucun tag disponible</p>
         )}

@@ -9,18 +9,21 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
+import BlogPagination from "@/components/BlogPagination";
 import CategorySidebar from "@/components/CategorySidebar";
 import { useWordPressPosts, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 
 const Category = () => {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState(1);
+  const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
+  const postsPerPage = 12;
   
   const { posts, loading, loadingMore, error, totalPages, categoryName, categoryDescription, categoryCount, categoryNotFound } = useWordPressPosts({ 
-    perPage: 12, 
+    perPage: postsPerPage, 
     page: currentPage,
     categorySlug: slug,
-    append: currentPage > 1
+    append: useInfiniteScroll && currentPage > 1
   });
 
   // Display name from resolved category or fallback to formatted slug
@@ -42,6 +45,8 @@ const Category = () => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    if (!useInfiniteScroll) return;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && currentPage < totalPages && !loadingMore && !loading) {
@@ -56,7 +61,18 @@ const Category = () => {
     }
 
     return () => observer.disconnect();
-  }, [currentPage, totalPages, loadingMore, loading]);
+  }, [currentPage, totalPages, loadingMore, loading, useInfiniteScroll]);
+
+  // Handle pagination page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Toggle pagination mode
+  const togglePaginationMode = () => {
+    setUseInfiniteScroll(!useInfiniteScroll);
+    setCurrentPage(1);
+  };
 
   const handleArticleClick = (postSlug: string) => {
     window.location.href = `/blog/${postSlug}`;
@@ -257,18 +273,41 @@ const Category = () => {
                     ))}
                   </div>
 
-                  {/* Infinite Scroll Trigger */}
-                  <div ref={loadMoreRef} className="h-20 flex items-center justify-center mt-8">
-                    {loadingMore && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Chargement...</span>
-                      </div>
-                    )}
-                    {currentPage >= totalPages && posts.length > 6 && (
-                      <p className="text-muted-foreground text-sm">Tous les articles ont été chargés</p>
-                    )}
-                  </div>
+                  {/* Infinite Scroll Trigger or Pagination */}
+                  {useInfiniteScroll ? (
+                    <div ref={loadMoreRef} className="h-20 flex items-center justify-center mt-8">
+                      {loadingMore && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          <span>Chargement...</span>
+                        </div>
+                      )}
+                      {currentPage >= totalPages && posts.length > postsPerPage && (
+                        <p className="text-muted-foreground text-sm">Tous les articles ont été chargés</p>
+                      )}
+                    </div>
+                  ) : (
+                    <BlogPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                      loading={loading}
+                    />
+                  )}
+
+                  {/* Toggle pagination mode */}
+                  {totalPages > 1 && (
+                    <div className="flex justify-center mt-6">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={togglePaginationMode}
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        {useInfiniteScroll ? "Afficher la pagination" : "Utiliser le défilement infini"}
+                      </Button>
+                    </div>
+                  )}
                 </>
               )}
 

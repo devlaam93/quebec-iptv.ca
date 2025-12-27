@@ -14,7 +14,7 @@ import { Card } from "@/components/ui/card";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe, User } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe, User, FileText, Timer } from "lucide-react";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
 import { useWordPressPost, useWordPressPosts, WordPressPost as WordPressPostType, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
 import { useReadingList } from "@/hooks/useReadingList";
@@ -31,9 +31,23 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
   const navigate = useNavigate();
   
   const { post, loading, error } = useWordPressPost(slug);
-  const { posts: allPosts } = useWordPressPosts({ perPage: 10 });
+  const { posts: allPosts } = useWordPressPosts({ perPage: 100 }); // Fetch more for accurate stats
   const { addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
   const { incrementViewCount } = useViewCount(slug);
+  
+  // Calculate author stats from all posts
+  const authorStats = useMemo(() => {
+    const articleCount = allPosts.length;
+    // Calculate total reading time in minutes
+    const totalMinutes = allPosts.reduce((acc, p) => {
+      const match = p.readTime?.match(/(\d+)/);
+      return acc + (match ? parseInt(match[1], 10) : 5);
+    }, 0);
+    const hours = Math.floor(totalMinutes / 60);
+    const mins = totalMinutes % 60;
+    const totalReadingTime = hours > 0 ? `${hours}h ${mins}min` : `${mins} min`;
+    return { articleCount, totalReadingTime };
+  }, [allPosts]);
   
   const isBookmarked = post ? isInReadingList(post.slug) : false;
 
@@ -337,9 +351,22 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
                   <h4 className="font-bold text-lg text-foreground">À propos de l'auteur</h4>
                 </div>
                 <p className="font-semibold text-primary mb-2">{AUTHOR.name}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                   {AUTHOR.description}
                 </p>
+                {/* Author Stats */}
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <FileText className="w-4 h-4 text-primary" />
+                    <span className="font-medium">{authorStats.articleCount}</span>
+                    <span>articles</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <Timer className="w-4 h-4 text-primary" />
+                    <span className="font-medium">{authorStats.totalReadingTime}</span>
+                    <span>de lecture</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,10 +1,15 @@
 /**
- * Image optimization utilities for vite-imagetools
+ * Image optimization utilities for vite-imagetools and BunnyCDN
  * 
  * Usage with vite-imagetools:
  * - Add ?webp to any image import to get WebP version
  * - Add ?optimize to get optimized WebP with quality settings
  * - Add ?w=800 to resize images
+ * 
+ * Usage with BunnyCDN:
+ * - Set VITE_BUNNY_CDN_URL environment variable to your Pull Zone URL
+ * - Use toBunnyCDNUrl() to transform image URLs
+ * - Use generateBunnySrcSet() for responsive images
  * 
  * Example:
  * import heroImage from '@/assets/hero.jpg?webp'
@@ -12,24 +17,65 @@
  * import heroImageSmall from '@/assets/hero.jpg?w=400&format=webp'
  */
 
+import { 
+  isBunnyCDNConfigured, 
+  toBunnyCDNUrl, 
+  generateBunnySrcSet,
+  generateBunnyWebpSrcSet 
+} from './bunnycdn';
+
 /**
  * Generates srcSet for responsive images
+ * Supports BunnyCDN when configured, otherwise uses vite-imagetools format
+ * 
  * @param baseSrc - The base image source
  * @param widths - Array of widths to generate
  * @returns srcSet string for use in img or source elements
  */
 export const generateSrcSet = (baseSrc: string, widths: number[] = [640, 768, 1024, 1280, 1536]): string => {
+  // Use BunnyCDN if configured
+  if (isBunnyCDNConfigured()) {
+    return generateBunnySrcSet(baseSrc, widths);
+  }
+  
+  // Fallback to vite-imagetools format
   return widths
     .map((w) => `${baseSrc}?w=${w}&format=webp ${w}w`)
     .join(', ');
 };
 
 /**
- * Get WebP URL for local images
+ * Generates WebP srcSet for responsive images
+ * 
+ * @param baseSrc - The base image source
+ * @param widths - Array of widths to generate
+ * @returns WebP srcSet string
+ */
+export const generateWebpSrcSet = (baseSrc: string, widths: number[] = [640, 768, 1024, 1280, 1536]): string => {
+  // Use BunnyCDN if configured
+  if (isBunnyCDNConfigured()) {
+    return generateBunnyWebpSrcSet(baseSrc, widths);
+  }
+  
+  // Fallback to vite-imagetools format
+  return widths
+    .map((w) => `${baseSrc}?w=${w}&format=webp ${w}w`)
+    .join(', ');
+};
+
+/**
+ * Get WebP URL for images
+ * Supports BunnyCDN, Unsplash, and local images
+ * 
  * @param src - Original image source
  * @returns WebP version URL or null if not applicable
  */
 export const getWebPUrl = (src: string): string | null => {
+  // Use BunnyCDN if configured
+  if (isBunnyCDNConfigured()) {
+    return toBunnyCDNUrl(src, { format: 'webp', quality: 85 });
+  }
+  
   // For Unsplash images, add fm=webp parameter
   if (src.includes('images.unsplash.com')) {
     const separator = src.includes('?') ? '&' : '?';

@@ -3,14 +3,22 @@ import { Check, Sparkles, Shield, Crown, Tv, Film, Trophy, Headphones, Wifi, Loc
 import { useEffect, useState, useRef } from "react";
 import { BunnyImage } from "@/components/ui/bunny-image";
 
-// Payment logo paths for BunnyCDN
-const paymentLogoPaths = {
-  visa: "/src/assets/logos/visa-logo.png",
-  mastercard: "/src/assets/logos/mastercard-new.png",
-  crypto: "/src/assets/logos/crypto-logo.png",
-  paypal: "/src/assets/logos/paypal-logo.png",
-  applePay: "/src/assets/logos/apple-pay-logo.png",
-  interac: "/src/assets/logos/interac-logo.svg",
+// Import payment logos
+import visaLogo from "@/assets/logos/visa-logo.png";
+import mastercardLogo from "@/assets/logos/mastercard-new.png";
+import cryptoLogo from "@/assets/logos/crypto-logo.png";
+import paypalLogo from "@/assets/logos/paypal-logo.png";
+import applePayLogo from "@/assets/logos/apple-pay-logo.png";
+import interacLogo from "@/assets/logos/interac-logo.svg";
+
+// Payment logos
+const paymentLogos = {
+  visa: visaLogo,
+  mastercard: mastercardLogo,
+  crypto: cryptoLogo,
+  paypal: paypalLogo,
+  applePay: applePayLogo,
+  interac: interacLogo,
 };
 const RenewalPlans = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -214,12 +222,12 @@ const RenewalPlans = () => {
             
             <div className="flex flex-wrap justify-center gap-4 mb-6">
               {[
-                { logo: paymentLogoPaths.visa, name: "Visa" },
-                { logo: paymentLogoPaths.mastercard, name: "Mastercard" },
-                { logo: paymentLogoPaths.paypal, name: "PayPal" },
-                { logo: paymentLogoPaths.applePay, name: "Apple Pay" },
-                { logo: paymentLogoPaths.interac, name: "Interac" },
-                { logo: paymentLogoPaths.crypto, name: "Cryptomonnaie" }
+                { logo: paymentLogos.visa, name: "Visa" },
+                { logo: paymentLogos.mastercard, name: "Mastercard" },
+                { logo: paymentLogos.paypal, name: "PayPal" },
+                { logo: paymentLogos.applePay, name: "Apple Pay" },
+                { logo: paymentLogos.interac, name: "Interac" },
+                { logo: paymentLogos.crypto, name: "Cryptomonnaie" }
               ].map((payment, index) => <div key={index} className={`bg-background border border-border rounded-xl px-4 py-2.5 hover:border-primary/30 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`} style={{
               transitionDelay: `${900 + index * 50}ms`
             }}>

@@ -6,12 +6,13 @@ import iboStep3 from "@/assets/blog/ibo-step-3-downloader.jpg";
 import iboStep4 from "@/assets/blog/ibo-step-4-app.jpg";
 import iboStep5 from "@/assets/blog/ibo-step-5-playlist.jpg";
 import logo from "@/assets/iptv-quebec-premium-logo.png";
+import { BunnyImage } from "@/components/ui/bunny-image";
 
 const StepImage = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative my-6 rounded-xl overflow-hidden border border-border">
-    <img src={src} alt={alt} width={800} height={450} loading="lazy" className="w-full h-auto object-cover" />
+    <BunnyImage src={src} alt={alt} width={800} height={450} quality={85} className="w-full h-auto object-cover" />
     <div className="absolute bottom-3 right-3 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-lg">
-      <img src={logo} alt="" width={50} height={20} className="h-5" aria-hidden="true" />
+      <BunnyImage src={logo} alt="" width={50} height={20} quality={90} className="h-5" aria-hidden="true" />
     </div>
   </div>
 );

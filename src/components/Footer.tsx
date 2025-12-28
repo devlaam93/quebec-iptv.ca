@@ -3,6 +3,7 @@ import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
 import amexIcon from "@/assets/logos/amex-icon.png";
 import paypalIcon from "@/assets/logos/paypal-icon.png";
 import { Mail, Phone, MapPin, Clock, Shield, Tv, Headphones, CreditCard } from "lucide-react";
+import { BunnyImage } from "@/components/ui/bunny-image";
 const WhatsAppIcon = ({
   className
 }: {
@@ -99,7 +100,7 @@ const Footer = () => {
                     {/* Logo container with animation */}
                     <div className="relative bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 rounded-[50%] p-2 sm:p-2 shadow-xl shadow-orange-500/30 group-hover:shadow-2xl group-hover:shadow-orange-500/50 transition-all duration-500">
                       <div className="bg-gradient-to-br from-background to-background/95 rounded-[50%] p-1.5 sm:p-1.5 backdrop-blur-sm">
-                        <img src={animatedLogo} alt="IPTV Quebec Premium" width={32} height={32} loading="lazy" decoding="async" className="w-8 h-8 sm:w-6 sm:h-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 drop-shadow-lg" />
+                        <BunnyImage src={animatedLogo} alt="IPTV Quebec Premium" width={32} height={32} quality={90} className="w-8 h-8 sm:w-6 sm:h-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 drop-shadow-lg" />
                       </div>
                     </div>
                   </div>

@@ -183,23 +183,23 @@ export async function warmRouteImages(
 
 import { toBunnyCDNUrl, isBunnyCDNConfigured } from "./bunnycdn";
 
-// Image paths for BunnyCDN optimization
-const heroBackgroundPath = "/src/assets/hero-background.jpg";
-const premiumLogoPath = "/src/assets/iptv-quebec-premium-logo.png";
-const quebecLogoPath = "/src/assets/quebec-iptv-logo.png";
+// Import critical images so Vite resolves them correctly
+import heroBackground from "@/assets/hero-background.jpg";
+import premiumLogo from "@/assets/iptv-quebec-premium-logo.png";
+import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
 
 /**
  * Get optimized image URL (BunnyCDN if configured, else original)
  */
-const getOptimizedUrl = (path: string, options?: { width?: number; quality?: number }) => {
+const getOptimizedUrl = (src: string, options?: { width?: number; quality?: number }) => {
   if (isBunnyCDNConfigured()) {
-    return toBunnyCDNUrl(path, { 
+    return toBunnyCDNUrl(src, { 
       quality: options?.quality || 85,
       width: options?.width,
       format: 'webp'
     });
   }
-  return path;
+  return src;
 };
 
 /**
@@ -207,9 +207,9 @@ const getOptimizedUrl = (path: string, options?: { width?: number; quality?: num
  * Add your above-the-fold images here
  */
 export const criticalImages: string[] = [
-  getOptimizedUrl(heroBackgroundPath, { width: 1920, quality: 85 }),
-  getOptimizedUrl(premiumLogoPath, { quality: 90 }),
-  getOptimizedUrl(quebecLogoPath, { quality: 90 }),
+  getOptimizedUrl(heroBackground, { width: 1920, quality: 85 }),
+  getOptimizedUrl(premiumLogo, { quality: 90 }),
+  getOptimizedUrl(animatedLogo, { quality: 90 }),
 ];
 
 /**

@@ -93,14 +93,23 @@ export const toBunnyCDNUrl = (src: string, options?: BunnyOptimizeOptions): stri
     return addBunnyParams(src, options);
   }
   
-  // Skip external URLs (keep as-is unless you want to proxy them)
-  if (src.startsWith('http://') || src.startsWith('https://')) {
-    return src;
-  }
-  
   // Skip data URLs
   if (src.startsWith('data:')) {
     return src;
+  }
+  
+  // Handle Vite imported assets (they start with /assets/ or contain the origin)
+  // These are already full URLs or paths that should be appended to CDN
+  if (src.startsWith('http://') || src.startsWith('https://')) {
+    // Check if it's from the same origin (Vite dev or prod URL)
+    try {
+      const url = new URL(src);
+      // Extract just the pathname for CDN
+      const pathname = url.pathname;
+      return addBunnyParams(`${BUNNY_CDN_URL}${pathname}`, options);
+    } catch {
+      return src;
+    }
   }
   
   // Build the BunnyCDN URL

@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BunnyCardImage } from "@/components/ui/bunny-image";
 import { Link } from "react-router-dom";
+import { useBlogImagePreload } from "@/hooks/useBlogImagePreload";
 
 const LatestArticles = () => {
+  const { onHover, onHoverEnd } = useBlogImagePreload();
   const articles = [
     {
       title: "Guide complet IPTV 2025",
@@ -54,6 +56,8 @@ const LatestArticles = () => {
             <Card 
               key={index}
               className="group overflow-hidden bg-card hover:shadow-xl hover:shadow-primary/5 border-border/50 hover:border-primary/30 transition-all duration-500"
+              onMouseEnter={() => onHover(article.image, article.slug)}
+              onMouseLeave={onHoverEnd}
             >
               <Link to={`/blog/${article.slug}`} className="block">
                 <div className="relative aspect-video overflow-hidden">

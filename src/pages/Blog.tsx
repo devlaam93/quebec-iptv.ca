@@ -20,6 +20,7 @@ import { useReadingList } from "@/hooks/useReadingList";
 import BookmarkButton from "@/components/BookmarkButton";
 import { toast } from "@/hooks/use-toast";
 import { useAllViewCounts } from "@/hooks/useViewCount";
+import { useBlogImagePreload } from "@/hooks/useBlogImagePreload";
 
 const Blog = () => {
   const [searchParams] = useSearchParams();
@@ -49,6 +50,7 @@ const Blog = () => {
   });
   const { readingList, addToReadingList, removeFromReadingList, isInReadingList } = useReadingList();
   const { getViewCount } = useAllViewCounts();
+  const { onHover: onImageHover, onHoverEnd: onImageHoverEnd } = useBlogImagePreload();
 
   const handleBookmarkToggle = useCallback((post: WordPressPost) => {
     if (isInReadingList(post.slug)) {
@@ -210,13 +212,25 @@ const Blog = () => {
     window.location.href = `/blog/${post.slug}`;
   };
 
-  const handleArticleHover = useCallback((slug: string) => {
-    prefetchPostOnHover(slug);
-  }, []);
+  const handleArticleHover = useCallback((post: WordPressPost) => {
+    prefetchPostOnHover(post.slug);
+    // Preload hero image for faster page load
+    if (post.image) {
+      onImageHover(post.image, post.slug);
+    }
+  }, [onImageHover]);
+
+  const handleReadingListHover = useCallback((item: { slug: string; image?: string }) => {
+    prefetchPostOnHover(item.slug);
+    if (item.image) {
+      onImageHover(item.image, item.slug);
+    }
+  }, [onImageHover]);
 
   const handleArticleHoverEnd = useCallback(() => {
     cancelPrefetch();
-  }, []);
+    onImageHoverEnd();
+  }, [onImageHoverEnd]);
 
   // Get sort label for display
   const getSortLabel = () => {
@@ -483,7 +497,7 @@ const Blog = () => {
                           key={item.slug} 
                           className="group overflow-hidden bg-card hover:shadow-xl hover:shadow-primary/5 border-border/50 hover:border-primary/30 transition-all duration-500"
                           style={{ animationDelay: `${index * 50}ms` }}
-                          onMouseEnter={() => handleArticleHover(item.slug)}
+                          onMouseEnter={() => handleReadingListHover(item)}
                           onMouseLeave={handleArticleHoverEnd}
                         >
                           <div 
@@ -572,7 +586,7 @@ const Blog = () => {
                         key={post.id} 
                         className="group overflow-hidden bg-card hover:shadow-xl hover:shadow-primary/5 border-border/50 hover:border-primary/30 transition-all duration-500 cursor-pointer"
                         style={{ animationDelay: `${index * 50}ms` }}
-                        onMouseEnter={() => handleArticleHover(post.slug)}
+                        onMouseEnter={() => handleArticleHover(post)}
                         onMouseLeave={handleArticleHoverEnd}
                         onClick={() => handleArticleClick(post)}
                       >

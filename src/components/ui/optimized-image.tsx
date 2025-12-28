@@ -1,6 +1,15 @@
 import { useState, ImgHTMLAttributes, useMemo, useRef, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { imageCache } from "@/lib/image-cache";
+import { 
+  isBunnyCDNConfigured, 
+  isBunnyCDNUrl, 
+  toBunnyCDNUrl, 
+  generateBunnySrcSet, 
+  generateBunnyWebpSrcSet,
+  generateBunnyPlaceholder,
+  BUNNY_RESPONSIVE_WIDTHS 
+} from "@/lib/bunnycdn";
 
 /**
  * Responsive image source set configuration
@@ -138,6 +147,14 @@ const generateExternalSrcSet = (
   widths: number[] = DEFAULT_WIDTHS,
   format?: 'webp' | 'jpg'
 ): string | null => {
+  // BunnyCDN responsive URLs (check first as it may wrap other URLs)
+  if (isBunnyCDNUrl(url) || isBunnyCDNConfigured()) {
+    if (format === 'webp') {
+      return generateBunnyWebpSrcSet(url, widths.length > 0 ? widths : BUNNY_RESPONSIVE_WIDTHS);
+    }
+    return generateBunnySrcSet(url, widths.length > 0 ? widths : BUNNY_RESPONSIVE_WIDTHS);
+  }
+
   // Unsplash responsive URLs
   if (url.includes('images.unsplash.com')) {
     return widths
@@ -178,6 +195,11 @@ const generateExternalSrcSet = (
  * Generate a tiny placeholder URL for external services
  */
 const generatePlaceholderUrl = (url: string): string | null => {
+  // BunnyCDN placeholder (check first)
+  if (isBunnyCDNUrl(url) || isBunnyCDNConfigured()) {
+    return generateBunnyPlaceholder(url);
+  }
+  
   if (url.includes('images.unsplash.com')) {
     const baseUrl = url.split('?')[0];
     return `${baseUrl}?w=20&blur=50&q=10`;

@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyHeroImage } from "@/components/ui/bunny-image";
 import { Calendar, Clock, ArrowLeft, Share2, User, FileText, Timer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -139,12 +139,11 @@ const BlogPost = ({ title, excerpt, category, date, readTime, image, content, sl
 
           {/* Featured Image with Watermark */}
           <figure className="relative mb-12 rounded-xl overflow-hidden">
-            <OptimizedImage 
+            <BunnyHeroImage 
               src={image} 
               alt={`Image principale de l'article: ${title} - Guide IPTV Quebec`}
               width={1200}
               height={630}
-              priority
               className="w-full h-auto object-cover"
             />
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">

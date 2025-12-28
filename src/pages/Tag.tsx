@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyCardImage } from "@/components/ui/bunny-image";
 import { 
   Calendar, 
   Clock, 
@@ -326,7 +326,7 @@ const TagPage = () => {
                     {/* Image Container */}
                     <div className="relative h-52 overflow-hidden">
                       {post.image ? (
-                        <OptimizedImage 
+                        <BunnyCardImage 
                           src={post.image} 
                           alt={post.imageAlt || `Article: ${post.title}`}
                           width={400}

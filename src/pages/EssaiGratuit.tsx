@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyAvatar } from "@/components/ui/bunny-image";
 import { CheckCircle2, Shield, Zap, Clock, Star, Play, Tv, Film, Globe, Headphones, Sparkles, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import PageLayout from "@/components/PageLayout";
@@ -244,7 +244,7 @@ const EssaiGratuit = () => {
                       { src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', name: 'Pierre' },
                       { src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', name: 'Marie' }
                     ].map((client, i) => (
-                      <OptimizedImage 
+                      <BunnyAvatar 
                         key={i} 
                         src={client.src} 
                         alt={`Photo de profil de ${client.name}, client satisfait du service IPTV Quebec`} 

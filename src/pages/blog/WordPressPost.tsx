@@ -11,7 +11,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyImage, BunnyHeroImage, BunnyCardImage } from "@/components/ui/bunny-image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Loader2, Globe, User, FileText, Timer } from "lucide-react";
@@ -306,12 +306,11 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
           {/* Featured Image */}
           {post.image && (
             <div className="relative mb-12 rounded-xl overflow-hidden">
-              <OptimizedImage 
+              <BunnyHeroImage 
                 src={post.image} 
                 alt={post.imageAlt || `Image de l'article: ${post.title} - Guide complet IPTV Quebec`}
                 width={1200}
                 height={630}
-                priority
                 className="w-full h-auto object-cover"
               />
               <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-2 rounded-lg">
@@ -462,7 +461,7 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
                       >
                         <div className="relative h-36 overflow-hidden">
                           {article.image ? (
-                            <OptimizedImage 
+                            <BunnyCardImage 
                               src={article.image} 
                               alt={article.imageAlt || article.title}
                               width={300}

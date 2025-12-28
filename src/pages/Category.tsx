@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyCardImage } from "@/components/ui/bunny-image";
 import { 
   Calendar, Clock, ArrowRight, Globe, Tag, Loader2, SearchX, 
   ArrowUpDown, FileText, Eye, Sparkles, TrendingUp, BookOpen
@@ -447,7 +447,7 @@ const Category = () => {
                         {/* Image */}
                         <div className="relative aspect-video overflow-hidden">
                           {post.image ? (
-                            <OptimizedImage 
+                            <BunnyCardImage 
                               src={post.image} 
                               alt={post.imageAlt || `Article: ${post.title}`}
                               width={600}

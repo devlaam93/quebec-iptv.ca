@@ -3,11 +3,23 @@ import { Calendar, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BunnyCardImage } from "@/components/ui/bunny-image";
-import { Link } from "react-router-dom";
 import { useBlogImagePreload } from "@/hooks/useBlogImagePreload";
+import { startPrefetch, cancelRoutePrefetch } from "@/lib/route-prefetch";
+import PrefetchLink from "@/components/PrefetchLink";
 
 const LatestArticles = () => {
   const { onHover, onHoverEnd } = useBlogImagePreload();
+  
+  // Combined hover handler for image + route prefetching
+  const handleCardHover = (article: { image: string; slug: string }) => {
+    onHover(article.image, article.slug);
+    startPrefetch(`/blog/${article.slug}`);
+  };
+  
+  const handleCardHoverEnd = () => {
+    onHoverEnd();
+    cancelRoutePrefetch();
+  };
   const articles = [
     {
       title: "Guide complet IPTV 2025",
@@ -56,10 +68,10 @@ const LatestArticles = () => {
             <Card 
               key={index}
               className="group overflow-hidden bg-card hover:shadow-xl hover:shadow-primary/5 border-border/50 hover:border-primary/30 transition-all duration-500"
-              onMouseEnter={() => onHover(article.image, article.slug)}
-              onMouseLeave={onHoverEnd}
+              onMouseEnter={() => handleCardHover(article)}
+              onMouseLeave={handleCardHoverEnd}
             >
-              <Link to={`/blog/${article.slug}`} className="block">
+              <PrefetchLink to={`/blog/${article.slug}`} className="block" noPrefetch>
                 <div className="relative aspect-video overflow-hidden">
                   <BunnyCardImage
                     src={article.image}
@@ -75,7 +87,7 @@ const LatestArticles = () => {
                     </Badge>
                   </div>
                 </div>
-              </Link>
+              </PrefetchLink>
               
               <div className="p-6">
                 <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
@@ -89,23 +101,24 @@ const LatestArticles = () => {
                   </div>
                 </div>
                 
-                <Link to={`/blog/${article.slug}`}>
+                <PrefetchLink to={`/blog/${article.slug}`} noPrefetch>
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                     {article.title}
                   </h3>
-                </Link>
+                </PrefetchLink>
                 
                 <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed text-sm">
                   {article.description}
                 </p>
                 
-                <Link 
+                <PrefetchLink 
                   to={`/blog/${article.slug}`}
                   className="flex items-center text-primary font-medium text-sm group-hover:gap-3 transition-all duration-300"
+                  noPrefetch
                 >
                   <span>Lire l'article</span>
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
+                </PrefetchLink>
               </div>
             </Card>
           ))}
@@ -113,10 +126,10 @@ const LatestArticles = () => {
 
         <div className="text-center mt-10">
           <Button asChild size="lg" variant="outline" className="group">
-            <Link to="/blog">
+            <PrefetchLink to="/blog">
               Voir tous les articles
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </PrefetchLink>
           </Button>
         </div>
       </div>

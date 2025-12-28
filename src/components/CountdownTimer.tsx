@@ -104,15 +104,15 @@ const CountdownTimer = ({ variant = "default", className = "" }: CountdownTimerP
         aria-atomic="true"
         aria-label={ariaLabel}
       >
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
+        <span className="bg-background text-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formattedTime.hours}
         </span>
-        <span className="text-destructive font-bold" aria-hidden="true">:</span>
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
+        <span className="text-destructive-foreground font-bold" aria-hidden="true">:</span>
+        <span className="bg-background text-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formattedTime.minutes}
         </span>
-        <span className="text-destructive font-bold" aria-hidden="true">:</span>
-        <span className="bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
+        <span className="text-destructive-foreground font-bold" aria-hidden="true">:</span>
+        <span className="bg-background text-foreground px-1.5 py-0.5 rounded font-bold" aria-hidden="true">
           {formattedTime.seconds}
         </span>
       </div>

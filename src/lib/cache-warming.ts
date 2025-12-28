@@ -181,19 +181,35 @@ export async function warmRouteImages(
 // Critical Images Configuration
 // ============================================
 
-// Import critical images - these will be preloaded on app init
-import heroBackground from "@/assets/hero-background.jpg";
-import premiumLogo from "@/assets/iptv-quebec-premium-logo.png";
-import quebecLogo from "@/assets/quebec-iptv-logo.png";
+import { toBunnyCDNUrl, isBunnyCDNConfigured } from "./bunnycdn";
+
+// Image paths for BunnyCDN optimization
+const heroBackgroundPath = "/src/assets/hero-background.jpg";
+const premiumLogoPath = "/src/assets/iptv-quebec-premium-logo.png";
+const quebecLogoPath = "/src/assets/quebec-iptv-logo.png";
+
+/**
+ * Get optimized image URL (BunnyCDN if configured, else original)
+ */
+const getOptimizedUrl = (path: string, options?: { width?: number; quality?: number }) => {
+  if (isBunnyCDNConfigured()) {
+    return toBunnyCDNUrl(path, { 
+      quality: options?.quality || 85,
+      width: options?.width,
+      format: 'webp'
+    });
+  }
+  return path;
+};
 
 /**
  * Critical images that should be preloaded on app initialization
  * Add your above-the-fold images here
  */
 export const criticalImages: string[] = [
-  heroBackground,
-  premiumLogo,
-  quebecLogo,
+  getOptimizedUrl(heroBackgroundPath, { width: 1920, quality: 85 }),
+  getOptimizedUrl(premiumLogoPath, { quality: 90 }),
+  getOptimizedUrl(quebecLogoPath, { quality: 90 }),
 ];
 
 /**

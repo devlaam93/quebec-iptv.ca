@@ -2,14 +2,19 @@ import { useState } from "react";
 import { useEffect, useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import xboxLogo from "@/assets/devices/xbox-logo.png";
-import vizioLogo from "@/assets/devices/vizio-logo.png";
-import samsungLogo from "@/assets/devices/samsung-logo.png";
-import rokuLogo from "@/assets/devices/roku-logo.png";
-import playstationLogo from "@/assets/devices/playstation-logo.png";
-import lgLogo from "@/assets/devices/lg-logo.png";
-import chromecastLogo from "@/assets/devices/chromecast-logo.png";
-import fireTVLogo from "@/assets/devices/amazon-fire-tv-logo.png";
+import { BunnyImage } from "@/components/ui/bunny-image";
+
+// Device logo paths for BunnyCDN
+const deviceLogoPaths = {
+  xbox: "/src/assets/devices/xbox-logo.png",
+  vizio: "/src/assets/devices/vizio-logo.png",
+  samsung: "/src/assets/devices/samsung-logo.png",
+  roku: "/src/assets/devices/roku-logo.png",
+  playstation: "/src/assets/devices/playstation-logo.png",
+  lg: "/src/assets/devices/lg-logo.png",
+  chromecast: "/src/assets/devices/chromecast-logo.png",
+  fireTV: "/src/assets/devices/amazon-fire-tv-logo.png",
+};
 const DeviceCompatibility = () => {
   const [api, setApi] = useState<any>();
   const [current, setCurrent] = useState(0);
@@ -20,28 +25,28 @@ const DeviceCompatibility = () => {
   }));
   const devices = [{
     name: "Xbox",
-    logo: xboxLogo
+    logo: deviceLogoPaths.xbox
   }, {
     name: "Vizio",
-    logo: vizioLogo
+    logo: deviceLogoPaths.vizio
   }, {
     name: "Samsung",
-    logo: samsungLogo
+    logo: deviceLogoPaths.samsung
   }, {
     name: "Roku",
-    logo: rokuLogo
+    logo: deviceLogoPaths.roku
   }, {
     name: "PlayStation",
-    logo: playstationLogo
+    logo: deviceLogoPaths.playstation
   }, {
     name: "LG",
-    logo: lgLogo
+    logo: deviceLogoPaths.lg
   }, {
     name: "Chromecast",
-    logo: chromecastLogo
+    logo: deviceLogoPaths.chromecast
   }, {
     name: "Fire TV",
-    logo: fireTVLogo
+    logo: deviceLogoPaths.fireTV
   }];
   useEffect(() => {
     if (!api) {
@@ -89,7 +94,15 @@ const DeviceCompatibility = () => {
                   {/* Device Icon Container - Circular like channel logos */}
                   <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary-glow/20 hover:scale-110 transition-all duration-300 shadow-elegant hover:shadow-glow">
                     <div className="w-full h-full rounded-full bg-background/50 backdrop-blur-sm border-2 border-primary/30 flex items-center justify-center p-2 group-hover:bg-primary/10 group-hover:border-primary/60 transition-all duration-300">
-                      <img src={device.logo} alt={`Logo ${device.name} - application IPTV compatible`} width={40} height={40} loading="lazy" decoding="async" className="w-8 h-8 md:w-10 md:h-10 object-contain filter drop-shadow-lg grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                      <BunnyImage 
+                        src={device.logo} 
+                        alt={`Logo ${device.name} - application IPTV compatible`} 
+                        width={40} 
+                        height={40}
+                        responsiveWidths={[40, 80, 120]}
+                        quality={90}
+                        className="w-8 h-8 md:w-10 md:h-10 object-contain filter drop-shadow-lg grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" 
+                      />
                     </div>
                   </div>
                 </div>

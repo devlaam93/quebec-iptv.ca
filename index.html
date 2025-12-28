@@ -27,9 +27,10 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
     <!-- Preload critical above-the-fold assets for LCP optimization -->
-    <link rel="preload" as="image" href="/src/assets/hero-background.jpg" type="image/jpeg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/src/assets/iptv-quebec-premium-logo.png" type="image/png" fetchpriority="high" />
-    <link rel="preload" as="image" href="/src/assets/iptv-quebec-animated-logo.png" type="image/png" fetchpriority="high" />
+    <!-- Note: BunnyCDN will handle optimization at runtime; these are fallbacks -->
+    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/hero-background.jpg?width=1920&quality=85&format=webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-premium-logo.png?quality=90&format=webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-animated-logo.png?quality=90&format=webp" type="image/webp" fetchpriority="high" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

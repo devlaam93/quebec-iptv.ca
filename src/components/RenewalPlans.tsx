@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Check, Sparkles, Shield, Crown, Tv, Film, Trophy, Headphones, Wifi, Lock, Star, Play, Zap, Clock } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { BunnyImage } from "@/components/ui/bunny-image";
 
-// Import real payment and security logos
-import visaLogo from "@/assets/logos/visa-logo.png";
-import mastercardLogo from "@/assets/logos/mastercard-new.png";
-import cryptoLogo from "@/assets/logos/crypto-logo.png";
-import paypalLogo from "@/assets/logos/paypal-logo.png";
-import applePayLogo from "@/assets/logos/apple-pay-logo.png";
-import interacLogo from "@/assets/logos/interac-logo.svg";
+// Payment logo paths for BunnyCDN
+const paymentLogoPaths = {
+  visa: "/src/assets/logos/visa-logo.png",
+  mastercard: "/src/assets/logos/mastercard-new.png",
+  crypto: "/src/assets/logos/crypto-logo.png",
+  paypal: "/src/assets/logos/paypal-logo.png",
+  applePay: "/src/assets/logos/apple-pay-logo.png",
+  interac: "/src/assets/logos/interac-logo.svg",
+};
 const RenewalPlans = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -211,16 +214,24 @@ const RenewalPlans = () => {
             
             <div className="flex flex-wrap justify-center gap-4 mb-6">
               {[
-                { logo: visaLogo, name: "Visa" },
-                { logo: mastercardLogo, name: "Mastercard" },
-                { logo: paypalLogo, name: "PayPal" },
-                { logo: applePayLogo, name: "Apple Pay" },
-                { logo: interacLogo, name: "Interac" },
-                { logo: cryptoLogo, name: "Cryptomonnaie" }
+                { logo: paymentLogoPaths.visa, name: "Visa" },
+                { logo: paymentLogoPaths.mastercard, name: "Mastercard" },
+                { logo: paymentLogoPaths.paypal, name: "PayPal" },
+                { logo: paymentLogoPaths.applePay, name: "Apple Pay" },
+                { logo: paymentLogoPaths.interac, name: "Interac" },
+                { logo: paymentLogoPaths.crypto, name: "Cryptomonnaie" }
               ].map((payment, index) => <div key={index} className={`bg-background border border-border rounded-xl px-4 py-2.5 hover:border-primary/30 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`} style={{
               transitionDelay: `${900 + index * 50}ms`
             }}>
-                  <img src={payment.logo} alt={`Mode de paiement ${payment.name} accepté - paiement sécurisé`} width={60} height={24} loading="lazy" decoding="async" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                  <BunnyImage 
+                    src={payment.logo} 
+                    alt={`Mode de paiement ${payment.name} accepté - paiement sécurisé`} 
+                    width={60} 
+                    height={24}
+                    responsiveWidths={[60, 120]}
+                    quality={90}
+                    className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" 
+                  />
                 </div>)}
             </div>
 

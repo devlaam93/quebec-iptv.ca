@@ -16,7 +16,7 @@ const DesktopNav = () => {
               <NavLink
                 to={item.href}
                 end={item.href === "/"}
-                className="text-sm xl:text-base text-muted-foreground hover:text-foreground px-2"
+                className="text-sm xl:text-base text-muted-foreground hover:text-foreground px-3 py-3 min-h-[44px] min-w-[44px] inline-flex items-center touch-manipulation"
                 activeClassName="text-primary font-medium"
               >
                 {item.label}

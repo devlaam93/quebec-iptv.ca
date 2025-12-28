@@ -14,8 +14,8 @@
  * const srcSet = generateBunnySrcSet('/assets/hero.jpg');
  */
 
-/** BunnyCDN Pull Zone URL from environment variable */
-const BUNNY_CDN_URL = import.meta.env.VITE_BUNNY_CDN_URL || '';
+/** BunnyCDN Pull Zone URL */
+const BUNNY_CDN_URL = 'https://quebec-iptv.b-cdn.net';
 
 /** Default widths for responsive images */
 export const BUNNY_RESPONSIVE_WIDTHS = [640, 768, 1024, 1280, 1536, 1920];

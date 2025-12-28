@@ -14,23 +14,22 @@
     <link rel="canonical" href="https://quebec-iptv.ca/" />
     <link rel="author" href="/humans.txt" type="text/plain" />
 
-    <!-- Preconnect to external domains for faster loading -->
+    <!-- Preconnect to critical origins (reduces critical path latency) -->
+    <link rel="preconnect" href="https://quebec-iptv.ca" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- BunnyCDN Preconnect (update URL when configured) -->
     <link rel="preconnect" href="https://quebec-iptv.b-cdn.net" crossorigin />
-    <link rel="dns-prefetch" href="https://quebec-iptv.b-cdn.net" />
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
     
     <!-- DNS Prefetch for additional resources -->
+    <link rel="dns-prefetch" href="https://quebec-iptv.b-cdn.net" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
     <!-- Preload critical above-the-fold assets for LCP optimization -->
-    <!-- Note: BunnyCDN will handle optimization at runtime; these are fallbacks -->
     <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/hero-background.jpg?width=1920&quality=85&format=webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-premium-logo.png?quality=90&format=webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-animated-logo.png?quality=90&format=webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-premium-logo.png?quality=90&format=webp" type="image/webp" />
+    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-animated-logo.png?quality=90&format=webp" type="image/webp" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

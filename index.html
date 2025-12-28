@@ -30,9 +30,9 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
     <!-- Preload critical above-the-fold assets for LCP optimization -->
-    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/hero-background.jpg?width=1920&quality=85&format=webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-premium-logo.png?quality=90&format=webp" type="image/webp" />
-    <link rel="preload" as="image" href="https://quebec-iptv.b-cdn.net/src/assets/iptv-quebec-animated-logo.png?quality=90&format=webp" type="image/webp" />
+    <!-- Note: These paths will work in production when assets are served from the CDN origin -->
+    <link rel="preload" as="image" href="/assets/hero-background.jpg" type="image/jpeg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/iptv-quebec-premium-logo.png" type="image/png" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

@@ -7,6 +7,11 @@ import { useBlogImagePreload } from "@/hooks/useBlogImagePreload";
 import { startPrefetch, cancelRoutePrefetch } from "@/lib/route-prefetch";
 import PrefetchLink from "@/components/PrefetchLink";
 
+// Import blog images
+import meilleurServiceImg from "@/assets/blog/meilleur-service-iptv.jpg";
+import iptvFonctionnementImg from "@/assets/blog/iptv-fonctionnement.jpg";
+import fireStickGuideImg from "@/assets/blog/fire-stick-guide.jpg";
+
 const LatestArticles = () => {
   const { onHover, onHoverEnd } = useBlogImagePreload();
   
@@ -27,7 +32,7 @@ const LatestArticles = () => {
       date: "15 Mars 2025",
       readTime: "8 min",
       category: "Guides",
-      image: "/src/assets/blog/meilleur-service-iptv.jpg",
+      image: meilleurServiceImg,
       slug: "meilleur-service-iptv-quebec"
     },
     {
@@ -36,7 +41,7 @@ const LatestArticles = () => {
       date: "12 Mars 2025",
       readTime: "6 min",
       category: "Sports",
-      image: "/src/assets/blog/iptv-fonctionnement.jpg",
+      image: iptvFonctionnementImg,
       slug: "comment-iptv-fonctionne"
     },
     {
@@ -45,7 +50,7 @@ const LatestArticles = () => {
       date: "10 Mars 2025",
       readTime: "5 min",
       category: "Tutoriels",
-      image: "/src/assets/blog/fire-stick-guide.jpg",
+      image: fireStickGuideImg,
       slug: "fire-stick-iptv"
     }
   ];

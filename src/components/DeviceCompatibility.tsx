@@ -4,17 +4,16 @@ import Autoplay from "embla-carousel-autoplay";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { BunnyImage } from "@/components/ui/bunny-image";
 
-// Device logo paths for BunnyCDN
-const deviceLogoPaths = {
-  xbox: "/src/assets/devices/xbox-logo.png",
-  vizio: "/src/assets/devices/vizio-logo.png",
-  samsung: "/src/assets/devices/samsung-logo.png",
-  roku: "/src/assets/devices/roku-logo.png",
-  playstation: "/src/assets/devices/playstation-logo.png",
-  lg: "/src/assets/devices/lg-logo.png",
-  chromecast: "/src/assets/devices/chromecast-logo.png",
-  fireTV: "/src/assets/devices/amazon-fire-tv-logo.png",
-};
+// Import device logos
+import xboxLogo from "@/assets/devices/xbox-logo.png";
+import vizioLogo from "@/assets/devices/vizio-logo.png";
+import samsungLogo from "@/assets/devices/samsung-logo.png";
+import rokuLogo from "@/assets/devices/roku-logo.png";
+import playstationLogo from "@/assets/devices/playstation-logo.png";
+import lgLogo from "@/assets/devices/lg-logo.png";
+import chromecastLogo from "@/assets/devices/chromecast-logo.png";
+import fireTVLogo from "@/assets/devices/amazon-fire-tv-logo.png";
+
 const DeviceCompatibility = () => {
   const [api, setApi] = useState<any>();
   const [current, setCurrent] = useState(0);
@@ -25,28 +24,28 @@ const DeviceCompatibility = () => {
   }));
   const devices = [{
     name: "Xbox",
-    logo: deviceLogoPaths.xbox
+    logo: xboxLogo
   }, {
     name: "Vizio",
-    logo: deviceLogoPaths.vizio
+    logo: vizioLogo
   }, {
     name: "Samsung",
-    logo: deviceLogoPaths.samsung
+    logo: samsungLogo
   }, {
     name: "Roku",
-    logo: deviceLogoPaths.roku
+    logo: rokuLogo
   }, {
     name: "PlayStation",
-    logo: deviceLogoPaths.playstation
+    logo: playstationLogo
   }, {
     name: "LG",
-    logo: deviceLogoPaths.lg
+    logo: lgLogo
   }, {
     name: "Chromecast",
-    logo: deviceLogoPaths.chromecast
+    logo: chromecastLogo
   }, {
     name: "Fire TV",
-    logo: deviceLogoPaths.fireTV
+    logo: fireTVLogo
   }];
   useEffect(() => {
     if (!api) {

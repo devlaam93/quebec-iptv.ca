@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BunnyImage } from "@/components/ui/bunny-image";
-
-// Original image path for BunnyCDN
-const showcaseTvPath = "/src/assets/iptv-showcase-tv.jpg";
+import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
 
 const BestChoiceSection = () => {
   return (
@@ -18,7 +16,7 @@ const BestChoiceSection = () => {
           <div className="relative order-2 lg:order-1" data-aos="fade-right">
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
               <BunnyImage 
-                src={showcaseTvPath}
+                src={showcaseTv}
                 responsiveWidths={[640, 1024, 1280]}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 

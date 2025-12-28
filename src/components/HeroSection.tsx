@@ -3,9 +3,7 @@ import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, memo } from "react";
 import { BunnyHeroBackground } from "@/components/ui/bunny-background";
-
-// Hero background path for BunnyCDN
-const heroBackgroundPath = "/src/assets/hero-background.jpg";
+import heroBackground from "@/assets/hero-background.jpg";
 
 // Live viewer count with fluctuation - memoized for performance
 const useLiveViewerCount = (min: number, max: number) => {
@@ -57,7 +55,7 @@ const HeroSection = () => {
 
   return (
     <BunnyHeroBackground
-      src={heroBackgroundPath}
+      src={heroBackground}
       overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
       overlayOpacity={1}
       className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32"

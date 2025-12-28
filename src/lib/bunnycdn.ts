@@ -98,10 +98,14 @@ export const toBunnyCDNUrl = (src: string, options?: BunnyOptimizeOptions): stri
     return src;
   }
   
-  // Handle Vite imported assets (they start with /assets/ or contain the origin)
-  // These are already full URLs or paths that should be appended to CDN
+  // In development mode, skip CDN transformation (CDN only works in production)
+  const isDev = import.meta.env.DEV;
+  if (isDev) {
+    return src;
+  }
+  
+  // Handle Vite imported assets (they start with /assets/ in production)
   if (src.startsWith('http://') || src.startsWith('https://')) {
-    // Check if it's from the same origin (Vite dev or prod URL)
     try {
       const url = new URL(src);
       // Extract just the pathname for CDN

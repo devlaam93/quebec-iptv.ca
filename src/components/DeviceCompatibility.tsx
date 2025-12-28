@@ -101,11 +101,20 @@ const DeviceCompatibility = () => {
           
         </Carousel>
 
-        {/* Interactive Pagination Dots */}
-        <div className="flex justify-center items-center mt-12 gap-3">
+        {/* Interactive Pagination Dots - 44px min touch target */}
+        <div className="flex justify-center items-center mt-12 gap-1">
           {Array.from({
           length: count
-        }).map((_, index) => <button key={index} onClick={() => api?.scrollTo(index)} className={`transition-all duration-300 rounded-full ${index === current ? 'w-10 h-2.5 bg-gradient-to-r from-primary to-orange-400 shadow-lg shadow-primary/50' : 'w-2.5 h-2.5 bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-125'}`} aria-label={`Aller à la diapositive ${index + 1}`} />)}
+        }).map((_, index) => (
+          <button 
+            key={index} 
+            onClick={() => api?.scrollTo(index)} 
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
+            aria-label={`Aller à la diapositive ${index + 1}`}
+          >
+            <span className={`transition-all duration-300 rounded-full ${index === current ? 'w-10 h-2.5 bg-gradient-to-r from-primary to-orange-400 shadow-lg shadow-primary/50' : 'w-2.5 h-2.5 bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-125'}`} />
+          </button>
+        ))}
         </div>
 
         {/* Features Grid */}
@@ -114,7 +123,7 @@ const DeviceCompatibility = () => {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
               <span className="text-xl sm:text-2xl">📱</span>
             </div>
-            <h4 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Multi-Appareils</h4>
+            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Multi-Appareils</h3>
             <p className="text-xs sm:text-sm text-muted-foreground">Accès simultané sur plusieurs appareils</p>
           </div>
           
@@ -122,7 +131,7 @@ const DeviceCompatibility = () => {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
               <span className="text-xl sm:text-2xl">⚡</span>
             </div>
-            <h4 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Plug & Play</h4>
+            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Plug & Play</h3>
             <p className="text-xs sm:text-sm text-muted-foreground">Installation facile en quelques minutes</p>
           </div>
           
@@ -130,7 +139,7 @@ const DeviceCompatibility = () => {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
               <span className="text-xl sm:text-2xl">🔄</span>
             </div>
-            <h4 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Synchronisation</h4>
+            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1.5 sm:mb-2">Synchronisation</h3>
             <p className="text-xs sm:text-sm text-muted-foreground">Reprenez où vous vous êtes arrêté</p>
           </div>
         </div>

@@ -1,19 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyImage } from "@/components/ui/bunny-image";
 
-// Original image
-import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
-
-// Responsive srcset - different sizes for different viewports
-import showcaseTv640 from "@/assets/iptv-showcase-tv.jpg?w=640";
-import showcaseTv1024 from "@/assets/iptv-showcase-tv.jpg?w=1024";
-
-// WebP versions for modern browsers
-import showcaseTvWebp640 from "@/assets/iptv-showcase-tv.jpg?w=640&format=webp";
-import showcaseTvWebp1024 from "@/assets/iptv-showcase-tv.jpg?w=1024&format=webp";
-import showcaseTvWebp from "@/assets/iptv-showcase-tv.jpg?format=webp";
+// Original image path for BunnyCDN
+const showcaseTvPath = "/src/assets/iptv-showcase-tv.jpg";
 
 const BestChoiceSection = () => {
   return (
@@ -26,21 +17,14 @@ const BestChoiceSection = () => {
           {/* Left side - Image */}
           <div className="relative order-2 lg:order-1" data-aos="fade-right">
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
-              <OptimizedImage 
-                src={showcaseTv} 
-                webpSrc={showcaseTvWebp}
-                srcSet={[
-                  { src: showcaseTv640, width: 640 },
-                  { src: showcaseTv1024, width: 1024 },
-                ]}
-                webpSrcSet={[
-                  { src: showcaseTvWebp640, width: 640 },
-                  { src: showcaseTvWebp1024, width: 1024 },
-                ]}
+              <BunnyImage 
+                src={showcaseTvPath}
+                responsiveWidths={[640, 1024, 1280]}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
                 width={600}
                 height={400}
+                quality={90}
                 className="w-full h-auto"
               />
               {/* Glow effect */}

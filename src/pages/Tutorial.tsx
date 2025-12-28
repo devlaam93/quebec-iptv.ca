@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyCardImage } from "@/components/ui/bunny-image";
 import { Calendar, Clock, ArrowRight, Globe, Tag, Loader2, Search, X, Smartphone, Tv, Monitor, Flame, Apple, Play } from "lucide-react";
 import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import { useWordPressPosts, useWordPressTags, prefetchPostOnHover, cancelPrefetch } from "@/hooks/useWordPressPosts";
@@ -357,7 +357,7 @@ const Tutorial = () => {
                 {filteredPosts.map(post => <Card key={post.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-card border-border group cursor-pointer" onMouseEnter={() => handleArticleHover(post.slug)} onMouseLeave={handleArticleHoverEnd} onClick={() => handleArticleClick(post.slug)}>
                     {/* Full-width image */}
                     <div className="relative aspect-video overflow-hidden">
-                      {post.image ? <OptimizedImage src={post.image} alt={post.imageAlt || `Guide: ${post.title}`} width={600} height={338} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      {post.image ? <BunnyCardImage src={post.image} alt={post.imageAlt || `Guide: ${post.title}`} width={600} height={338} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                           <Globe className="w-16 h-16 text-primary/50" />
                         </div>}
                     </div>

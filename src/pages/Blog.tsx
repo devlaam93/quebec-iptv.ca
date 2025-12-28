@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { BunnyImage, BunnyCardImage } from "@/components/ui/bunny-image";
 import { 
   Calendar, Clock, ArrowRight, Globe, Tag, Loader2, BookmarkX, Library, ArrowUpDown,
   FileText, Eye, Sparkles, TrendingUp, BookOpen, Newspaper
@@ -491,7 +491,7 @@ const Blog = () => {
                             onClick={() => window.location.href = `/blog/${item.slug}`}
                           >
                             {item.image ? (
-                              <OptimizedImage 
+                              <BunnyCardImage 
                                 src={item.image} 
                                 alt={`Article: ${item.title}`}
                                 width={600}
@@ -579,7 +579,7 @@ const Blog = () => {
                         {/* Image */}
                         <div className="relative aspect-video overflow-hidden">
                           {post.image ? (
-                            <OptimizedImage 
+                            <BunnyCardImage 
                               src={post.image} 
                               alt={post.imageAlt || `Article: ${post.title}`}
                               width={600}

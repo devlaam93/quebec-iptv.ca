@@ -10,7 +10,7 @@ const HeaderLogo = ({ variant = "header" }: HeaderLogoProps) => {
   const isHeader = variant === "header";
   
   return (
-    <a href="/" className="group flex items-center gap-2 sm:gap-3 relative z-10" aria-label="IPTV Quebec - Retour à l'accueil">
+    <a href="/" className="group flex items-center gap-2 sm:gap-3 relative z-10 min-h-[48px] touch-manipulation" aria-label="IPTV Quebec - Retour à l'accueil">
       <div className="relative">
         {/* Gradient background with glow effect */}
         <div className="absolute inset-0 bg-gradient-orange rounded-lg blur-md opacity-60 group-hover:opacity-80 transition-opacity"></div>

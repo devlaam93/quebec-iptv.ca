@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { usePrefetchRoute } from "@/hooks/usePrefetchRoute";
+import { useRoutePrefetch } from "@/hooks/useRoutePrefetch";
 
 interface NavLinkProps {
   to: string;
@@ -9,7 +9,7 @@ interface NavLinkProps {
   activeClassName?: string;
   end?: boolean;
   onClick?: () => void;
-  /** Enable image prefetching on hover */
+  /** Enable component and image prefetching on hover */
   prefetch?: boolean;
 }
 
@@ -23,8 +23,9 @@ const NavLink = ({
   prefetch = true,
 }: NavLinkProps) => {
   const location = useLocation();
-  const { onMouseEnter, onMouseLeave } = usePrefetchRoute(to, {
-    enableLogging: import.meta.env.DEV,
+  const { onMouseEnter, onMouseLeave } = useRoutePrefetch(to, {
+    prefetchImages: true,
+    debug: import.meta.env.DEV,
   });
   
   const isActive = end 

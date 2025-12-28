@@ -2,23 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, memo } from "react";
-import heroBackground from "@/assets/hero-background.jpg";
+import { BunnyHeroBackground } from "@/components/ui/bunny-background";
 
-// Preload hero background image for LCP optimization
-const preloadHeroImage = () => {
-  if (typeof window !== 'undefined') {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = heroBackground;
-    // @ts-ignore - fetchPriority is valid but not in TS types
-    link.fetchPriority = 'high';
-    // Only add if not already preloaded
-    if (!document.querySelector(`link[href="${heroBackground}"]`)) {
-      document.head.appendChild(link);
-    }
-  }
-};
+// Hero background path for BunnyCDN
+const heroBackgroundPath = "/src/assets/hero-background.jpg";
 
 // Live viewer count with fluctuation - memoized for performance
 const useLiveViewerCount = (min: number, max: number) => {
@@ -67,22 +54,14 @@ BackgroundElements.displayName = 'BackgroundElements';
 
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
-  
-  // Preload hero image - using useEffect to avoid blocking paint
-  useEffect(() => {
-    preloadHeroImage();
-  }, []);
 
   return (
-    <section 
-      aria-labelledby="hero-heading"
-      className="relative pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32 flex items-center justify-center overflow-hidden" 
-      style={{
-        backgroundImage: `linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95)), url(${heroBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'scroll' // Changed from 'fixed' for better mobile performance
-      }}
+    <BunnyHeroBackground
+      src={heroBackgroundPath}
+      overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
+      overlayOpacity={1}
+      className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32"
+      ariaLabel="Hero background image"
     >
       <BackgroundElements />
       
@@ -189,8 +168,8 @@ const HeroSection = () => {
       </div>
       
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" aria-hidden="true" />
-    </section>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" aria-hidden="true" />
+    </BunnyHeroBackground>
   );
 };
 

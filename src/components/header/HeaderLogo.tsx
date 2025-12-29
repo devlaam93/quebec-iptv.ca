@@ -1,5 +1,4 @@
 import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
-import { BunnyImage } from "@/components/ui/bunny-image";
 
 interface HeaderLogoProps {
   variant?: "header" | "mobile";
@@ -17,13 +16,13 @@ const HeaderLogo = ({ variant = "header" }: HeaderLogoProps) => {
         {/* Logo container with animation */}
         <div className={`relative bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 rounded-[50%] shadow-xl shadow-orange-500/30 group-hover:shadow-2xl group-hover:shadow-orange-500/50 transition-all duration-500 ${isHeader ? 'p-1.5 sm:p-2' : 'p-1.5 animate-pulse-slow'}`}>
           <div className={`bg-gradient-to-br from-background to-background/95 rounded-[50%] backdrop-blur-sm ${isHeader ? 'p-1 sm:p-1.5' : 'p-1'}`}>
-            <BunnyImage 
+            <img 
               src={animatedLogo} 
-              alt="IPTV Quebec Premium - Service de streaming TV au Canada" 
+              alt="IPTV Quebec Premium" 
               width={24}
               height={24}
-              priority
-              quality={90}
+              loading="eager"
+              decoding="sync"
               className={`object-contain drop-shadow-lg ${isHeader ? 'w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500' : 'w-5 h-5'}`} 
             />
           </div>

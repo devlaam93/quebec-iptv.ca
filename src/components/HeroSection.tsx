@@ -58,7 +58,7 @@ const HeroSection = () => {
       src={heroBackground}
       overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
       overlayOpacity={1}
-      className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-8 sm:pb-10 md:pb-12 lg:pb-14"
+      className="pt-28 sm:pt-32 md:pt-36 lg:pt-40 xl:pt-44 pb-6 sm:pb-8 md:pb-10 lg:pb-12"
       priority
       quality={90}
       responsiveWidths={[1024, 1536, 1920]}
@@ -67,7 +67,7 @@ const HeroSection = () => {
       <BackgroundElements />
       
       <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
-        <div className="w-full max-w-4xl space-y-6 sm:space-y-8 flex flex-col items-center">
+        <div className="w-full max-w-4xl space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 flex flex-col items-center">
           {/* Badge */}
           <div className="opacity-0 animate-fade-in-down inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
@@ -83,42 +83,42 @@ const HeroSection = () => {
           </h1>
           
           {/* Stats row */}
-          <div className="opacity-0 animate-fade-in-up-delay-1 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 py-4">
+          <div className="opacity-0 animate-fade-in-up-delay-1 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10 py-2 sm:py-3">
             <div className="flex flex-col items-center">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">15K+</span>
-              <span className="text-xs sm:text-sm text-muted-foreground">Chaînes en Direct</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary">15K+</span>
+              <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">Chaînes en Direct</span>
             </div>
-            <div className="w-px h-12 bg-border hidden sm:block" />
+            <div className="w-px h-10 sm:h-12 bg-border hidden sm:block" />
             <div className="flex flex-col items-center">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">40K+</span>
-              <span className="text-xs sm:text-sm text-muted-foreground">Films & Séries VOD</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary">40K+</span>
+              <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">Films & Séries VOD</span>
             </div>
-            <div className="w-px h-12 bg-border hidden sm:block" />
+            <div className="w-px h-10 sm:h-12 bg-border hidden sm:block" />
             <div className="flex flex-col items-center">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">4K</span>
-              <span className="text-xs sm:text-sm text-muted-foreground">Ultra HD Qualité</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary">4K</span>
+              <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">Ultra HD Qualité</span>
             </div>
           </div>
           
           {/* Description */}
-          <p className="opacity-0 animate-fade-in-up-delay-2 text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed px-4 text-center">
+          <p className="opacity-0 animate-fade-in-up-delay-2 text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl leading-relaxed px-2 sm:px-4 text-center">
             Profitez du <strong className="text-foreground">meilleur abonnement IPTV</strong> avec une expérience de divertissement exceptionnelle.
             Compatible avec toutes les plateformes pour un streaming fluide et une activation instantanée.
           </p>
           
           
           {/* Feature pills */}
-          <div className="opacity-0 animate-fade-in-up-delay-2 flex flex-wrap justify-center gap-2 sm:gap-3">
+          <div className="opacity-0 animate-fade-in-up-delay-2 flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3">
             {['Activation Instantanée', 'Support 24/7', 'Qualité 4K', 'Multi-Écrans'].map((feature) => (
-              <div key={feature} className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary/50 border border-border/50 rounded-full text-xs sm:text-sm text-muted-foreground backdrop-blur-sm">
-                <CheckCircle className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+              <div key={feature} className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-secondary/50 border border-border/50 rounded-full text-[10px] sm:text-xs md:text-sm text-muted-foreground backdrop-blur-sm">
+                <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" aria-hidden="true" />
                 {feature}
               </div>
             ))}
           </div>
 
           {/* CTA Buttons */}
-          <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 w-full">
+          <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center items-center pt-2 sm:pt-3 md:pt-4 w-full">
             <Button 
               variant="renewal" 
               size="lg" 
@@ -143,19 +143,19 @@ const HeroSection = () => {
           </div>
           
           {/* Trust indicators */}
-          <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row items-center gap-4 pt-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1" role="img" aria-label="Note de 4.9 sur 5 étoiles">
+          <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 pt-2 sm:pt-3 md:pt-4">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-0.5 sm:gap-1" role="img" aria-label="Note de 4.9 sur 5 étoiles">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" aria-hidden="true" />
+                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary" aria-hidden="true" />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 <span className="text-foreground font-medium">4.9/5</span> basé sur 2000+ avis
               </span>
             </div>
             <div className="hidden sm:block w-px h-4 bg-border" aria-hidden="true" />
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
               <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>

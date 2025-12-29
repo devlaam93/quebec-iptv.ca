@@ -79,88 +79,84 @@ const AmexIcon = ({
     
   </div>;
 const Footer = () => {
-  return <footer className="bg-card border-t border-border">
+  return (
+    <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Main Content */}
-        <div className="py-10 sm:py-12 lg:py-16">
-          {/* Mobile/Tablet: Stacked layout | Desktop: 4 columns */}
-          <div className="space-y-10 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
+        <div className="py-8 sm:py-12 lg:py-16">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
             
             {/* Brand Section */}
             <div className="lg:col-span-4">
-              {/* Mobile/Tablet: Card style | Desktop: Standard */}
-              <div className="bg-background/50 sm:bg-transparent rounded-2xl sm:rounded-none p-6 sm:p-0 border border-border/50 sm:border-0">
-                {/* Logo - Same as header */}
-                <div className="mb-4">
+              <div className="text-center sm:text-left">
+                {/* Logo */}
+                <div className="flex justify-center sm:justify-start mb-4">
                   <HeaderLogo />
                 </div>
                 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed text-center sm:text-left mb-4 max-w-xs mx-auto sm:mx-0">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-sm mx-auto sm:mx-0">
                   Le meilleur service IPTV au Quebec avec plus de 45 000 chaînes et 100 000+ VOD.
                 </p>
 
                 {/* Key Info badges */}
                 <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-5">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium">
-                    <Clock className="w-3 h-3" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium">
+                    <Clock className="w-3.5 h-3.5" />
                     <span>Support 24/7</span>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-                    <Shield className="w-3 h-3" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary/10 text-primary text-xs font-medium">
+                    <Shield className="w-3.5 h-3.5" />
                     <span>Garantie 7 jours</span>
                   </div>
                 </div>
 
-                {/* Working hours */}
-                <div className="bg-muted/50 rounded-xl p-4 mb-5 text-center sm:text-left">
+                {/* Support hours - Compact on mobile */}
+                <div className="bg-muted/50 rounded-xl p-4">
                   <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
                     <Headphones className="w-4 h-4 text-primary" />
                     <span className="text-sm font-semibold text-foreground">Heures de Support</span>
                   </div>
-                  <div className="space-y-1 text-xs text-muted-foreground">
-                    <p className="flex items-center justify-center sm:justify-start gap-2">
+                  <div className="flex flex-col sm:flex-row sm:gap-4 gap-1 text-xs text-muted-foreground">
+                    <p className="flex items-center justify-center sm:justify-start gap-1.5">
                       <span className="font-medium text-foreground">WhatsApp:</span>
-                      <span className="text-emerald-500 font-medium">24h/24, 7j/7</span>
+                      <span className="text-emerald-500 font-medium">24h/24</span>
                     </p>
-                    <p className="flex items-center justify-center sm:justify-start gap-2">
+                    <p className="flex items-center justify-center sm:justify-start gap-1.5">
                       <span className="font-medium text-foreground">Email:</span>
-                      <span>Réponse sous 2h</span>
+                      <span>Sous 2h</span>
                     </p>
                   </div>
                 </div>
-                
-                {/* Action buttons - Stack on mobile, inline on tablet+ */}
-                
               </div>
             </div>
 
-            {/* Links Grid - 2x2 on mobile, 3 cols on tablet, inline on desktop */}
+            {/* Links Grid */}
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-6">
+              <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
                 {/* Règlements */}
                 <nav aria-label="Liens légaux">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
                     Règlements
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2.5 sm:space-y-3">
                     <li>
-                      <a href="/politique-confidentialite" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/politique-confidentialite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Confidentialité
                       </a>
                     </li>
                     <li>
-                      <a href="/conditions-generales" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/conditions-generales" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Conditions générales
                       </a>
                     </li>
                     <li>
-                      <a href="/avis-non-responsabilite" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/avis-non-responsabilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Non-responsabilité
                       </a>
                     </li>
                     <li>
-                      <a href="/dmca-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/dmca-policy" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         DMCA
                       </a>
                     </li>
@@ -169,58 +165,58 @@ const Footer = () => {
 
                 {/* Service Client */}
                 <nav aria-label="Service client">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
                     Service Client
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2.5 sm:space-y-3">
                     <li>
-                      <a href="/annulation-commande" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/annulation-commande" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Annulation
                       </a>
                     </li>
                     <li>
-                      <a href="/politique-remboursement" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/politique-remboursement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Remboursement
                       </a>
                     </li>
                     <li>
-                      <a href="/conditions-paiement" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/conditions-paiement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Paiement
                       </a>
                     </li>
                     <li>
-                      <a href="/faq" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/faq" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         FAQ
                       </a>
                     </li>
                     <li>
-                      <a href="/accessibilite" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/accessibilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Accessibilité
                       </a>
                     </li>
                     <li>
-                      <a href="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <a href="/blog" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                         Blog
                       </a>
                     </li>
                   </ul>
                 </nav>
 
-                {/* Contact - Full width on mobile */}
+                {/* Contact */}
                 <address className="col-span-2 sm:col-span-1 not-italic">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
                     Contact
                   </h3>
-                  <div className="space-y-3">
-                    <a href="mailto:support@quebeciptv.ca" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <div className="grid grid-cols-1 sm:grid-cols-1 gap-2.5 sm:gap-3">
+                    <a href="mailto:support@quebeciptv.ca" className="flex items-center gap-2.5 py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                       <Mail className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span>support@quebeciptv.ca</span>
+                      <span className="truncate">support@quebeciptv.ca</span>
                     </a>
-                    <a href="tel:+15141234567" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                    <a href="tel:+15141234567" className="flex items-center gap-2.5 py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                       <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                       <span>+1 (514) 123-4567</span>
                     </a>
-                    <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                    <p className="flex items-center gap-2.5 py-1 text-sm text-muted-foreground">
                       <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
                       <span>Montreal, QC, Canada</span>
                     </p>
@@ -232,31 +228,32 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border py-6">
+        <div className="border-t border-border py-5 sm:py-6">
           <div className="flex flex-col items-center gap-4">
             {/* Payment Methods */}
-            <div className="flex items-center gap-3 flex-wrap justify-center" role="list" aria-label="Modes de paiement acceptés">
-              <span className="text-xs text-muted-foreground mr-2">Paiements sécurisés:</span>
-              <span role="listitem" aria-label="Visa"><VisaIcon className="h-8 w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
-              <span role="listitem" aria-label="Mastercard"><MastercardIcon className="h-8 w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
-              <span role="listitem" aria-label="PayPal"><PaypalIcon className="h-8 w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
-              <span role="listitem" aria-label="Interac"><InteracIcon className="h-8 w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center" role="list" aria-label="Modes de paiement acceptés">
+              <span className="text-xs text-muted-foreground mr-1 sm:mr-2">Paiements sécurisés:</span>
+              <span role="listitem" aria-label="Visa"><VisaIcon className="h-7 w-7 sm:h-8 sm:w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
+              <span role="listitem" aria-label="Mastercard"><MastercardIcon className="h-7 w-7 sm:h-8 sm:w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
+              <span role="listitem" aria-label="PayPal"><PaypalIcon className="h-7 w-7 sm:h-8 sm:w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
+              <span role="listitem" aria-label="Interac"><InteracIcon className="h-7 w-7 sm:h-8 sm:w-8 opacity-80 hover:opacity-100 transition-opacity" /></span>
             </div>
             
-            <div className="flex flex-col-reverse sm:flex-row items-center justify-between w-full gap-4">
-              <p className="text-xs text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3 sm:gap-4">
+              <nav aria-label="Liens rapides" className="flex flex-wrap justify-center gap-x-4 sm:gap-x-6 gap-y-2 order-1 sm:order-2">
+                <a href="/" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Accueil</a>
+                <a href="/tarifs" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Tarifs</a>
+                <a href="/essai-gratuit" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Essai Gratuit</a>
+                <a href="/contact" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Contact</a>
+              </nav>
+              <p className="text-xs text-muted-foreground order-2 sm:order-1">
                 © 2026 Quebec IPTV. Tous droits réservés.
               </p>
-              <nav aria-label="Liens rapides" className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                <a href="/" className="text-xs text-muted-foreground hover:text-primary transition-colors">Accueil</a>
-                <a href="/tarifs" className="text-xs text-muted-foreground hover:text-primary transition-colors">Tarifs</a>
-                <a href="/essai-gratuit" className="text-xs text-muted-foreground hover:text-primary transition-colors">Essai Gratuit</a>
-                <a href="/contact" className="text-xs text-muted-foreground hover:text-primary transition-colors">Contact</a>
-              </nav>
             </div>
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
 export default Footer;

@@ -58,7 +58,7 @@ const HeroSection = () => {
       src={heroBackground}
       overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
       overlayOpacity={1}
-      className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-16 sm:pb-20 md:pb-28 lg:pb-32"
+      className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-8 sm:pb-10 md:pb-12 lg:pb-16"
       ariaLabel="Hero background image"
     >
       <BackgroundElements />

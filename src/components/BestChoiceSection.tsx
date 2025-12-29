@@ -17,12 +17,12 @@ const BestChoiceSection = () => {
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
               <BunnyImage 
                 src={showcaseTv}
-                responsiveWidths={[640, 1024, 1280]}
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
+                responsiveWidths={[800, 1024, 1280, 1600]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
-                width={600}
-                height={400}
-                quality={90}
+                width={800}
+                height={533}
+                quality={95}
                 className="w-full h-auto"
               />
               {/* Glow effect */}

@@ -26,16 +26,6 @@ const routeLabels: Record<string, string> = {
   "dmca-policy": "Politique DMCA",
   "avis-non-responsabilite": "Avis de Non-Responsabilité",
   "conditions-paiement": "Conditions de Paiement",
-  // Blog articles
-  "comment-iptv-fonctionne": "Comment l'IPTV Fonctionne",
-  "iptv-legal-quebec": "IPTV Légal au Québec",
-  "meilleure-application-iptv": "Meilleure Application IPTV",
-  "acheter-code-iptv": "Acheter Code IPTV",
-  "installer-iptv-montreal-quebec": "Installation Montréal",
-  "fire-stick-iptv-fonctionnement": "Fire Stick IPTV",
-  "meilleur-service-iptv-quebec": "Meilleur Service IPTV",
-  "applications-gratuites-fire-tv-stick": "Apps Gratuites Fire Stick",
-  "ibo-player-guide": "Guide IBO Player",
 };
 
 const getLabel = (segment: string): string => {

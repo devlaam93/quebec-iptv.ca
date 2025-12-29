@@ -186,7 +186,8 @@ import { toBunnyCDNUrl, isBunnyCDNConfigured } from "./bunnycdn";
 // Import critical images so Vite resolves them correctly
 import heroBackground from "@/assets/hero-background.jpg";
 import premiumLogo from "@/assets/iptv-quebec-premium-logo.png";
-import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
+// Logo is in public folder for preloading
+const animatedLogo = "/iptv-quebec-animated-logo.png";
 
 /**
  * Get optimized image URL (BunnyCDN if configured, else original)

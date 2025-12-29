@@ -1,4 +1,5 @@
-import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
+// Logo moved to public folder for preloading
+const animatedLogo = "/iptv-quebec-animated-logo.png";
 
 interface HeaderLogoProps {
   variant?: "header" | "mobile";

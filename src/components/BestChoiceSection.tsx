@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
-import { BunnyImage } from "@/components/ui/bunny-image";
 import showcaseTv from "@/assets/iptv-showcase-tv.jpg";
 
 const BestChoiceSection = () => {
@@ -15,15 +14,12 @@ const BestChoiceSection = () => {
           {/* Left side - Image */}
           <div className="relative order-2 lg:order-1" data-aos="fade-right">
             <div className="relative rounded-xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-none">
-              <BunnyImage 
+              <img 
                 src={showcaseTv}
-                responsiveWidths={[800, 1024, 1280, 1600]}
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                 alt="Interface IPTV Quebec affichant le menu principal sur une smart TV avec chaînes en direct et films en 4K" 
-                width={800}
-                height={533}
-                quality={95}
-                className="w-full h-auto"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto object-cover object-center"
               />
               {/* Glow effect */}
               <div className="absolute -inset-4 bg-primary/20 blur-3xl -z-10" />

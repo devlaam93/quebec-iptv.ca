@@ -141,15 +141,19 @@ const addBunnyParams = (url: string, options?: BunnyOptimizeOptions): string => 
   
   const params = new URLSearchParams();
   
-  // Core optimization params
+  // Core optimization params - only add if specified
   if (options.width) params.set('width', String(options.width));
   if (options.height) params.set('height', String(options.height));
   
-  // Quality - default to 85 for good balance
-  params.set('quality', String(options.quality || 85));
+  // Quality - only add if specified, use higher default of 90 for better resolution
+  if (options.quality) {
+    params.set('quality', String(options.quality));
+  }
   
-  // Format - default to auto for best browser compatibility
-  params.set('format', options.format || 'auto');
+  // Format - only add if explicitly specified to preserve original quality
+  if (options.format) {
+    params.set('format', options.format);
+  }
   
   // Optional enhancements
   if (options.sharpen) params.set('sharpen', 'true');
@@ -161,9 +165,6 @@ const addBunnyParams = (url: string, options?: BunnyOptimizeOptions): string => 
   if (options.saturation !== undefined) params.set('saturation', String(options.saturation));
   if (options.contrast !== undefined) params.set('contrast', String(options.contrast));
   if (options.blur) params.set('blur', String(options.blur));
-  
-  // Add cache version for cache-busting
-  params.set('v', CACHE_VERSION);
   
   const queryString = params.toString();
   if (!queryString) return url;

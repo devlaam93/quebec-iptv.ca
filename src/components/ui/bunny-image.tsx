@@ -74,7 +74,7 @@ export const BunnyImage = ({
   responsiveWidths = BUNNY_RESPONSIVE_WIDTHS,
   enableAvif = true,
   enableWebp = true,
-  quality = 85,
+  quality = 90,
   autoPlaceholder = true,
   blurUp = true,
   priority = false,
@@ -178,36 +178,36 @@ export const BunnyImage = ({
  * Preset configurations for common use cases
  */
 export const BunnyImagePresets = {
-  /** Hero/banner images - full width, high quality */
+  /** Hero/banner images - full width, highest quality */
   hero: {
     responsiveWidths: [768, 1024, 1280, 1536, 1920],
-    quality: 90,
+    quality: 95,
     sizes: "100vw",
     priority: true,
   },
   /** Thumbnail images - small, fast loading */
   thumbnail: {
     responsiveWidths: [150, 300, 450],
-    quality: 80,
+    quality: 85,
     sizes: "(max-width: 640px) 33vw, 150px",
     enableAvif: false,
   },
-  /** Card images - medium size */
+  /** Card images - medium size, high quality */
   card: {
-    responsiveWidths: [320, 480, 640],
-    quality: 85,
+    responsiveWidths: [320, 480, 640, 800],
+    quality: 90,
     sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px",
   },
-  /** Blog post images - content width */
+  /** Blog post images - content width, high quality */
   blog: {
-    responsiveWidths: [640, 768, 1024],
-    quality: 85,
+    responsiveWidths: [640, 768, 1024, 1280],
+    quality: 90,
     sizes: "(max-width: 768px) 100vw, 768px",
   },
   /** Avatar/profile images - small, fixed size */
   avatar: {
     responsiveWidths: [48, 96, 144],
-    quality: 85,
+    quality: 90,
     sizes: "48px",
     enableAvif: false,
   },

@@ -76,11 +76,11 @@ const NotFound = () => {
         ]}
       />
       <Header />
-      <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-16">
+      <main id="main-content" className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
         <div className="text-center max-w-lg mx-auto">
           {/* 404 Number with gradient */}
-          <div className="relative mb-8">
-            <h1 className="text-[150px] md:text-[200px] font-bold leading-none bg-gradient-to-b from-primary to-primary/20 bg-clip-text text-transparent select-none">
+          <div className="relative mb-6">
+            <h1 className="text-[120px] md:text-[160px] font-bold leading-none bg-gradient-to-b from-primary to-primary/20 bg-clip-text text-transparent select-none">
               404
             </h1>
             <div className="absolute inset-0 blur-3xl bg-primary/20 -z-10" aria-hidden="true" />

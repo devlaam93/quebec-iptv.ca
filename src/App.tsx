@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import ScrollToTop from "./components/ScrollToTop";
 import RouteAnnouncer from "./components/RouteAnnouncer";
 import useDocumentLang from "./hooks/useDocumentLang";
+import { LinkValidator } from "./components/dev/LinkValidator";
 
 // Lazy load all pages for code splitting
 const Index = lazy(() => import("./pages/Index"));
@@ -88,6 +89,7 @@ const AppContent = () => {
       <Suspense fallback={null}>
         <WhatsAppButton />
       </Suspense>
+      <LinkValidator />
     </>
   );
 };

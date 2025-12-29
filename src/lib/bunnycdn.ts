@@ -17,8 +17,17 @@
 /** BunnyCDN Pull Zone URL */
 const BUNNY_CDN_URL = 'https://quebec-iptv.b-cdn.net';
 
-/** Default widths for responsive images */
-export const BUNNY_RESPONSIVE_WIDTHS = [640, 768, 1024, 1280, 1536, 1920];
+/** Cache version for cache-busting (increment when assets change) */
+const CACHE_VERSION = 'v1';
+
+/** Default widths for responsive images - optimized for common breakpoints */
+export const BUNNY_RESPONSIVE_WIDTHS = [480, 640, 768, 1024, 1280, 1536, 1920];
+
+/** Smaller set for thumbnails and avatars */
+export const BUNNY_THUMBNAIL_WIDTHS = [96, 192, 384];
+
+/** Medium set for cards and content */
+export const BUNNY_CARD_WIDTHS = [320, 480, 640, 800];
 
 /** Options for BunnyCDN Bunny Optimizer */
 export interface BunnyOptimizeOptions {
@@ -132,10 +141,17 @@ const addBunnyParams = (url: string, options?: BunnyOptimizeOptions): string => 
   
   const params = new URLSearchParams();
   
+  // Core optimization params
   if (options.width) params.set('width', String(options.width));
   if (options.height) params.set('height', String(options.height));
-  if (options.quality) params.set('quality', String(options.quality));
-  if (options.format) params.set('format', options.format);
+  
+  // Quality - default to 85 for good balance
+  params.set('quality', String(options.quality || 85));
+  
+  // Format - default to auto for best browser compatibility
+  params.set('format', options.format || 'auto');
+  
+  // Optional enhancements
   if (options.sharpen) params.set('sharpen', 'true');
   if (options.crop) params.set('crop', options.crop);
   if (options.crop_gravity) params.set('crop_gravity', options.crop_gravity);
@@ -145,6 +161,9 @@ const addBunnyParams = (url: string, options?: BunnyOptimizeOptions): string => 
   if (options.saturation !== undefined) params.set('saturation', String(options.saturation));
   if (options.contrast !== undefined) params.set('contrast', String(options.contrast));
   if (options.blur) params.set('blur', String(options.blur));
+  
+  // Add cache version for cache-busting
+  params.set('v', CACHE_VERSION);
   
   const queryString = params.toString();
   if (!queryString) return url;

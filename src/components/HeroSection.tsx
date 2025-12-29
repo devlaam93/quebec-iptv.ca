@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Star, Play, Tv, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, memo } from "react";
-import { BunnyHeroBackground } from "@/components/ui/bunny-background";
+import { BunnyBackground } from "@/components/ui/bunny-background";
 import heroBackground from "@/assets/hero-background.jpg";
 
 // Live viewer count with fluctuation - memoized for performance
@@ -54,11 +54,14 @@ const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
 
   return (
-    <BunnyHeroBackground
+    <BunnyBackground
       src={heroBackground}
       overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
       overlayOpacity={1}
-      className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-8 sm:pb-10 md:pb-12 lg:pb-16"
+      className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-8 sm:pb-10 md:pb-12 lg:pb-14"
+      priority
+      quality={90}
+      responsiveWidths={[1024, 1536, 1920]}
       ariaLabel="Hero background image"
     >
       <BackgroundElements />
@@ -167,7 +170,7 @@ const HeroSection = () => {
       
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" aria-hidden="true" />
-    </BunnyHeroBackground>
+    </BunnyBackground>
   );
 };
 

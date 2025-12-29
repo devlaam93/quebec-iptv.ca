@@ -1,9 +1,8 @@
 import { Separator } from "@/components/ui/separator";
-import animatedLogo from "@/assets/iptv-quebec-animated-logo.png";
+import HeaderLogo from "@/components/header/HeaderLogo";
 import amexIcon from "@/assets/logos/amex-icon.png";
 import paypalIcon from "@/assets/logos/paypal-icon.png";
-import { Mail, Phone, MapPin, Clock, Shield, Tv, Headphones, CreditCard } from "lucide-react";
-import { BunnyImage } from "@/components/ui/bunny-image";
+import { Mail, Phone, MapPin, Clock, Shield, Headphones } from "lucide-react";
 const WhatsAppIcon = ({
   className
 }: {
@@ -91,26 +90,10 @@ const Footer = () => {
             <div className="lg:col-span-4">
               {/* Mobile/Tablet: Card style | Desktop: Standard */}
               <div className="bg-background/50 sm:bg-transparent rounded-2xl sm:rounded-none p-6 sm:p-0 border border-border/50 sm:border-0">
-                {/* Logo row - Same style as header */}
-                <a href="/" className="group flex items-center gap-3 mb-4" aria-label="IPTV Quebec - Retour à l'accueil">
-                  <img 
-                    src={animatedLogo} 
-                    alt="IPTV Quebec" 
-                    width={40} 
-                    height={40} 
-                    className="w-10 h-10 object-contain" 
-                    loading="lazy"
-                  />
-                  <div className="flex flex-col leading-tight">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-lg font-bold text-foreground">IPTV</span>
-                      <span className="text-lg font-bold text-primary">Quebec</span>
-                    </div>
-                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
-                      Premium Streaming
-                    </span>
-                  </div>
-                </a>
+                {/* Logo - Same as header */}
+                <div className="mb-4">
+                  <HeaderLogo />
+                </div>
                 
                 {/* Description */}
                 <p className="text-muted-foreground text-sm leading-relaxed text-center sm:text-left mb-4 max-w-xs mx-auto sm:mx-0">

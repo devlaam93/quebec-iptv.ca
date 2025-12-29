@@ -92,30 +92,21 @@ const Footer = () => {
               {/* Mobile/Tablet: Card style | Desktop: Standard */}
               <div className="bg-background/50 sm:bg-transparent rounded-2xl sm:rounded-none p-6 sm:p-0 border border-border/50 sm:border-0">
                 {/* Logo row - Same style as header */}
-                <a href="/" className="group flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-3 mb-4" aria-label="IPTV Quebec - Retour à l'accueil">
-                  <div className="relative">
-                    {/* Gradient background with glow effect */}
-                    <div className="absolute inset-0 bg-gradient-orange rounded-lg blur-md opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                    
-                    {/* Logo container with animation */}
-                    <div className="relative bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 rounded-[50%] p-2 sm:p-2 shadow-xl shadow-orange-500/30 group-hover:shadow-2xl group-hover:shadow-orange-500/50 transition-all duration-500">
-                      <div className="bg-gradient-to-br from-background to-background/95 rounded-[50%] p-1.5 sm:p-1.5 backdrop-blur-sm">
-                        <BunnyImage src={animatedLogo} alt="IPTV Quebec Premium" width={32} height={32} quality={90} className="w-8 h-8 sm:w-6 sm:h-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 drop-shadow-lg" />
-                      </div>
+                <a href="/" className="group flex items-center gap-3 mb-4" aria-label="IPTV Quebec - Retour à l'accueil">
+                  <img 
+                    src={animatedLogo} 
+                    alt="IPTV Quebec" 
+                    width={40} 
+                    height={40} 
+                    className="w-10 h-10 object-contain" 
+                    loading="lazy"
+                  />
+                  <div className="flex flex-col leading-tight">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-lg font-bold text-foreground">IPTV</span>
+                      <span className="text-lg font-bold text-primary">Quebec</span>
                     </div>
-                  </div>
-                  
-                  {/* Brand text */}
-                  <div className="flex flex-col leading-tight text-center sm:text-left">
-                    <div className="flex items-baseline justify-center sm:justify-start gap-1">
-                      <span className="text-lg sm:text-xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
-                        IPTV
-                      </span>
-                      <span className="text-lg sm:text-xl font-black bg-gradient-orange bg-clip-text text-transparent">
-                        Quebec
-                      </span>
-                    </div>
-                    <span className="text-[10px] sm:text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
                       Premium Streaming
                     </span>
                   </div>

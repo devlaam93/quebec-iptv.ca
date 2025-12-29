@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import HeaderLogo from "@/components/header/HeaderLogo";
 import amexIcon from "@/assets/logos/amex-icon.png";
 import paypalIcon from "@/assets/logos/paypal-icon.png";
@@ -133,81 +134,106 @@ const Footer = () => {
 
             {/* Links Grid */}
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
+              {/* Mobile: Accordion layout */}
+              <div className="sm:hidden">
+                <Accordion type="multiple" className="w-full">
+                  {/* Règlements */}
+                  <AccordionItem value="reglements" className="border-border">
+                    <AccordionTrigger className="text-sm font-semibold text-foreground uppercase tracking-wider hover:no-underline py-3">
+                      Règlements
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <nav aria-label="Liens légaux">
+                        <ul className="space-y-2">
+                          <li><a href="/politique-confidentialite" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Confidentialité</a></li>
+                          <li><a href="/conditions-generales" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Conditions générales</a></li>
+                          <li><a href="/avis-non-responsabilite" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Non-responsabilité</a></li>
+                          <li><a href="/dmca-policy" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">DMCA</a></li>
+                        </ul>
+                      </nav>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* Service Client */}
+                  <AccordionItem value="service" className="border-border">
+                    <AccordionTrigger className="text-sm font-semibold text-foreground uppercase tracking-wider hover:no-underline py-3">
+                      Service Client
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <nav aria-label="Service client">
+                        <ul className="space-y-2">
+                          <li><a href="/annulation-commande" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Annulation</a></li>
+                          <li><a href="/politique-remboursement" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Remboursement</a></li>
+                          <li><a href="/conditions-paiement" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Paiement</a></li>
+                          <li><a href="/faq" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</a></li>
+                          <li><a href="/accessibilite" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Accessibilité</a></li>
+                          <li><a href="/blog" className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+                        </ul>
+                      </nav>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* Contact */}
+                  <AccordionItem value="contact" className="border-border">
+                    <AccordionTrigger className="text-sm font-semibold text-foreground uppercase tracking-wider hover:no-underline py-3">
+                      Contact
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <address className="not-italic space-y-2">
+                        <a href="mailto:support@quebeciptv.ca" className="flex items-center gap-2.5 py-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                          <Mail className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>support@quebeciptv.ca</span>
+                        </a>
+                        <a href="tel:+15141234567" className="flex items-center gap-2.5 py-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                          <Phone className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>+1 (514) 123-4567</span>
+                        </a>
+                        <p className="flex items-center gap-2.5 py-2 text-sm text-muted-foreground">
+                          <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span>Montreal, QC, Canada</span>
+                        </p>
+                      </address>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              {/* Desktop/Tablet: Standard grid layout */}
+              <div className="hidden sm:grid sm:grid-cols-3 sm:gap-8">
                 {/* Règlements */}
                 <nav aria-label="Liens légaux">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Règlements
                   </h3>
-                  <ul className="space-y-2.5 sm:space-y-3">
-                    <li>
-                      <a href="/politique-confidentialite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Confidentialité
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/conditions-generales" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Conditions générales
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/avis-non-responsabilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Non-responsabilité
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dmca-policy" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        DMCA
-                      </a>
-                    </li>
+                  <ul className="space-y-3">
+                    <li><a href="/politique-confidentialite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Confidentialité</a></li>
+                    <li><a href="/conditions-generales" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Conditions générales</a></li>
+                    <li><a href="/avis-non-responsabilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Non-responsabilité</a></li>
+                    <li><a href="/dmca-policy" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">DMCA</a></li>
                   </ul>
                 </nav>
 
                 {/* Service Client */}
                 <nav aria-label="Service client">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Service Client
                   </h3>
-                  <ul className="space-y-2.5 sm:space-y-3">
-                    <li>
-                      <a href="/annulation-commande" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Annulation
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/politique-remboursement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Remboursement
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/conditions-paiement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Paiement
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/faq" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        FAQ
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/accessibilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Accessibilité
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/blog" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        Blog
-                      </a>
-                    </li>
+                  <ul className="space-y-3">
+                    <li><a href="/annulation-commande" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Annulation</a></li>
+                    <li><a href="/politique-remboursement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Remboursement</a></li>
+                    <li><a href="/conditions-paiement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Paiement</a></li>
+                    <li><a href="/faq" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</a></li>
+                    <li><a href="/accessibilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Accessibilité</a></li>
+                    <li><a href="/blog" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
                   </ul>
                 </nav>
 
                 {/* Contact */}
-                <address className="col-span-2 sm:col-span-1 not-italic">
-                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3 sm:mb-4">
+                <address className="not-italic">
+                  <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Contact
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-1 gap-2.5 sm:gap-3">
+                  <div className="space-y-3">
                     <a href="mailto:support@quebeciptv.ca" className="flex items-center gap-2.5 py-1 text-sm text-muted-foreground hover:text-primary transition-colors">
                       <Mail className="w-4 h-4 text-primary flex-shrink-0" />
                       <span className="truncate">support@quebeciptv.ca</span>

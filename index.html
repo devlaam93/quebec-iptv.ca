@@ -17,25 +17,17 @@
     <link rel="canonical" href="https://quebec-iptv.ca/" />
     <link rel="author" href="/humans.txt" type="text/plain" />
 
-    <!-- Preconnect to critical origins (reduces DNS/TCP/TLS latency) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Preconnect to critical origins FIRST (must be early in head) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://quebec-iptv.b-cdn.net" crossorigin />
     
-    <!-- Preload critical CSS to reduce render-blocking -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" />
-    
-    <!-- Google Fonts with font-display: swap to prevent FOIT -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'" />
-    
-    <!-- DNS Prefetch for additional resources -->
-    <link rel="dns-prefetch" href="https://quebec-iptv.b-cdn.net" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <!-- Google Fonts - load async to avoid render blocking -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'" crossorigin />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" /></noscript>
 
     <!-- Preload critical above-the-fold assets for LCP optimization -->
-    <!-- Note: These paths will work in production when assets are served from the CDN origin -->
-    <link rel="preload" as="image" href="/assets/hero-background.jpg" type="image/jpeg" fetchpriority="high" />
     <link rel="preload" as="image" href="/assets/iptv-quebec-animated-logo.png" type="image/png" fetchpriority="high" />
 
     <!-- Open Graph / Facebook -->

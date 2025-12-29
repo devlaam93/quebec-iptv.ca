@@ -58,7 +58,7 @@ const HeroSection = () => {
       src={heroBackground}
       overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
       overlayOpacity={1}
-      className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-48 pb-6 sm:pb-8 md:pb-10 lg:pb-12"
+      className="pt-36 sm:pt-40 md:pt-44 lg:pt-48 xl:pt-52 pb-6 sm:pb-8 md:pb-10 lg:pb-12"
       priority
       quality={90}
       responsiveWidths={[1024, 1536, 1920]}

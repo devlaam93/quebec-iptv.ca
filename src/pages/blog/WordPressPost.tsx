@@ -168,18 +168,50 @@ const WordPressPost = ({ basePath = "blog" }: WordPressPostProps) => {
   // Not found state
   if (!post) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <SEO 
+          title="Article Non Trouvé - Erreur 404 | IPTV Québec"
+          description="L'article que vous recherchez n'existe pas ou a été déplacée."
+          path={`/${basePath}/${slug}`}
+          noIndex={true}
+        />
         <Header />
-        <main className="pt-20">
-          <div className="max-w-4xl mx-auto px-4 py-12 text-center min-h-[50vh]">
-            <h1 className="text-2xl font-bold mb-4">Article non trouvé</h1>
-            <p className="text-muted-foreground mb-6">
-              L&apos;article que vous recherchez n&apos;existe pas ou a été supprimé.
+        <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
+          <div className="text-center max-w-lg mx-auto">
+            {/* 404 Number with gradient */}
+            <div className="relative mb-6">
+              <span className="text-[100px] md:text-[140px] font-bold leading-none bg-gradient-to-b from-primary to-primary/20 bg-clip-text text-transparent select-none block">
+                404
+              </span>
+              <div className="absolute inset-0 blur-3xl bg-primary/20 -z-10" aria-hidden="true" />
+            </div>
+            
+            <h1 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">
+              {basePath === "tutorial" ? "Tutoriel Non Trouvé" : "Article Non Trouvé"}
+            </h1>
+            <p className="text-muted-foreground text-lg mb-8">
+              {basePath === "tutorial" 
+                ? "Le tutoriel que vous recherchez n'existe pas ou a été supprimé."
+                : "L'article que vous recherchez n'existe pas ou a été supprimé."}
             </p>
-            <Button onClick={() => navigate(`/${basePath}`)}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Retour
-            </Button>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" onClick={() => navigate(`/${basePath}`)}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                {basePath === "tutorial" ? "Voir tous les tutoriels" : "Voir tous les articles"}
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => navigate("/")}>
+                Retour à l'accueil
+              </Button>
+            </div>
+            
+            <button
+              onClick={() => window.history.back()}
+              className="mt-6 inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Retourner à la page précédente
+            </button>
           </div>
         </main>
         <Footer />

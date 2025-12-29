@@ -521,7 +521,7 @@ const ContentShowcase = () => {
         {/* Poster Card */}
         <div className="relative ml-8 md:ml-12 overflow-hidden rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl">
           <div className="aspect-[2/3] w-full">
-            <BunnyImage src={item.image} alt={`Affiche du film ${item.title} - disponible en streaming 4K`} width={200} height={300} responsiveWidths={[200, 300, 400]} className="w-full h-full object-cover" />
+            <BunnyImage src={item.image} alt={`Affiche du film ${item.title} - disponible en streaming 4K`} width={400} height={600} responsiveWidths={[300, 400, 600, 800]} quality={95} className="w-full h-full object-cover" />
           </div>
           
           {/* Hover Overlay */}
@@ -626,7 +626,7 @@ const ContentShowcase = () => {
         
         {/* Main Image Area */}
         <div className="relative aspect-[16/9] overflow-hidden">
-          <BunnyCardImage src={item.image} alt={`${item.title} - match en direct disponible sur IPTV Quebec`} width={640} height={360} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          <BunnyImage src={item.image} alt={`${item.title} - match en direct disponible sur IPTV Quebec`} width={800} height={450} responsiveWidths={[480, 640, 800, 1024]} quality={95} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
           
           {/* Gradient Overlay */}
           <div className={`absolute inset-0 bg-gradient-to-t from-background ${colors.gradient} to-transparent opacity-90`} />
@@ -684,7 +684,7 @@ const ContentShowcase = () => {
   }) => {
     return <Card className="group relative overflow-hidden bg-gradient-card border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-glow cursor-pointer hover:scale-105 min-w-[280px]">
         <div className="relative overflow-hidden aspect-[3/4]">
-          <BunnyImage src={item.image} alt={`Affiche ${type === 'movie' ? 'du film' : 'de la série'} ${item.title} - streaming HD disponible`} width={280} height={373} responsiveWidths={[280, 400, 560]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <BunnyImage src={item.image} alt={`Affiche ${type === 'movie' ? 'du film' : 'de la série'} ${item.title} - streaming HD disponible`} width={400} height={533} responsiveWidths={[320, 480, 640, 800]} quality={95} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
           
           {/* Reel Name */}

@@ -733,7 +733,7 @@ const ContentShowcase = () => {
       <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 sm:mb-3 px-4">{title}</h2>
       <p className="text-sm sm:text-base md:text-lg text-muted-foreground px-4">{subtitle}</p>
     </div>;
-  return <section className="pt-8 pb-16 px-4 bg-background">
+  return <section className="py-16 px-4 bg-background relative z-10">
       <div className="max-w-7xl mx-auto">
         {/* Premium Canadian Channels */}
         <div className="mb-16">

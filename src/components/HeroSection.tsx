@@ -167,9 +167,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" aria-hidden="true" />
+    
     </BunnyBackground>
   );
 };

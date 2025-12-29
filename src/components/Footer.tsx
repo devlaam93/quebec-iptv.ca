@@ -205,11 +205,11 @@ const Footer = () => {
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Règlements
                   </h3>
-                  <ul className="space-y-3">
-                    <li><a href="/politique-confidentialite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Confidentialité</a></li>
-                    <li><a href="/conditions-generales" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Conditions générales</a></li>
-                    <li><a href="/avis-non-responsabilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Non-responsabilité</a></li>
-                    <li><a href="/dmca-policy" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">DMCA</a></li>
+                  <ul className="space-y-1">
+                    <li><a href="/politique-confidentialite" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Confidentialité</a></li>
+                    <li><a href="/conditions-generales" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Conditions générales</a></li>
+                    <li><a href="/avis-non-responsabilite" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Non-responsabilité</a></li>
+                    <li><a href="/dmca-policy" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">DMCA</a></li>
                   </ul>
                 </nav>
 
@@ -218,13 +218,13 @@ const Footer = () => {
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     Service Client
                   </h3>
-                  <ul className="space-y-3">
-                    <li><a href="/annulation-commande" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Annulation</a></li>
-                    <li><a href="/politique-remboursement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Remboursement</a></li>
-                    <li><a href="/conditions-paiement" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Paiement</a></li>
-                    <li><a href="/faq" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</a></li>
-                    <li><a href="/accessibilite" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Accessibilité</a></li>
-                    <li><a href="/blog" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+                  <ul className="space-y-1">
+                    <li><a href="/annulation-commande" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Annulation</a></li>
+                    <li><a href="/politique-remboursement" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Remboursement</a></li>
+                    <li><a href="/conditions-paiement" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Paiement</a></li>
+                    <li><a href="/faq" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</a></li>
+                    <li><a href="/accessibilite" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Accessibilité</a></li>
+                    <li><a href="/blog" className="block py-2 min-h-[44px] flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
                   </ul>
                 </nav>
 
@@ -266,11 +266,11 @@ const Footer = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3 sm:gap-4">
-              <nav aria-label="Liens rapides" className="flex flex-wrap justify-center gap-x-4 sm:gap-x-6 gap-y-2 order-1 sm:order-2">
-                <a href="/" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Accueil</a>
-                <a href="/tarifs" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Tarifs</a>
-                <a href="/essai-gratuit" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Essai Gratuit</a>
-                <a href="/contact" className="text-xs py-1 text-muted-foreground hover:text-primary transition-colors">Contact</a>
+              <nav aria-label="Liens rapides" className="flex flex-wrap justify-center gap-x-1 gap-y-1 order-1 sm:order-2">
+                <a href="/" className="text-xs px-3 py-2 min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors">Accueil</a>
+                <a href="/tarifs" className="text-xs px-3 py-2 min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors">Tarifs</a>
+                <a href="/essai-gratuit" className="text-xs px-3 py-2 min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors">Essai Gratuit</a>
+                <a href="/contact" className="text-xs px-3 py-2 min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors">Contact</a>
               </nav>
               <p className="text-xs text-muted-foreground order-2 sm:order-1">
                 © 2026 Quebec IPTV. Tous droits réservés.

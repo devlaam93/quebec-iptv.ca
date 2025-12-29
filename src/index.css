@@ -76,7 +76,7 @@ All colors MUST be HSL.
     --secondary-foreground: 210 40% 96%;
 
     --muted: 220 13% 14%;
-    --muted-foreground: 215 15% 68%; /* Lightened for 4.5:1 on dark */
+    --muted-foreground: 215 20% 75%; /* Increased from 68% to 75% for 5:1 contrast ratio */
 
     --accent: 16 100% 58%;
     --accent-foreground: 220 15% 6%;

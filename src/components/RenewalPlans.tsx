@@ -121,7 +121,7 @@ const RenewalPlans = () => {
 
         {/* Cards */}
         <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {plans.map((plan, idx) => <div key={idx} className={`relative rounded-[2rem] overflow-hidden transition-all duration-700 hover:scale-[1.02] ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`} style={{
             transitionDelay: `${200 + idx * 150}ms`
           }}>

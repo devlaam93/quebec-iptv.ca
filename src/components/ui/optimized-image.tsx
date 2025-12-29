@@ -393,7 +393,7 @@ const OptimizedImage = ({
     height,
     loading: priority ? "eager" as const : "lazy" as const,
     decoding: priority ? "sync" as const : "async" as const,
-    fetchPriority: priority ? "high" as const : "auto" as const,
+    fetchpriority: priority ? "high" : "auto",
     onError: handleError,
     onLoad: handleLoad,
     className: imageStyles,

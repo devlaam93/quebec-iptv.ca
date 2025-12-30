@@ -21,49 +21,48 @@ const useLiveViewerCount = (min: number, max: number) => {
 };
 
 // Memoized background elements for performance
-const BackgroundElements = memo(() => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+const BackgroundElements = memo(() => <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {/* Glowing orbs */}
     <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[100px] animate-glow-pulse" />
-    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-glow-pulse" style={{ animationDelay: '1s' }} />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] animate-glow-pulse" style={{ animationDelay: '2s' }} />
+    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-glow-pulse" style={{
+    animationDelay: '1s'
+  }} />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] animate-glow-pulse" style={{
+    animationDelay: '2s'
+  }} />
     
     {/* Floating icons - hidden on mobile for performance */}
-    <div className="absolute top-32 left-[10%] text-primary/30 animate-float-slow hidden lg:block" style={{ animationDelay: '0s' }}>
+    <div className="absolute top-32 left-[10%] text-primary/30 animate-float-slow hidden lg:block" style={{
+    animationDelay: '0s'
+  }}>
       <Tv className="w-12 h-12" aria-hidden="true" />
     </div>
-    <div className="absolute top-48 right-[15%] text-primary/20 animate-float-slow hidden lg:block" style={{ animationDelay: '1s' }}>
+    <div className="absolute top-48 right-[15%] text-primary/20 animate-float-slow hidden lg:block" style={{
+    animationDelay: '1s'
+  }}>
       <Play className="w-10 h-10" aria-hidden="true" />
     </div>
-    <div className="absolute bottom-32 left-[20%] text-primary/25 animate-float-slow hidden lg:block" style={{ animationDelay: '2s' }}>
+    <div className="absolute bottom-32 left-[20%] text-primary/25 animate-float-slow hidden lg:block" style={{
+    animationDelay: '2s'
+  }}>
       <Zap className="w-8 h-8" aria-hidden="true" />
     </div>
-    <div className="absolute bottom-48 right-[10%] text-primary/15 animate-float-slow hidden lg:block" style={{ animationDelay: '0.5s' }}>
+    <div className="absolute bottom-48 right-[10%] text-primary/15 animate-float-slow hidden lg:block" style={{
+    animationDelay: '0.5s'
+  }}>
       <Star className="w-10 h-10" aria-hidden="true" />
     </div>
     
     {/* Animated particles/dots - reduced for performance */}
     <div className="absolute top-1/3 left-[5%] w-2 h-2 bg-primary/40 rounded-full animate-ping-slow hidden md:block" />
-    <div className="absolute top-2/3 right-[8%] w-2 h-2 bg-primary/30 rounded-full animate-ping-slow hidden md:block" style={{ animationDelay: '0.5s' }} />
-  </div>
-));
-
+    <div className="absolute top-2/3 right-[8%] w-2 h-2 bg-primary/30 rounded-full animate-ping-slow hidden md:block" style={{
+    animationDelay: '0.5s'
+  }} />
+  </div>);
 BackgroundElements.displayName = 'BackgroundElements';
-
 const HeroSection = () => {
   const viewerCount = useLiveViewerCount(1000, 8000);
-
-  return (
-    <BunnyBackground
-      src={heroBackground}
-      overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))"
-      overlayOpacity={1}
-      className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 xl:pt-56 pb-6 sm:pb-8 md:pb-10 lg:pb-12"
-      priority
-      quality={90}
-      responsiveWidths={[1024, 1536, 1920]}
-      ariaLabel="Hero background image"
-    >
+  return <BunnyBackground src={heroBackground} overlay="linear-gradient(rgba(22, 22, 29, 0.85), rgba(22, 22, 29, 0.95))" overlayOpacity={1} className="pt-40 sm:pt-44 md:pt-48 lg:pt-52 xl:pt-56 pb-6 sm:pb-8 md:pb-10 lg:pb-12" priority quality={90} responsiveWidths={[1024, 1536, 1920]} ariaLabel="Hero background image">
       <BackgroundElements />
       
       <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
@@ -79,7 +78,7 @@ const HeroSection = () => {
           
           {/* Main heading with gradient text */}
           <h1 id="hero-heading" className="opacity-0 animate-fade-in-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-center w-full">
-            <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">IPTV QUEBEC</span>
+            <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">IPTV QUEBECV</span>
           </h1>
           
           {/* Stats row */}
@@ -109,25 +108,21 @@ const HeroSection = () => {
           
           {/* Feature pills */}
           <div className="opacity-0 animate-fade-in-up-delay-2 flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3">
-            {['Activation Instantanée', 'Support 24/7', 'Qualité 4K', 'Multi-Écrans'].map((feature) => (
-              <div key={feature} className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-secondary/50 border border-border/50 rounded-full text-[10px] sm:text-xs md:text-sm text-muted-foreground backdrop-blur-sm">
+            {['Activation Instantanée', 'Support 24/7', 'Qualité 4K', 'Multi-Écrans'].map(feature => <div key={feature} className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-secondary/50 border border-border/50 rounded-full text-[10px] sm:text-xs md:text-sm text-muted-foreground backdrop-blur-sm">
                 <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" aria-hidden="true" />
                 {feature}
-              </div>
-            ))}
+              </div>)}
           </div>
 
           {/* CTA Buttons */}
           <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center items-center pt-2 sm:pt-3 md:pt-4 w-full">
-            <Button 
-              variant="renewal" 
-              size="lg" 
-              className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group relative overflow-hidden shadow-glow hover:shadow-[0_0_40px_hsl(16,100%,60%,0.5)] transition-all duration-300" 
-              onClick={() => {
-                const element = document.getElementById('renewal');
-                element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-            >
+            <Button variant="renewal" size="lg" className="w-full sm:w-auto sm:min-w-[180px] md:min-w-[200px] group relative overflow-hidden shadow-glow hover:shadow-[0_0_40px_hsl(16,100%,60%,0.5)] transition-all duration-300" onClick={() => {
+            const element = document.getElementById('renewal');
+            element?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }}>
               <span className="relative z-10 flex items-center gap-2">
                 <Zap className="w-4 h-4" aria-hidden="true" />
                 S'abonner Maintenant
@@ -146,9 +141,7 @@ const HeroSection = () => {
           <div className="opacity-0 animate-fade-in-up-delay-3 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 pt-2 sm:pt-3 md:pt-4">
             <div className="flex items-center gap-2 sm:gap-4">
               <div className="flex items-center gap-0.5 sm:gap-1" role="img" aria-label="Note de 4.9 sur 5 étoiles">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary" aria-hidden="true" />
-                ))}
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary" aria-hidden="true" />)}
               </div>
               <span className="text-xs sm:text-sm text-muted-foreground">
                 <span className="text-foreground font-medium">4.9/5</span> basé sur 2000+ avis
@@ -168,8 +161,6 @@ const HeroSection = () => {
         </div>
       </div>
     
-    </BunnyBackground>
-  );
+    </BunnyBackground>;
 };
-
 export default HeroSection;

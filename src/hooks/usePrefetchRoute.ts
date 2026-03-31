@@ -27,7 +27,7 @@ interface UsePrefetchOptions extends Omit<WarmCacheOptions, "onStart" | "onCompl
  */
 export function usePrefetchRoute(route: string, options: UsePrefetchOptions = {}) {
   const { delay = 100, enableLogging = false, ...warmOptions } = options;
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasPrefetchedRef = useRef(false);
 
   const onMouseEnter = useCallback(() => {

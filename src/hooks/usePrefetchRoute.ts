@@ -27,7 +27,7 @@ interface UsePrefetchOptions extends Omit<WarmCacheOptions, "onStart" | "onCompl
  */
 export function usePrefetchRoute(route: string, options: UsePrefetchOptions = {}) {
   const { delay = 100, enableLogging = false, ...warmOptions } = options;
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasPrefetchedRef = useRef(false);
 
   const onMouseEnter = useCallback(() => {
@@ -82,7 +82,7 @@ export function usePrefetchRoutes(
   options: UsePrefetchOptions = {}
 ): Record<string, { onMouseEnter: () => void; onMouseLeave: () => void }> {
   const { delay = 100, enableLogging = false, ...warmOptions } = options;
-  const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const prefetchedRef = useRef<Set<string>>(new Set());
 
   const createHandlers = useCallback(

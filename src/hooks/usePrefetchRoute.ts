@@ -82,7 +82,7 @@ export function usePrefetchRoutes(
   options: UsePrefetchOptions = {}
 ): Record<string, { onMouseEnter: () => void; onMouseLeave: () => void }> {
   const { delay = 100, enableLogging = false, ...warmOptions } = options;
-  const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const prefetchedRef = useRef<Set<string>>(new Set());
 
   const createHandlers = useCallback(

@@ -5,7 +5,7 @@ import { toBunnyCDNUrl, isBunnyCDNConfigured } from "@/lib/bunnycdn";
 const preloadedImages = new Set<string>();
 
 // Pending preload timeouts
-const pendingPreloads = new Map<string, NodeJS.Timeout>();
+const pendingPreloads = new Map<string, ReturnType<typeof setTimeout>>();
 
 /**
  * Preload an image with BunnyCDN optimization

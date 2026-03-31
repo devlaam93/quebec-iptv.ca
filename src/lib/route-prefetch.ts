@@ -42,7 +42,7 @@ const dynamicRouteImports: Array<{
 const prefetchedRoutes = new Set<string>();
 
 // Pending prefetch timeouts
-const pendingPrefetches = new Map<string, NodeJS.Timeout>();
+const pendingPrefetches = new Map<string, ReturnType<typeof setTimeout>>();
 
 /**
  * Get the import function for a route

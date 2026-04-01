@@ -736,7 +736,7 @@ const ContentShowcase = () => {
       <div className="max-w-7xl mx-auto">
         {/* Premium Canadian Channels */}
         <div className="mb-16">
-          <SectionHeader title="📺 Top 30 Premium Channels in Canada yu" subtitle="Most watched premium channels for sports, local Canadian content, and movies" />
+          <SectionHeader title="📺 Top 30 Premium Channels in Canada" subtitle="Most watched premium channels for sports, local Canadian content, and movies" />
           
           {/* Category Legend */}
           <div className="flex flex-wrap justify-center gap-3 mb-6 px-4">

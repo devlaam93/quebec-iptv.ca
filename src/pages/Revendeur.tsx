@@ -51,7 +51,7 @@ const Revendeur = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 bg-gradient-orange bg-clip-text text-transparent">
-              Programmo Revendeur
+              Programm ddo Revendeur
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground mb-8">
               Développez votre entreprise avec notre programme de revente IPTV. 

@@ -150,7 +150,7 @@ const ListeChaines = () => {
               </Badge>
               
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                Plus de <span className="text-primary">45 000</span> Chaînes
+                Plus de <span className="text-primary">45 000</span> Chaines
                 <br />
                 <span className="text-primary">140 000+</span> Films & Séries
               </h1>

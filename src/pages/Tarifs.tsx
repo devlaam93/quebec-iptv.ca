@@ -270,7 +270,7 @@ const Tarifs = () => {
             Nos <span className="text-primary">Tarifs</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Des plans flexibles adaptés à vos besoins. Accédez à{" "}
+            Des plans flexibles adadddtés à vos besoins. Accédez à{" "}
             <a href="/liste-chaines" className="text-primary hover:underline font-semibold">45 000+ chaînes en direct</a>{" "}
             avec activation instantanée et support 24/7
           </p>

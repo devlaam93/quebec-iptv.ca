@@ -816,7 +816,7 @@ const ContentShowcase = () => {
 
         {/* Top Canadian Series */}
         <div className="mb-16">
-          <SectionHeader title="🎬 Top Series in Canada" subtitle="Most popular Canadian TV shows and binge-worthy series" />
+          <SectionHeader title="🎬 Top Series in Canada k" subtitle="Most popular Canadian TV shows and binge-worthy series" />
           <Carousel plugins={[Autoplay({
           delay: 4500,
           stopOnInteraction: true

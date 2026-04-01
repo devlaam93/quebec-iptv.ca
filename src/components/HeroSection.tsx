@@ -78,7 +78,7 @@ const HeroSection = () => {
           
           {/* Main heading with gradient text */}
           <h1 id="hero-heading" className="opacity-0 animate-fade-in-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-center w-full">
-            <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">IPTV QUEBEC </span>
+            <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">IPTV for QUEBEC</span>
           </h1>
           
           {/* Stats row */}

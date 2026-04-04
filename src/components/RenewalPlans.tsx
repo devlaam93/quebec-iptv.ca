@@ -38,10 +38,10 @@ const RenewalPlans = () => {
   }, []);
   const plans = [{
     name: "Legacy",
-    price: "139",
+    price: "159",
     originalPrice: "199",
     discount: "30%",
-    monthlyEquiv: "11.58",
+    monthlyEquiv: "13.25",
     tagline: "Pour les amateurs",
     highlights: [{
       icon: Tv,
@@ -64,10 +64,10 @@ const RenewalPlans = () => {
     isPopular: false
   }, {
     name: "Advanced",
-    price: "189",
+    price: "199",
     originalPrice: "299",
     discount: "37%",
-    monthlyEquiv: "15.75",
+    monthlyEquiv: "16.58",
     tagline: "L'expérience ultime",
     highlights: [{
       icon: Tv,

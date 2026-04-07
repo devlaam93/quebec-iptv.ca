@@ -1,0 +1,22 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "fr",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "fr",
+    "name": "IPTV From Canada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les forfaits IPTV débutent à 14,99$/mois avec des options flexibles de 1, 3, 6 ou 12 mois selon vos besoins."
+      },
+      "name": "Quels sont les tarifs des abonnements IPTV?"
+    }
+  ],
+  "url": "https://iptvfromcanada.ca/tarifs"
+}

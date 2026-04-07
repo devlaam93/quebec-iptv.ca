@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-06T10:01:07.103426+00:00",
+  "generated_at": "2026-04-07T17:24:20.207401+00:00",
   "managed_paths": [
     "content/pages.json",
     "seo/meta.json",
@@ -7,7 +7,7 @@
     ".dashboard-lock"
   ],
   "owner": "dashboard",
-  "pages_count": 33,
+  "pages_count": 34,
   "site_domain": "iptvfromcanada.ca",
   "site_id": "047d3d70-ee5f-43aa-986a-de8cbf7d2800"
 }

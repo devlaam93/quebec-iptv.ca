@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "description": "Learn more about Politiqueconfidentialite.",
+  "headline": "Politiqueconfidentialite",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "name": "Politiqueconfidentialite",
+  "url": "https://iptvfromcanada.ca/politique-confidentialite"
+}

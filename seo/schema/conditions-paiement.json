@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "description": "Learn more about Conditionspaiement.",
+  "headline": "Conditionspaiement",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "name": "Conditionspaiement",
+  "url": "https://iptvfromcanada.ca/conditions-paiement"
+}

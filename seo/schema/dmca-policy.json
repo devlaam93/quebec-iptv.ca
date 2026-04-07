@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "description": "Learn more about Dmcapolicy.",
+  "headline": "Dmcapolicy",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "name": "Dmcapolicy",
+  "url": "https://iptvfromcanada.ca/dmca-policy"
+}

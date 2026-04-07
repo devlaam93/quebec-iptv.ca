@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "description": "Learn more about Avisnonresponsabilite.",
+  "headline": "Avisnonresponsabilite",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "name": "Avisnonresponsabilite",
+  "url": "https://iptvfromcanada.ca/avis-non-responsabilite"
+}

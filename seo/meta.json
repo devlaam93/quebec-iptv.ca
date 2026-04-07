@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-06T10:01:07.102420+00:00",
+  "generated_at": "2026-04-07T17:24:20.206367+00:00",
   "pages": {
     "/": {
       "canonical_url": "https://iptvfromcanada.ca/",
@@ -892,6 +892,39 @@
       },
       "updated_at": "2026-04-01T21:49:00.949558+00:00"
     },
+    "otero": {
+      "canonical_url": "https://iptvfromcanada.ca/otero",
+      "categories": [],
+      "change_frequency": "weekly",
+      "focus_keyword": null,
+      "h1": "Otero",
+      "hreflang": {},
+      "id": "06475f64-87e7-4beb-b236-0acf143a7c20",
+      "keywords": [],
+      "locale": "en",
+      "meta_description": null,
+      "og": {
+        "description": null,
+        "image": null,
+        "title": "Otero"
+      },
+      "page_template": "default",
+      "page_type": "page",
+      "published_at": null,
+      "robots_meta": "index,follow",
+      "schema_path": "seo/schema/otero.json",
+      "schema_type": null,
+      "sitemap_priority": 0.5,
+      "slug": "otero",
+      "tags": [],
+      "title": "Otero",
+      "twitter": {
+        "description": null,
+        "image": null,
+        "title": "Otero"
+      },
+      "updated_at": "2026-04-06T12:43:11.326564+00:00"
+    },
     "politique-confidentialite": {
       "canonical_url": "https://iptvfromcanada.ca/politique-confidentialite",
       "categories": [],
@@ -1033,7 +1066,7 @@
         }
       ],
       "change_frequency": "weekly",
-      "focus_keyword": "prix IPTV",
+      "focus_keyword": "abonnement iptv",
       "h1": "Nos Tarifs",
       "hreflang": {},
       "id": "d2778977-7732-4323-8330-e26f0560efaa",
@@ -1044,28 +1077,28 @@
         "IPTV pas cher"
       ],
       "locale": "en",
-      "meta_description": "Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois. Accès à 45 000+ chaînes et VOD 4K. Activation instantanée, garantie 7 jours. Choisissez votre plan!",
+      "meta_description": "Abonnement IPTV flexible au Québec : forfaits 1, 3, 6 ou 12 mois dès 14,99$. Plus de 45 000 chaînes et VOD 4K. Activation instantanée avec garantie 7 jours.",
       "og": {
-        "description": "Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois. Accès à 45 000+ chaînes et VOD 4K. Activation instantanée, garantie 7 jours. Choisissez votre plan!",
+        "description": "Abonnement IPTV flexible au Québec : forfaits 1, 3, 6 ou 12 mois dès 14,99$. Plus de 45 000 chaînes et VOD 4K. Activation instantanée avec garantie 7 jours.",
         "image": "/og-tarifs.jpg",
-        "title": "Tarifs IPTV Québec | Forfaits dès 14,99$/mois"
+        "title": "Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada"
       },
       "page_template": "default",
       "page_type": "page",
       "published_at": null,
       "robots_meta": "index,follow",
       "schema_path": "seo/schema/tarifs.json",
-      "schema_type": null,
+      "schema_type": "FAQPage",
       "sitemap_priority": 0.5,
       "slug": "tarifs",
       "tags": [],
-      "title": "Tarifs IPTV Québec | Forfaits dès 14,98$/mois",
+      "title": "Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada",
       "twitter": {
         "description": "Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois. Accès à 45 000+ chaînes et VOD 4K. Activation instantanée, garantie 7 jours. Choisissez votre plan!",
         "image": "/og-tarifs.jpg",
         "title": "Tarifs IPTV Québec | Forfaits dès 14,99$/mois"
       },
-      "updated_at": "2026-04-06T10:01:07.061708+00:00"
+      "updated_at": "2026-04-07T17:24:20.153194+00:00"
     },
     "tutorial": {
       "canonical_url": "https://iptvfromcanada.ca/tutorial",

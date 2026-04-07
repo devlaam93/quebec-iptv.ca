@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-06T10:01:07.101882+00:00",
+  "generated_at": "2026-04-07T17:24:20.205575+00:00",
   "pages": [
     {
       "categories": [],
@@ -381,6 +381,20 @@
     },
     {
       "categories": [],
+      "id": "06475f64-87e7-4beb-b236-0acf143a7c20",
+      "page_template": "default",
+      "page_type": "page",
+      "preview_url": "https://iptvfromcanada.ca/otero",
+      "published_at": null,
+      "slug": "otero",
+      "source_path": "src/pages/Hamisdo.tsx",
+      "status": "draft",
+      "tags": [],
+      "title": "Otero",
+      "updated_at": "2026-04-06T12:43:11.326564+00:00"
+    },
+    {
+      "categories": [],
       "id": "d28d655c-56b6-4fb4-aba2-54cf76c5bcd6",
       "page_template": "default",
       "page_type": "page",
@@ -451,8 +465,8 @@
       "source_path": "src/pages/Tarifs.tsx",
       "status": "published",
       "tags": [],
-      "title": "Tarifs IPTV Québec | Forfaits dès 14,98$/mois",
-      "updated_at": "2026-04-06T10:01:07.061708+00:00"
+      "title": "Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada",
+      "updated_at": "2026-04-07T17:24:20.153194+00:00"
     },
     {
       "categories": [],

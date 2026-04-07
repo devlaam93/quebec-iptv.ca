@@ -1,0 +1,27 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "author": {
+    "@type": "Organization",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "dateModified": "2026-04-01T21:27:36.949396+00:00",
+  "datePublished": "2026-04-01T21:27:36.949396+00:00",
+  "description": "Learn more about Meilleureapplicationiptv.",
+  "headline": "Meilleureapplicationiptv",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "mainEntityOfPage": "https://iptvfromcanada.ca/blog/MeilleureApplicationIptv",
+  "publisher": {
+    "@type": "Organization",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "url": "https://iptvfromcanada.ca/blog/MeilleureApplicationIptv"
+}

@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "description": "Learn more about Tags.",
+  "headline": "Tags",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "name": "Tags",
+  "url": "https://iptvfromcanada.ca/tags"
+}

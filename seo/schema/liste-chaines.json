@@ -1,0 +1,22 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "inLanguage": "en",
+    "name": "iptvfromcanada",
+    "url": "https://iptvfromcanada.ca"
+  },
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Replace this starter answer with the real on-page answer before publishing."
+      },
+      "name": "Prêt à explorer notre catalogue?"
+    }
+  ],
+  "url": "https://iptvfromcanada.ca/liste-chaines"
+}

@@ -7,6 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Shield, Zap, HeadphonesIcon, Users } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { buildSeoLinks, buildSeoMeta } from "@/lib/seo";
+
+export const meta = () =>
+  buildSeoMeta({
+    title: "Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada""Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada""Tarifs IPTV Québec | Forfaits dès 14,99$/mois"
+    description:
+      "Abonnement IPTV flexible au Québec : forfaits 1, 3, 6 ou 12 mois dès 14,99$. Plus de 45 000 chaînes et VOD 4K. Activation instantanée avec garantie 7 jours.""Abonnement IPTV flexible au Québec : forfaits 1, 3, 6 ou 12 mois dès 14,99$. Plus de 45 000 chaînes et VOD 4K. Activation instantanée avec garantie 7 jours.""Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois. Accès à 45 000+ chaînes et VOD 4K. Activation instantanée, garantie 7 jours. Choisissez votre plan!"
+    keywords: ["prix IPTV", "abonnement IPTV", "forfait IPTV Québec", "IPTV pas cher"],
+    image: "/generated/social/tarifs-social-20260408101259.png""/og-tarifs.jpg""/og-tarifs.jpg"
+    path: "/tarifs""/tarifs""/tarifs"
+  });
+
+export const links = () => buildSeoLinks("/tarifs""/tarifs";
 
 // Animated counter hook
 const useAnimatedCounter = (target: number, duration: number = 2000, startOnView: boolean = true) => {
@@ -158,14 +171,14 @@ const ClientCounter = () => {
 };
 const Tarifs = () => {
   return <PageLayout>
-      <SEO title="Tarifs IPTV Québec | Forfaits dès 14,99$/mois" description="Forfaits IPTV flexibles : 1, 3, 6 ou 12 mois. Accès à 45 000+ chaînes et VOD 4K. Activation instantanée, garantie 7 jours. Choisissez votre plan!" path="/tarifs" keywords={["prix IPTV", "abonnement IPTV", "forfait IPTV Québec", "IPTV pas cher"]} image="/og-tarifs.jpg" />
+      <SEO title={"Abonnement IPTV - Forfaits dès 14,99$/mois | IPTV From Canada"} description={"Abonnement IPTV flexible au Québec : forfaits 1, 3, 6 ou 12 mois dès 14,99$. Plus de 45 000 chaînes et VOD 4K. Activation instantanée avec garantie 7 jours."} path={"/tarifs"} keywords={["prix IPTV", "abonnement IPTV", "forfait IPTV Québec", "IPTV pas cher"]} image={"/generated/social/tarifs-social-20260408101259.png"} />
       <StructuredData
         type="service"
         data={{
           name: "Abonnement IPTV Quebec",
           description: "Service IPTV premium avec 45 000+ chaines, films et series en qualite 4K. Support 24/7.",
           provider: "Quebec IPTV",
-          url: "https://quebec-iptv.ca/tarifs",
+          url: "https://iptvfromcanada.ca/tarifs",
           areaServed: "Canada",
           serviceType: "IPTV Streaming Service",
         }}
@@ -176,8 +189,8 @@ const Tarifs = () => {
           name: "Abonnements IPTV Québec",
           description: "Forfaits IPTV premium avec 45 000+ chaînes TV, films et séries en qualité 4K. Activation instantanée, garantie 7 jours.",
           brand: "IPTV Québec",
-          url: "https://quebec-iptv.ca/tarifs",
-          image: "https://quebec-iptv.ca/og-tarifs.jpg",
+          url: "https://iptvfromcanada.ca/tarifs",
+          image: "https://iptvfromcanada.ca/og-tarifs.jpg",
           reviewCount: 2847,
           ratingValue: 4.9,
           variants: [
@@ -259,8 +272,8 @@ const Tarifs = () => {
       <StructuredData
         type="breadcrumb"
         data={[
-          { name: "Accueil", url: "https://quebec-iptv.ca" },
-          { name: "Tarifs", url: "https://quebec-iptv.ca/tarifs" },
+          { name: "Accueil", url: "https://iptvfromcanada.ca" },
+          { name: "Tarifs", url: "https://iptvfromcanada.ca/tarifs" },
         ]}
       />
       {/* Hero Section */}
@@ -270,9 +283,9 @@ const Tarifs = () => {
             Nos <span className="text-primary">Tarifs</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Des plans flexibles adadddtés à vos besoins. Accédez à{" "}
+            Des plans flexibles adaptés à vos besoins. Accédez à{" "}
             <a href="/liste-chaines" className="text-primary hover:underline font-semibold">45 000+ chaînes en direct</a>{" "}
-            avec activation instantanée et support 24/7
+            avec activation instantanée et support 24/7.
           </p>
         </div>
       </section>
